@@ -1,7 +1,7 @@
 #! /usr/bin/env DB
 
 from flaskext.mysql import MySQL
-from data_gen.generate_data import gen_people
+from data_gen.generate_data import gen_people, gen_lodging
 
 class DB(object):
     """docstring for ClassName"""
@@ -24,8 +24,10 @@ class DB(object):
         self.conn.commit()
 
     def generate_data(self):
-        query = gen_people()
         curr = self.conn.cursor()
+        query = gen_people()
+        curr.execute(query)
+        query = gen_lodging()
         curr.execute(query)
         self.conn.commit()
 

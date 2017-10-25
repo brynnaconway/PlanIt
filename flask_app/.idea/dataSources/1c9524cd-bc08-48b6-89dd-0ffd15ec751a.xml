@@ -100,12 +100,12 @@ groupID</ColNames>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="32" parent="11" name="Address">
+    <column id="32" parent="11" name="address">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="33" parent="11" name="URL">
+    <column id="33" parent="11" name="url">
       <Position>4</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
