@@ -35,8 +35,8 @@ CREATE TABLE timerange(
 	PRIMARY KEY (personID, eventID)
 );
 
-DROP TABLE IF EXISTS person;
-CREATE TABLE person(
+DROP TABLE IF EXISTS people;
+CREATE TABLE people(
 	personID INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50),
 	phoneNumber VARCHAR(20),
