@@ -101,7 +101,7 @@ def gen_voting_data(db):
               VALUES ({},{},{},{});\n'''.format(p,event[0],event[1],bit)
 
             lodge = random.choice(lodgeIDs)
-            query += '''INSERT INTO vote(eventID, personID, groupID, lodgeVote, startVote, stopVote)
+            query += '''INSERT INTO votes(eventID, personID, groupID, lodgeVote, startVote, stopVote)
               VALUES({},{},{},{},{},{});\n'''.format(event[0],p,event[1],lodge,start,stop)
 
     return query
@@ -112,7 +112,7 @@ def update_events(db):
 
     query = ''
     for event in eventIDs:
-        votes = db.query('SELECT personID,lodgeVote, startVote, stopVote FROM vote '
+        votes = db.query('SELECT personID,lodgeVote, startVote, stopVote FROM votes '
                                      'WHERE eventID = {};'.format(event[0]))
         commitCount = int(db.query('SELECT SUM(decision) from commits WHERE eventID = {}'.format(event[0]))[0][0])
         lodge = random.choice(votes)[1]
