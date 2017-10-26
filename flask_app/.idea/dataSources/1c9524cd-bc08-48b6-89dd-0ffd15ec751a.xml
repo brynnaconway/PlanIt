@@ -15,8 +15,8 @@
     <table id="9" parent="2" name="events"/>
     <table id="10" parent="2" name="groups"/>
     <table id="11" parent="2" name="lodging"/>
-    <table id="12" parent="2" name="people"/>
-    <table id="13" parent="2" name="timerange"/>
+    <table id="12" parent="2" name="memberships"/>
+    <table id="13" parent="2" name="people"/>
     <table id="14" parent="2" name="vote"/>
     <column id="15" parent="8" name="personID">
       <Position>1</Position>
@@ -73,20 +73,20 @@ eventID</ColNames>
       <ColNames>eventID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="27" parent="10" name="personID">
+    <column id="27" parent="10" name="groupID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="28" parent="10" name="groupID">
+    <column id="28" parent="10" name="groupName">
       <Position>2</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="29" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>personID
-groupID</ColNames>
+      <ColNames>groupID</ColNames>
       <Primary>1</Primary>
     </key>
     <column id="30" parent="11" name="lodgeID">
@@ -114,78 +114,68 @@ groupID</ColNames>
       <ColNames>lodgeID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="35" parent="12" name="personID">
+    <column id="35" parent="12" name="groupID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="12" name="personID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="37" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>groupID
+personID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="38" parent="13" name="personID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="36" parent="12" name="name">
+    <column id="39" parent="13" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="37" parent="12" name="phoneNumber">
+    <column id="40" parent="13" name="phoneNumber">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <key id="38" parent="12" name="PRIMARY">
+    <key id="41" parent="13" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>personID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="39" parent="13" name="personID">
+    <column id="42" parent="14" name="eventID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="40" parent="13" name="eventID">
+    <column id="43" parent="14" name="personID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="41" parent="13" name="start">
-      <Position>3</Position>
-      <DataType>datetime|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="42" parent="13" name="stop">
-      <Position>4</Position>
-      <DataType>datetime|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="43" parent="13" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>personID
-eventID</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="44" parent="14" name="eventID">
-      <Position>1</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="45" parent="14" name="personID">
-      <Position>2</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="46" parent="14" name="lodgeVote">
+    <column id="44" parent="14" name="lodgeVote">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="47" parent="14" name="locationVote">
+    <column id="45" parent="14" name="locationVote">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="48" parent="14" name="startVote">
+    <column id="46" parent="14" name="startVote">
       <Position>5</Position>
       <DataType>datetime|0</DataType>
     </column>
-    <column id="49" parent="14" name="stopVote">
+    <column id="47" parent="14" name="stopVote">
       <Position>6</Position>
       <DataType>datetime|0</DataType>
     </column>
-    <key id="50" parent="14" name="PRIMARY">
+    <key id="48" parent="14" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>eventID
 personID</ColNames>

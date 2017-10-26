@@ -3,11 +3,12 @@
 from flaskext.mysql import MySQL
 from flask import Flask, render_template
 from app.db import DB
+import yaml
 
+config = yaml.load(open('planit.config'))
 app = Flask(__name__)
-# app.config["DEBUG"] = True  # Only include this while you are testing your app
-
-db = DB(app)
+db = DB(app, config)
+app.config["DEBUG"] = True  # Only include this while you are testing your app
 
 @app.route('/')
 def homepage():

@@ -1,11 +1,10 @@
-DROP TABLE IF EXISTS events ;
+DROP TABLE IF EXISTS events;
 CREATE TABLE events(
    eventID INT NOT NULL AUTO_INCREMENT,
    start DATETIME,
    stop DATETIME,
    lodgeID INT,
    groupID INT,
-   locationID INT,
    confirmCount INT,
    PRIMARY KEY ( eventID )
 );
@@ -14,7 +13,7 @@ DROP TABLE IF EXISTS memberships;
 CREATE TABLE memberships(
 	groupID INT NOT NULL,
 	personID INT NOT NULL,
-	PRIMARY KEY (personID, groupID)
+	PRIMARY KEY (groupID, personID)
 );
 
 DROP TABLE IF EXISTS groups;
@@ -56,8 +55,7 @@ CREATE TABLE vote(
 	eventID INT NOT NULL,
 	personID INT NOT NULL,
 	lodgeVote INT,
-	locationVote INT,
-	startVote DATETIME, 
+	startVote DATETIME,
 	stopVote DATETIME,
 	PRIMARY KEY (eventID, personID)
 );

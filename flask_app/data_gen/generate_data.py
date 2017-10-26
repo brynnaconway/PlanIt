@@ -1,8 +1,8 @@
 #! /usr/bin/env python2
 
-import datetime, calendar
 import random
 import uuid
+from app.util import *
 random.seed()
 
 
@@ -46,68 +46,123 @@ def gen_groups(db):
 
 
 def gen_memberships(db):
-    gid_query = 'SELECT groupID from groups'
-    pid_query = 'SELECT personID from people'
-
-    cur = db.conn.cursor()
-    cur.execute(gid_query)
-    groupIDs = [ l[0] for l in cur.fetchall() ]
-    cur.execute(pid_query)
-    personIDs = [ l[0] for l in cur.fetchall() ]
+    groupIDs = db.single_attr_query('SELECT groupID FROM groups;')
+    personIDs = db.single_attr_query('SELECT personID FROM people;')
 
     query = ''
-
     for id in groupIDs:
-        members = random.sample(personIDs, random.randint(3, 10))
+        members = list(set(random.sample(personIDs, random.randint(3, 10))))
         for m in members:
-            query += '''INSERT INTO membership (groupID, personID) VALUES ({},{});\n'''.format(id,m)
-    print query
+            query += '''INSERT INTO memberships (groupID, personID) VALUES ({},{});\n'''.format(id,m)
+
+    with open('out','w+') as f:
+        f.write(query)
     return query
 
-''' Code for random interval generation from stackoverflow:
-https://stackoverflow.com/questions/44111143/how-to-generate-a-random-datetime-interval-in-python'''
-# Function to get random date with given month & year
-def getDate(m, y, start=1):
-    # For months havin 30 days
-    if m in [4, 6, 9, 11]:
-        return random.randrange(start, 30, 1)
-    # For month of Feb, to check if year is leap or not
-    elif m == 2:
-        if not calendar.isleap(y):
-            return random.randrange(start, 28, 1)
-        else:
-            return random.randrange(start, 29, 1)
-    else:
-        return random.randrange(start, 31, 1)
 
-# Function to return random time period
-def getRandomPeriod(minYear, maxYear):
-    if minYear > maxYear:
-        raise ValueError('Please enter proper year range')
-    if minYear == maxYear:
-        y1 = minYear
-        y2 = minYear
-    else:
-        y1 = random.randrange(minYear, maxYear)
-        # Choosing lower bound y2 to be same as y1, so that y2 >= y1
-        y2 = random.randrange(y1, maxYear)
+def gen_events(db):
+    groupIDs = db.single_attr_query('SELECT groupID FROM groups;')
+    random.shuffle(groupIDs)
 
-    m1 = random.randrange(1, 12)
-    if y2 != y1:
-        m2 = random.randrange(1, 12, 1)
-    else:
-        # Choosing lower bound m2 to be same as m1, so that m2 >= m1
-        m2 = random.randrange(m1, 12, 1)
 
-    d1 = getDate(m1, y1)
-    if m1 == m2 and y1 == y2:
-        d2 = getDate(m2, y2, start=d1 + 1)
-    else:
-        d2 = getDate(m2, y2)
+    query = ''
+    # Each group has at least one event
+    for gid in groupIDs:
+        query += '''INSERT INTO events (eventID, groupID) VALUES (0,{});\n'''.format(gid)
 
-    t1 = datetime.datetime(y1, m1, d1)
-    t2 = datetime.datetime(y2, m2, d2)
-    return (t1.strftime('%B %d %Y'), t2.strftime('%B %d %Y'))
+    # Some groups have more than one, possible more than two
+    for _ in range(0, int(.25 * len(groupIDs))):
+        gid = random.choice(groupIDs)
+        query += '''INSERT INTO events (eventID, groupID) VALUES (0,{});\n'''.format(gid)
+
+    return query
+
+
+def gen_voting_data(db):
+    eventIDs = db.query('SELECT eventID, groupID FROM events;')
+    lodgeIDs = db.single_attr_query('SELECT lodgeID FROM lodging;')
+
+    query = ''
+    for event in eventIDs:
+        people = db.single_attr_query('SELECT personID FROM memberships WHERE groupID = {};'.format(event[1]))
+        for p in people:
+            startd, stopd = getRandomPeriod(2017, 2017)
+            startt, stopt = getRandomTimes()
+            start = "'" + startd + startt + "'"
+            stop = "'" + stopd + stopt + "'"
+
+            query += '''INSERT INTO timerange(personID, eventID, start, stop) 
+              VALUES( {}, {}, {}, {});\n'''.format(p, event[0], start, stop)
+
+            bit = random.randint(0,1)
+            query += '''INSERT INTO commits(personID, eventID, decision)
+              VALUES ({},{},{});\n'''.format(p,event[0],bit)
+
+            lodge = random.choice(lodgeIDs)
+            query += '''INSERT INTO vote(eventID, personID, lodgeVote, startVote, stopVote)
+              VALUES({},{},{},{},{});\n'''.format(event[0],p,lodge,start,stop)
+
+    return query
+
+# Vote
+def update_events(db):
+    eventIDs = db.query('SELECT eventID, groupID FROM events;')
+
+    query = ''
+    for event in eventIDs:
+        votes = db.query('SELECT personID,lodgeVote, startVote, stopVote FROM vote '
+                                     'WHERE eventID = {};'.format(event[0]))
+        commitCount = int(db.query('SELECT SUM(decision) from commits WHERE eventID = {}'.format(event[0]))[0][0])
+        lodge = random.choice(votes)[1]
+
+        # DATETIMES are bullshit
+        start = "'" + random.choice(votes)[2].strftime('%Y-%m-%d %H:%M:%S') +"'"
+        stop = "'" + random.choice(votes)[3].strftime('%Y-%m-%d %H:%M:%S') +"'"
+
+        query += ''' UPDATE events SET lodgeID = {},start = {}, stop = {},confirmCount = {} 
+            WHERE eventID = {};\n'''.format(lodge, start, stop, commitCount, event[0])
+    return query
+
+
+
+
+def get_functions():
+    # return [gen_people, gen_lodging, gen_groups, gen_memberships,
+    #         gen_events, gen_timerange, gen_commits]
+    return [gen_people, gen_lodging, gen_groups, gen_memberships,
+            gen_events, gen_voting_data, update_events]
+
 
 if __name__ == '__main__':
-    gen_lodging()
+    # gen_lodging()
+    gen_timerange()
+
+
+
+
+# def gen_commits(db):
+#     eventIDs = db.query('SELECT eventID, groupID FROM events;')
+#
+#     query = ''
+#     for event in eventIDs:
+#         people = db.single_attr_query('SELECT personID FROM memberships WHERE groupID = {};'.format(event[1]))
+#         for p in people:
+#             bit = random.randint(0,1)
+#             query += '''INSERT INTO commits(personID, eventID, decision)
+#               VALUES ({},{},{});\n'''.format(p,event[0],bit)
+#
+#     return query
+#
+# # This can be combined with gen timerange
+# def gen_votes(db):
+#     eventIDs = db.query('SELECT eventID, groupID FROM events;')
+#
+#     query = ''
+#     for event in eventIDs:
+#         people = db.single_attr_query('SELECT personID FROM memberships WHERE groupID = {};'.format(event[1]))
+#             # random lodge
+#             # random location
+#
+#
+#             # their start time
+#             # their stop time
