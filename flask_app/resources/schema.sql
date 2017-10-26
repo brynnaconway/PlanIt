@@ -10,12 +10,20 @@ CREATE TABLE events(
    PRIMARY KEY ( eventID )
 );
 
-DROP TABLE IF EXISTS groups;
-CREATE TABLE groups(
-	personID INT NOT NULL,
+DROP TABLE IF EXISTS memberships;
+CREATE TABLE memberships(
 	groupID INT NOT NULL,
+	personID INT NOT NULL,
 	PRIMARY KEY (personID, groupID)
 );
+
+DROP TABLE IF EXISTS groups;
+CREATE TABLE groups(
+	groupID INT NOT NULL AUTO_INCREMENT,
+	groupName VARCHAR(30) NOT NULL,
+	PRIMARY KEY (groupID)
+);
+
 
 DROP TABLE IF EXISTS lodging;
 CREATE TABLE lodging(

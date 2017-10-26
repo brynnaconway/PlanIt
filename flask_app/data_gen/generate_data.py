@@ -5,20 +5,21 @@ import random
 import uuid
 random.seed()
 
-def gen_people():
+
+def gen_people(db):
     with open('./data_gen/names.txt') as f:
-        names = [line.strip('\n').strip('\t') for line in f]
+        names = ["'" + line.strip('\n').strip('\t') + "'" for line in f]
 
     query = ''
     for name in names:
         num = random.randint(1000000000, 9999999999)
-        n = "'" + name + "'"
         query += " INSERT INTO people (personID, name, phoneNumber)" \
-                 " VALUES (0, {}, {});\n".format(n, str(num))
+                 " VALUES (0, {}, {});\n".format(name, str(num))
 
     return query
 
-def gen_lodging():
+
+def gen_lodging(db):
     with open('./data_gen/addresses.txt') as f:
         lines = [line.strip('').strip('\n') for line in f]
         addresses = [street + ' ' + city for street, city in zip(lines[::2], lines[1::2])]
@@ -31,9 +32,37 @@ def gen_lodging():
         query += " INSERT INTO lodging (lodgeID, price, address, url)" \
                  " VALUES (0, {}, {}, {});\n".format(price,addr,url)
 
-    print query
     return query
 
+
+def gen_groups(db):
+    with open('./data_gen/group_names.txt') as f:
+        group_names = ["'" + line.strip('\n').strip('\t') + "'" for line in f if line != "\n"]
+
+    query = ''
+    for gname in group_names:
+        query += '''INSERT INTO groups (groupID, groupName) VALUES (0,{});\n'''.format(gname)
+    return query
+
+
+def gen_memberships(db):
+    gid_query = 'SELECT groupID from groups'
+    pid_query = 'SELECT personID from people'
+
+    cur = db.conn.cursor()
+    cur.execute(gid_query)
+    groupIDs = [ l[0] for l in cur.fetchall() ]
+    cur.execute(pid_query)
+    personIDs = [ l[0] for l in cur.fetchall() ]
+
+    query = ''
+
+    for id in groupIDs:
+        members = random.sample(personIDs, random.randint(3, 10))
+        for m in members:
+            query += '''INSERT INTO membership (groupID, personID) VALUES ({},{});\n'''.format(id,m)
+    print query
+    return query
 
 ''' Code for random interval generation from stackoverflow:
 https://stackoverflow.com/questions/44111143/how-to-generate-a-random-datetime-interval-in-python'''
