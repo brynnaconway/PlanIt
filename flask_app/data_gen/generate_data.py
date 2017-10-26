@@ -51,12 +51,12 @@ def gen_memberships(db):
 
     query = ''
     for id in groupIDs:
-        members = list(set(random.sample(personIDs, random.randint(3, 10))))
+        members = random.sample(personIDs, random.randint(3, 10))
         for m in members:
             query += '''INSERT INTO memberships (groupID, personID) VALUES ({},{});\n'''.format(id,m)
 
-    with open('out','w+') as f:
-        f.write(query)
+    # with open('out','w+') as f:
+    #     f.write(query)
     return query
 
 
@@ -82,9 +82,11 @@ def gen_voting_data(db):
     eventIDs = db.query('SELECT eventID, groupID FROM events;')
     lodgeIDs = db.single_attr_query('SELECT lodgeID FROM lodging;')
 
+
     query = ''
     for event in eventIDs:
         people = db.single_attr_query('SELECT personID FROM memberships WHERE groupID = {};'.format(event[1]))
+
         for p in people:
             startd, stopd = getRandomPeriod(2017, 2017)
             startt, stopt = getRandomTimes()
@@ -95,12 +97,12 @@ def gen_voting_data(db):
               VALUES( {}, {}, {}, {});\n'''.format(p, event[0], start, stop)
 
             bit = random.randint(0,1)
-            query += '''INSERT INTO commits(personID, eventID, decision)
-              VALUES ({},{},{});\n'''.format(p,event[0],bit)
+            query += '''INSERT INTO commits(personID, eventID, groupID, decision)
+              VALUES ({},{},{},{});\n'''.format(p,event[0],event[1],bit)
 
             lodge = random.choice(lodgeIDs)
-            query += '''INSERT INTO vote(eventID, personID, lodgeVote, startVote, stopVote)
-              VALUES({},{},{},{},{});\n'''.format(event[0],p,lodge,start,stop)
+            query += '''INSERT INTO vote(eventID, personID, groupID, lodgeVote, startVote, stopVote)
+              VALUES({},{},{},{},{},{});\n'''.format(event[0],p,event[1],lodge,start,stop)
 
     return query
 
@@ -129,8 +131,7 @@ def update_events(db):
 def get_functions():
     # return [gen_people, gen_lodging, gen_groups, gen_memberships,
     #         gen_events, gen_timerange, gen_commits]
-    return [gen_people, gen_lodging, gen_groups, gen_memberships,
-            gen_events, gen_voting_data, update_events]
+    return [gen_people, gen_lodging, gen_groups, gen_memberships, gen_events, gen_voting_data, update_events]
 
 
 if __name__ == '__main__':

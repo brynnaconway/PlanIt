@@ -54,6 +54,7 @@ DROP TABLE IF EXISTS vote;
 CREATE TABLE vote(
 	eventID INT NOT NULL,
 	personID INT NOT NULL,
+	groupID INT NOT NULL,
 	lodgeVote INT,
 	startVote DATETIME,
 	stopVote DATETIME,
@@ -64,6 +65,7 @@ DROP TABLE IF EXISTS commits;
 CREATE TABLE commits(
 	personID INT NOT NULL,
 	eventID INT NOT NULL,
+	groupID INT NOT NULL,
 	decision BIT,
 	PRIMARY KEY (personID, eventID)
 );
