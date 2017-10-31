@@ -2,7 +2,7 @@
 import json
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request, jsonify
 from app.db import DB
 import yaml
 
@@ -48,7 +48,9 @@ def search_people():
     data = request.get_data()
     d = deserialize(data)
     res = db.query('''SELECT name,phoneNumber FROM people WHERE name LIKE '%{}%';'''.format(d['queryName']))
-    jres = json.dumps(dict(res))
+    jres = jsonify(data=res)
+    # jres = json.dumps(dict(res))
+    print jres
     return jres
 
 if __name__ == "__main__":

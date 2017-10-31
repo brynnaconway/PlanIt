@@ -34,11 +34,11 @@
           <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="389">
-                  <caret line="51" column="12" lean-forward="false" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
+                <state relative-caret-position="1020">
+                  <caret line="51" column="14" lean-forward="false" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
                   <folding>
                     <element signature="e#24#35#0" expanded="true" />
-                    <marker date="1509465630935" expanded="true" signature="1191:1249" ph="SELECT name,... people" />
+                    <marker date="1509481449719" expanded="true" signature="1200:1258" ph="SELECT name,... people" />
                   </folding>
                 </state>
               </provider>
@@ -47,8 +47,8 @@
           <file leaf-file-name="schema.sql" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/schema.sql">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="556">
-                  <caret line="56" column="23" lean-forward="false" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+                <state relative-caret-position="60">
+                  <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
                   <folding />
                 </state>
               </provider>
@@ -64,44 +64,34 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="root.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/templates/root.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-551">
-                  <caret line="3" column="31" lean-forward="false" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="people.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/templates/people.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="283">
-                  <caret line="35" column="16" lean-forward="false" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="root.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="root.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/static/root.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="220">
-                  <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+                <state relative-caret-position="160">
+                  <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="people.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="people.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/static/people.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="60">
-                  <caret line="5" column="38" lean-forward="true" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+                <state relative-caret-position="300">
+                  <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#43#0" expanded="false" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="planit.config" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/planit.config">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="20">
+                  <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -110,11 +100,31 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="db.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="people.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/templates/people.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="409">
+                  <caret line="45" column="12" lean-forward="false" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="root.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/templates/root.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="249">
+                  <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="db.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/db.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="269">
-                  <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+                <state relative-caret-position="280">
+                  <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
                   <folding>
                     <element signature="e#19#30#0" expanded="true" />
                     <marker date="1509464365789" expanded="true" signature="2016:2098" ph="INSERT into people... " />
@@ -126,8 +136,8 @@
           <file leaf-file-name="console.sql" pinned="false" current-in-tab="false">
             <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console.sql">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="380">
-                  <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+                <state relative-caret-position="420">
+                  <caret line="21" column="21" lean-forward="false" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
                   <folding />
                 </state>
               </provider>
@@ -185,16 +195,16 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console_1.sql" />
         <option value="$PROJECT_DIR$/data_gen/generate_data.py" />
         <option value="$PROJECT_DIR$/static/root.js" />
-        <option value="$PROJECT_DIR$/resources/schema.sql" />
         <option value="$PROJECT_DIR$/app/db.py" />
-        <option value="$PROJECT_DIR$/templates/root.html" />
         <option value="$PROJECT_DIR$/static/people.html" />
         <option value="$PROJECT_DIR$/static/people.html.js" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console.sql" />
         <option value="$PROJECT_DIR$/app/util.py" />
+        <option value="$PROJECT_DIR$/resources/schema.sql" />
         <option value="$PROJECT_DIR$/app.py" />
-        <option value="$PROJECT_DIR$/templates/people.html" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console.sql" />
         <option value="$PROJECT_DIR$/static/people.js" />
+        <option value="$PROJECT_DIR$/templates/root.html" />
+        <option value="$PROJECT_DIR$/templates/people.html" />
       </list>
     </option>
   </component>
@@ -205,7 +215,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="64" />
+    <option name="x" value="1984" />
     <option name="y" value="-11" />
     <option name="width" value="1857" />
     <option name="height" value="1092" />
@@ -225,8 +235,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -311,6 +319,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -554,7 +564,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <frame x="1984" y="-11" width="1857" height="1092" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960325" sideWeight="0.5018868" order="0" side_tool="true" content_ui="tabs" />
@@ -699,7 +710,7 @@
           <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
-            <marker date="1509465630935" expanded="true" signature="1191:1249" ph="SELECT name,... people" />
+            <marker date="1509481449719" expanded="true" signature="1200:1258" ph="SELECT name,... people" />
           </folding>
         </state>
       </provider>
@@ -797,7 +808,7 @@
           <caret line="21" column="15" lean-forward="false" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="15" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
-            <marker date="1509465630935" expanded="true" signature="1191:1249" ph="SELECT name,... people" />
+            <marker date="1509481449719" expanded="true" signature="1200:1258" ph="SELECT name,... people" />
           </folding>
         </state>
       </provider>
@@ -975,13 +986,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/planit.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console_2.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1049,53 +1053,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/people.html.js">
+    <entry file="file://$PROJECT_DIR$/static/people.html.js" />
+    <entry file="file://$PROJECT_DIR$/planit.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/schema.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="56" column="23" lean-forward="false" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/root.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-551">
-          <caret line="3" column="31" lean-forward="false" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/root.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state relative-caret-position="20">
+          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        <state relative-caret-position="280">
+          <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
           <folding>
             <element signature="e#19#30#0" expanded="true" />
             <marker date="1509464365789" expanded="true" signature="2016:2098" ph="INSERT into people... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/schema.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="51" column="14" lean-forward="false" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
+          <folding>
+            <element signature="e#24#35#0" expanded="true" />
+            <marker date="1509481449719" expanded="true" signature="1200:1258" ph="SELECT name,... people" />
           </folding>
         </state>
       </provider>
@@ -1108,32 +1100,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1c9524cd-bc08-48b6-89dd-0ffd15ec751a/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="51" column="12" lean-forward="false" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
-          <folding>
-            <element signature="e#24#35#0" expanded="true" />
-            <marker date="1509465630935" expanded="true" signature="1191:1249" ph="SELECT name,... people" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/people.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="35" column="16" lean-forward="false" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
+        <state relative-caret-position="420">
+          <caret line="21" column="21" lean-forward="false" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/people.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="38" lean-forward="true" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        <state relative-caret-position="300">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
             <element signature="e#0#43#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/root.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/root.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/people.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="45" column="12" lean-forward="false" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>

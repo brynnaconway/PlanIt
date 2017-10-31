@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS events;
 CREATE TABLE events(
    eventID INT NOT NULL AUTO_INCREMENT,
+	 eventName varchar(30),
    start DATETIME,
    stop DATETIME,
    lodgeID INT,
