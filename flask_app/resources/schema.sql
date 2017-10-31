@@ -39,7 +39,7 @@ CREATE TABLE timerange(
 	eventID INT NOT NULL,
 	start DATETIME NOT NULL,
 	stop DATETIME NOT NULL,
-	PRIMARY KEY (personID, eventID)
+	PRIMARY KEY (personID, eventID, start)
 );
 
 DROP TABLE IF EXISTS people;

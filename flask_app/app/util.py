@@ -4,7 +4,11 @@ import datetime, calendar, random
 random.seed()
 
 
+def deserialize(str):
+    return { item.split('=')[0] : item.split('=')[1] for item in str.split('&') }
 
+def qfy(str):
+    return "'{}'".format(str)
 
 def getRandomTimes():
     start = ' ' +  str(random.randint(1,11)) +':' + str(random.randint(0,59)) + ':' +str(random.randint(0,59))

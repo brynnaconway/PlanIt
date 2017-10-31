@@ -1,7 +1,10 @@
 #! /usr/bin/env DB
+import json
 
 from flaskext.mysql import MySQL
 from data_gen.generate_data import get_functions
+from util import deserialize, qfy
+
 
 class DB(object):
     """docstring for ClassName"""
@@ -21,7 +24,14 @@ class DB(object):
         query = open('./resources/schema.sql').read()
         curr = self.conn.cursor()
         curr.execute(query)
+        res = curr.fetchall()
         self.conn.commit()
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Database reset successfully !'})
+        else:
+            return json.dumps({'error': str(res)})
+
 
     def generate_data(self):
         print 'Generating data...'
@@ -32,7 +42,14 @@ class DB(object):
             query = func(self)
             cur.execute(query)
             print 'ok'
+        res = cur.fetchall()
         self.conn.commit()
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Database generated successfully !'})
+        else:
+            return json.dumps({'error': str(res)})
+
         print 'all ok'
 
     def query(self, q):
@@ -48,3 +65,18 @@ class DB(object):
         res = [l[0] for l in cur.fetchall()]
         self.conn.commit()
         return res
+
+    def add_person(self,data):
+        d = deserialize(data)
+        name = qfy(d['inputName'])
+        num = qfy(d['inputNum'])
+
+        res = self.query('''INSERT into people (name, phoneNumber) 
+                        VALUES ({},{});'''.format(name, num))
+
+        if len(res) is 0:
+            return json.dumps({'message': 'User created successfully !'})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+
