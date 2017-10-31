@@ -11,7 +11,7 @@ def qfy(str):
     return "'{}'".format(str)
 
 def getRandomTimes():
-    start = ' ' +  str(random.randint(1,11)) +':' + str(random.randint(0,59)) + ':' +str(random.randint(0,59))
+    start = ' ' + str(random.randint(1,11)) +':' + str(random.randint(0,59)) + ':' +str(random.randint(0,59))
     stop = ' ' + str(random.randint(12,23)) +':' + str(random.randint(0,59)) + ':' +str(random.randint(0,59))
     return start, stop
 

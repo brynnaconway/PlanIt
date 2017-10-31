@@ -68,15 +68,18 @@ class DB(object):
 
     def add_person(self,data):
         d = deserialize(data)
-        name = qfy(d['inputName'])
-        num = qfy(d['inputNum'])
+        name = d['inputName']
+        num = d['inputNum']
 
         res = self.query('''INSERT into people (name, phoneNumber) 
-                        VALUES ({},{});'''.format(name, num))
+                        VALUES ('{}','{}');'''.format(name, num))
 
         if len(res) is 0:
             return json.dumps({'message': 'User created successfully !'})
         else:
             return json.dumps({'error': str(data[0])})
+
+
+
 
 
