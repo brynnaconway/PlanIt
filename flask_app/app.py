@@ -13,7 +13,7 @@ app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
 
-@app.route('/')
+@app.route('/')  
 def homepage():
     return render_template('root.html')
 
@@ -21,7 +21,7 @@ def homepage():
 def generate_data():
     res = db.generate_data()
     if request.method == 'GET':
-        return render_template('generate.html.html')
+        return render_template('generate.html')
     else:
         return res
 
@@ -50,6 +50,12 @@ def search_people():
     res = db.query('''SELECT name,phoneNumber FROM people WHERE name LIKE '%{}%';'''.format(d['queryName']))
     jres = json.dumps(dict(res))
     return jres
+
+@app.route('/dashboard')  
+def dashboard():
+    res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
+    # jres = json.dumps(dict(res))
+    return render_template('dashboard.html', eventIDs=res)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

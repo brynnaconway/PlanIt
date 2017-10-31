@@ -29,6 +29,7 @@ $(function() {
     });
 });
 
+
 $(function() {
     $('#btnReset').click(function() {
         $.ajax({
@@ -41,5 +42,12 @@ $(function() {
                 console.log(error);
             }
         });
+    });
+});
+
+$(function() {
+    $('#btnSignIn').click(function() {
+        window.location = '/dashboard';
+    }
     });
 });
