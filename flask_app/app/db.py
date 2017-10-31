@@ -79,7 +79,21 @@ class DB(object):
         else:
             return json.dumps({'error': str(data[0])})
 
+    def add_event(self, data):
+        res = self.query('''INSERT into events (eventID, groupID) VALUES (0,'{}');'''.format('1'))
+        newID = self.query('''SELECT last_insert_id() FROM events;''')
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Event created successfully !'})
+        else:
+            return json.dumps({'error': str(data[0])})
 
 
+    def delete_event(self, data):
+        print "data is: ", data
+        res = self.query('''DELETE FROM events WHERE eventID='{}';'''.format('420'))
 
-
+        if len(res) is 0:
+            return json.dumps({'message': 'Event deleted successfully !'})
+        else:
+            return json.dumps({'error': str(data[0])})

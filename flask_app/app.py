@@ -2,7 +2,7 @@
 import json
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template,request, jsonify
+from flask import Flask, render_template,request, jsonify, redirect
 from app.db import DB
 import yaml
 
@@ -58,6 +58,23 @@ def dashboard():
     res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
     # jres = json.dumps(dict(res))
     return render_template('dashboard.html', eventIDs=res)
+
+@app.route('/eventDetails')  
+def eventDetails():
+    return render_template('eventDetails.html')
+
+@app.route('/createEvent', methods=['POST'])
+def createEvent():
+    data = request.get_data()
+    res = db.add_event(data)
+    return res
+
+@app.route('/deleteEvent', methods=['POST'])
+def deleteEvent():
+    data = request.get_data()
+    print "DATA 2: ", data['eventID']
+    res = db.delete_event(data['eventID'])
+    return res
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
