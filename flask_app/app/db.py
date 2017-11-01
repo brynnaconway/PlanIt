@@ -53,6 +53,7 @@ class DB(object):
         print 'all ok'
 
     def query(self, q):
+        print q
         cur = self.conn.cursor()
         cur.execute(q)
         res = cur.fetchall()
@@ -78,6 +79,13 @@ class DB(object):
             return json.dumps({'message': 'User created successfully !'})
         else:
             return json.dumps({'error': str(data[0])})
+
+    def add_group(self, data):
+        res = self.query('''INSERT into groups (groupID, groupName) 
+                        VALUES ({},'{}');'''.format(0, data))
+
+        id = self.query('''SELECT groupID from groups where groupName = {};'''.format(qfy(data)))
+        return str(id[0][0])
 
     def add_event(self, data):
         res = self.query('''INSERT into events (eventID, groupID) VALUES (0,'{}');'''.format('171'))

@@ -29,6 +29,23 @@ $(function() {
     });
 });
 
+$(function() {
+    $('#btnNewGroup').click(function() {
+        console.log($('#groupName').val())
+        $.ajax({
+            url: '/addgroup',
+            data: $('#groupName').val(),
+            type: 'POST',
+            success: function(response) {
+                window.location = '/addmembership?id=' + response;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
 
 $(function() {
     $('#btnReset').click(function() {
