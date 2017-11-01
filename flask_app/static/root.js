@@ -68,10 +68,9 @@ $(function() {
 
 function deleteEvent(eventID) {
     console.log("eventID: ", eventID);
-    eventID = eventID.toString();
     $.ajax({
         url: '/deleteEvent',
-        data: {'eventID': eventID},
+        data: {eventID: eventID},
         type: 'POST',
         success: function(response) {
             console.log(response);
