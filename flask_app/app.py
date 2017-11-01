@@ -2,7 +2,7 @@
 import json
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template,request, jsonify
+from flask import Flask, render_template,request, jsonify, redirect
 from app.db import DB
 import yaml
 
@@ -71,6 +71,23 @@ def add_membership():
     data = request.get_data()
     print data
     res = db.add_membership(data)
+
+@app.route('/eventDetails')
+def eventDetails():
+    return render_template('eventDetails.html')
+
+@app.route('/createEvent', methods=['POST'])
+def createEvent():
+    data = request.get_data()
+    res = db.add_event(data)
+    return res
+
+@app.route('/deleteEvent', methods=['POST'])
+def deleteEvent():
+    data = request.get_data()
+    print "DATA 2: ", data['eventID']
+    res = db.delete_event(data['eventID'])
+    return res
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

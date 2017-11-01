@@ -5,8 +5,6 @@
             <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">
             <link rel="stylesheet" href="/static/root.css">
-            <link rel="stylesheet" href="/static/dashboard.css">
-
         </head>
 
         <body>
@@ -28,19 +26,13 @@
                     <h1>Event Dashboard</h1>
 
                     <ul>
-                        {% for eventID in eventIDs %}
-                        <div class = "delete_button">
-                            <li> 
-                                <a href = "/eventDetails" id=eventID> {{eventID}} </a>
-                                <button id="btnDelete" class="btn btn-sm btn-danger" type="button" onclick=deleteEvent({{eventID}})> Delete</button>
-                            </li>
-                            
-                        </div>
+                        {% for event in eventIDs %}
+                        <li> 
+                            <a href = "/eventDetails"> {{event}} </a>
+                        </li>
                         {% endfor %}
                     </ul>
-
-                    <button id="btnAddEvent" class="btn btn-lg btn-primary btn-block" type="button">Add Event</button>
-
+                <
                 </div>
 
                 <footer class="footer">
