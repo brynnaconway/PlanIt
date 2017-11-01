@@ -39,7 +39,7 @@ def add_person():
     res = db.add_person(data)
     return res
 
-@app.route('/people')
+@app.route('/addmembership')
 def get_people():
     return render_template('people.html')
 
@@ -47,7 +47,7 @@ def get_people():
 def search_people():
     data = request.get_data()
     d = deserialize(data)
-    res = db.query('''SELECT name,phoneNumber FROM people WHERE name LIKE '%{}%';'''.format(d['queryName']))
+    res = db.query('''SELECT name,phoneNumber,personID FROM people WHERE name LIKE '%{}%';'''.format(d['queryName']))
     jres = jsonify(data=res)
     # jres = json.dumps(dict(res))
     print jres
@@ -58,6 +58,19 @@ def dashboard():
     res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
     # jres = json.dumps(dict(res))
     return render_template('dashboard.html', eventIDs=res)
+
+@app.route('/addgroup', methods=['POST'])
+def add_group():
+    data = request.get_data()
+    print data
+    res = db.add_group(data)
+    return res
+
+@app.route('/addmembership', methods=['POST'])
+def add_membership():
+    data = request.get_data()
+    print data
+    res = db.add_membership(data)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
