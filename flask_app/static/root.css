@@ -1,41 +1,46 @@
+
+forgot-password {
+  color: white;
+  text-align: left;
+}
+
 .welcome {
   position: absolute; 
   text-align: center; 
-  top: 36%; 
+  top: 38%; 
   left: 50%; 
   transform: translate(-50%, -50%);
 }
 
 .title {
   font-size: 500%;
-  font-weight: 100;
   text-shadow: -3px 3px 10px; 
 }
 
 .form-signin {
-      max-width: 330px;
-        padding: 15px;
-          margin: 0 auto;
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
 
 }
 
 .form-signin .form-control {
-      position: relative;
-        height: auto;
-          -webkit-box-sizing: border-box;
-               -moz-box-sizing: border-box;
-                         box-sizing: border-box;
-                           padding: 10px;
-                             font-size: 16px;
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
 
 }
 .form-signin .form-control:focus {
-      z-index: 2;
+    z-index: 2;
 
 }
 .form-signin input[type="email"] {
-        border-bottom-right-radius: 0;
-          border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 
 }
 .form-signin input[type="password"] {
@@ -58,5 +63,5 @@ body, html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;    
-  z-index: -1;
 }
+

@@ -8,86 +8,29 @@
         </head>
 
         <body>
-            <!--
-            <div class="container">
-                <div class="header">
-                    <nav>
-                        <ul class="nav nav-pills pull-right">
-                            <li role="presentation" ><a href="main">Home</a></li>
-
-                            <li role="presentation"><a href="#">Sign In</a></li>
-                            <li role="presentation" class="active"><a href="#">Sign Up</a></li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <div class="jumbotron">
-                    <h1 align="center">PlanIt Travel App</h1>
-                    <br>
-                    <form class="form-signin">
-                        <label for="inputName" class="sr-only">Name</label>
-                        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
-                        <label for="inputNum" class="sr-only">Phone Number</label>
-                        <input type="num" name="inputNum" id="inputNum" class="form-control" placeholder="Phone Number" required autofocus>
-                        <label for="inputEmail" class="sr-only">Email address</label>
-                        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                        <label for="inputPassword" class="sr-only">Password</label>-->
-                      <!--  <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>-->
-
-                        <!--<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign Up</button>-->
-                       <!-- <button id="btnSignIn" class="btn btn-lg btn-primary btn-block" type="button">Sign In</button>-->
-
-
-                  <!--  </form>
-
-
-
-                    <form class="form-signin">
-                        <label for="groupName" class="sr-only">New Group</label>
-                        <input type="name" name="groupName" id="groupName" class="form-control" placeholder="Group Name" required autofocus>
-                        <button id="btnNewGroup" class="btn btn-lg btn-primary btn-block" type="button">Make New Group</button>
-                    </form>
-                    <br>
-
-                    <form class="form-signin">
-                        <button id="btnReset" class="btn btn-lg btn-primary btn-block" type="button">Reset Database</button>
-                        <button id="btnGen" class="btn btn-lg btn-primary btn-block" type="button">Generate New Data</button>
-
-                    </form>
-
-                </div>
-            <footer class="footer">
-                <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
-            </footer>
-
-            </div>-->
-
 
             <div class=bg_img> 
 
                 <!-- Top Navbar -->
                 <nav class="navbar">
-                    <a class="navbar-brand text-primary" href="#">Home</a>
-                    <a class="navbar-brand text-primary my-2 my-lg-0" href="#">Sign Up</a>
+                    <a class="navbar-brand text-primary" href="/">Home</a>
+                    <a class="navbar-brand text-primary my-2 my-lg-0" href="/signUp">Sign Up</a>
                 </nav> 
 
                 <!-- Sign in Form --> 
                 <div class=welcome>
                     <h1 class="title text-primary">Welcome to PlanIt</h1>
-                    <form class="form-signin">
-                        <label for="inputName" class="sr-only">Email</label>
-                        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
-                        <label for="inputPassword" class="sr-only">Password</label>
+                    <form class="form-signin" id=signInForm>
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
                         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <button id="btnSignIn" class="btn btn-primary btn-lg btn-block" color=primary type="button">Sign In</button>
+                        <button id="btnSignIn" class="btn btn-primary btn-lg btn-block" color=primary type="submit">Sign In</button>
                     </form>
+                    <a href="#" class="forgot-password text-muted" color=white>Forgot your password?</a>
                 </div>
-                
             </div>
             
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script src="/static/root.js"></script>
-
 
         </body>
 

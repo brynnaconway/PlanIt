@@ -1,18 +1,25 @@
 $(function() {
-    $('#btnSignIn').click(function() {
-        $.ajax({
-            url: '/addperson',
-            data: $('form').serialize(),
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+    $("signInForm").submit(function() {
+        window.location = '/dashboard';
     });
 });
+
+$(function() {
+    $('#goToSignUp').click(function() {
+        window.location = '/signUp';
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
 
 $(function() {
     $('#btnGen').click(function() {
@@ -62,38 +69,3 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#btnSignIn').click(function() {
-        window.location = '/dashboard';
-    });
-});
-
-$(function() {
-    $('#btnAddEvent').click(function() {
-        $.ajax({
-            url: '/createEvent',
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-});
-
-function deleteEvent(eventID) {
-    console.log("eventID: ", eventID);
-    $.ajax({
-        url: '/deleteEvent',
-        data: {eventID: eventID},
-        type: 'POST',
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}

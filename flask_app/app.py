@@ -17,9 +17,9 @@ app.config["DEBUG"] = True  # Only include this while you are testing your app
 def homepage():
     return render_template('root.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
+@app.route('/signUp')
+def signUp():
+    return render_template('signup.html') 
 
 @app.route('/generate',methods=['POST','GET'])
 def generate_data():
