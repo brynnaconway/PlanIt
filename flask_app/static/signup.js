@@ -1,5 +1,5 @@
 $(function() {
-    $('#btnSignUp').click(function() {
+    $("#signUpForm").submit(function(event) {
         $.ajax({
             url: '/addperson',
             data: $('form').serialize(),
@@ -11,6 +11,7 @@ $(function() {
                 console.log(error);
             }
         });
+        event.preventDefault(); 
     });
 });
 

@@ -18,12 +18,12 @@
                 <!-- Sign in Form --> 
                 <div class=welcome>
                     <h1 class="title text-primary">Welcome to PlanIt</h1>
-                    <form class="form">
-                        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
-                        <input type="phone" name="inputPhone" id="inputPhone" class="form-control" placeholder="Phone" required autofocus>
-                        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                    <form class="form" id=signUpForm method="POST">
+                        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required>
+                        <input type="phone" name="inputNum" id="inputNum" class="form-control" placeholder="Phone Number" required>
+                        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email" required>
                         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <button id="btnSignUp" class="btn btn-primary btn-lg btn-block" color=primary type="submit">Sign Up</button>
+                        <button id="btnSignUp" class="btn btn-primary btn-lg btn-block" color=primary type="submit" value=Submit>Sign Up</button>
                     </form>
                 </div>
                 

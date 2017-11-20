@@ -21,6 +21,15 @@ def homepage():
 def signUp():
     return render_template('signup.html') 
 
+@app.route('/signIn', methods=['POST'])  
+def signIn():
+    data = request.get_data()
+    res = db.sign_in(data)
+    #res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
+    # jres = json.dumps(dict(res))
+    #return render_template('dashboard.html', eventIDs=res)
+    return res
+
 @app.route('/generate',methods=['POST','GET'])
 def generate_data():
     res = db.generate_data()
