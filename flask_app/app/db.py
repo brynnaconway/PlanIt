@@ -77,7 +77,7 @@ class DB(object):
             return json.dumps({'error': "User does not exist"})
         else:
             if check_password_hash(res[0][1], password):
-                return json.dumps({'personID': str(res[0][0])})
+                return {'personID': str(res[0][0])}
             else:
                 return json.dumps({'error': "User does not exist"})
 

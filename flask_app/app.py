@@ -2,7 +2,7 @@
 import json
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template,request, jsonify, redirect
+from flask import Flask, render_template,request, jsonify, redirect, url_for
 from app.db import DB
 import yaml
 
@@ -25,10 +25,12 @@ def signUp():
 def signIn():
     data = request.get_data()
     res = db.sign_in(data)
-    #res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
-    # jres = json.dumps(dict(res))
+    personID = res['personID']
+    print "personID: ", personID
+    res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
+    print "RESPONSE: ", res 
     #return render_template('dashboard.html', eventIDs=res)
-    return res
+    return redirect(url_for('dashboard', personID=personID))
 
 @app.route('/generate',methods=['POST','GET'])
 def generate_data():
@@ -67,11 +69,15 @@ def search_people():
     print jres
     return jres
 
-@app.route('/dashboard')  
-def dashboard():
-    res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
+@app.route('/dashboard/<string:personID>')  
+def dashboard(personID):
+    print "PERSON ID: ", personID
+    eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))    
+    #res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
     # jres = json.dumps(dict(res))
-    return render_template('dashboard.html', eventIDs=res)
+    print "EVENT IDs: ", eventIDs
+    return render_template('dashboard.html', eventIDs=eventIDs)
+
 
 @app.route('/addgroup', methods=['POST'])
 def add_group():
