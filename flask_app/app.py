@@ -36,6 +36,7 @@ def reset_db():
 @app.route('/addperson', methods=['POST'])
 def add_person():
     data = request.get_data()
+    print "data is ", data
     res = db.add_person(data)
     return res
 
