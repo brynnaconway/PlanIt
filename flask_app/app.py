@@ -30,6 +30,7 @@ def signIn():
         if res['valid']:
             personID = res['personID']
             session['personID'] = personID
+            session['loggedIn'] = True 
             return redirect(url_for('dashboard', personID=personID))
         else:
             session['personID'] = None 
@@ -47,6 +48,12 @@ def dashboard():
     except:
         return redirect(url_for('homepage'))
 
+@app.route('/signOut')
+def signOut(): 
+    session['personID'] = None
+    session['loggedIn'] = False
+    return redirect(url_for('homepage'))
+    
 @app.route('/generate',methods=['POST','GET'])
 def generate_data():
     res = db.generate_data()
