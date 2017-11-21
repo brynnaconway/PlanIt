@@ -5,7 +5,18 @@ $(function() {
             data: $('form').serialize(),
             type: 'POST',
             success: function(response) {
-                console.log(response);
+                try { // invalid username or password 
+                    response = JSON.parse(response);
+                    if (response['valid'] == false) {
+                        console.log("FALSE");
+                        $('#invalid_login').show(); 
+                        $('#invalid_login').fadeOut(9900); 
+                    }
+                }
+                catch(err) {
+                    console.log(response);
+                    window.location = '/dashboard';
+                }
             },
             error: function(error) {
                 console.log(error);

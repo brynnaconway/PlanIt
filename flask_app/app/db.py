@@ -77,9 +77,9 @@ class DB(object):
             return json.dumps({'error': "User does not exist"})
         else:
             if check_password_hash(res[0][1], password):
-                return {'personID': str(res[0][0])}
+                return {'personID': str(res[0][0]), 'valid' : True}
             else:
-                return json.dumps({'error': "User does not exist"})
+                return {'valid' : False}
 
     def add_person(self,data):
         d = deserialize(data)

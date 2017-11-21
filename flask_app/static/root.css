@@ -17,6 +17,11 @@ forgot-password {
   text-shadow: -3px 3px 10px; 
   opacity: 1 !important; 
 }
+.text-danger {
+	text-shadow:-3px 3px 10px;
+  display: none; 
+  margin-top: 5px; 
+}
 
 .form-signin {
     max-width: 330px;
@@ -45,9 +50,9 @@ forgot-password {
 
 }
 .form-signin input[type="password"] {
-      margin-bottom: 10px;
-        border-top-left-radius: 0;
-          border-top-right-radius: 0;
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
 }
 
