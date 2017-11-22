@@ -4,35 +4,33 @@
             <title>PlanIt</title>
             <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
             <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">
-            <link rel="stylesheet" href="/static/root.css">
+            <link rel="stylesheet" href="/static/signup.css">
         </head>
 
         <body>
-
             <div class=bg_img> 
 
-                <!-- Top Navbar -->
+                <!-- Navbar -->
                 <nav class="navbar">
                     <a class="navbar-brand text-primary" href="/">Home</a>
-                    <a class="navbar-brand text-primary my-2 my-lg-0" href="/signUp">Sign Up</a>
                 </nav> 
 
                 <!-- Sign in Form --> 
                 <div class=welcome>
                     <h1 class="title text-primary">Welcome to PlanIt</h1>
-                    <form class="form-signin" id=signInForm method="POST">
-                        <input type="email" id="inputEmail" name=inputEmail class="form-control" placeholder="Email" required>
+                    <form class="form" id=signUpForm method="POST">
+                        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required>
+                        <input type="phone" name="inputNum" id="inputNum" class="form-control" placeholder="Phone Number" required>
+                        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email" required>
                         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <button id="btnSignIn" class="btn btn-primary btn-lg btn-block" color=primary type="submit" value=Submit>Sign In</button>
-                        <div class="form-control-feedback text-danger" id=invalid_login><strong>Invalid email or password.</strong></div>                        
+                        <button id="btnSignUp" class="btn btn-primary btn-lg btn-block" color=primary type="submit" value=Submit>Sign Up</button>
                     </form>
-                    <a href="#" class="forgot-password text-primary" color=white>Forgot your password?</a>
                 </div>
+                
             </div>
             
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script src="/static/root.js"></script>
-
+            <script src="/static/signup.js"></script>
         </body>
 
     </html>

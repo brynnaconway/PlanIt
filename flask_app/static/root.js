@@ -1,18 +1,47 @@
 $(function() {
-    $('#btnSignUp').click(function() {
+    $("#signInForm").submit(function(event) {
         $.ajax({
-            url: '/addperson',
+            url: '/signIn',
             data: $('form').serialize(),
             type: 'POST',
             success: function(response) {
-                console.log(response);
+                try { // invalid username or password 
+                    response = JSON.parse(response);
+                    if (response['valid'] == false) {
+                        console.log("FALSE");
+                        $('#invalid_login').show(); 
+                        $('#invalid_login').fadeOut(9900); 
+                    }
+                }
+                catch(err) {
+                    console.log(response);
+                    window.location = '/dashboard';
+                }
             },
             error: function(error) {
                 console.log(error);
             }
         });
+        event.preventDefault();
     });
 });
+
+$(function() {
+    $('#goToSignUp').click(function() {
+        window.location = '/signUp';
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
 
 $(function() {
     $('#btnGen').click(function() {
@@ -62,38 +91,3 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#btnSignIn').click(function() {
-        window.location = '/dashboard';
-    });
-});
-
-$(function() {
-    $('#btnAddEvent').click(function() {
-        $.ajax({
-            url: '/createEvent',
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-});
-
-function deleteEvent(eventID) {
-    console.log("eventID: ", eventID);
-    $.ajax({
-        url: '/deleteEvent',
-        data: {eventID: eventID},
-        type: 'POST',
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}

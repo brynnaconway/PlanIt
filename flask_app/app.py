@@ -2,9 +2,10 @@
 import json
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template,request, jsonify, redirect
+from flask import Flask, render_template,request, jsonify, redirect, url_for, session
 from app.db import DB
 import yaml
+import os
 
 from app.util import deserialize
 
@@ -13,10 +14,46 @@ app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
 
-@app.route('/')  
+@app.route('/', methods=['POST', 'GET'])  
 def homepage():
-    return render_template('root.html')
+        return render_template('root.html')
 
+@app.route('/signUp')
+def signUp():
+    return render_template('signup.html') 
+
+@app.route('/signIn', methods=['POST'])  
+def signIn():
+    if request.method == 'POST':
+        data = request.get_data()
+        res = db.sign_in(data)
+        if res['valid']:
+            personID = res['personID']
+            session['personID'] = personID
+            session['loggedIn'] = True 
+            return redirect(url_for('dashboard', personID=personID))
+        else:
+            session['personID'] = None 
+            return json.dumps(res) 
+    else:
+       return render_template('root.html')
+
+@app.route('/dashboard')  
+def dashboard():
+    try:
+        personID = session['personID']
+        eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))    
+        print "EVENT IDs: ", eventIDs
+        return render_template('dashboard.html', eventIDs=eventIDs)
+    except:
+        return redirect(url_for('homepage'))
+
+@app.route('/signOut')
+def signOut(): 
+    session['personID'] = None
+    session['loggedIn'] = False
+    return redirect(url_for('homepage'))
+    
 @app.route('/generate',methods=['POST','GET'])
 def generate_data():
     res = db.generate_data()
@@ -36,6 +73,7 @@ def reset_db():
 @app.route('/addperson', methods=['POST'])
 def add_person():
     data = request.get_data()
+    print "data is ", data
     res = db.add_person(data)
     return res
 
@@ -52,12 +90,6 @@ def search_people():
     # jres = json.dumps(dict(res))
     print jres
     return jres
-
-@app.route('/dashboard')  
-def dashboard():
-    res = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = 9);''')
-    # jres = json.dumps(dict(res))
-    return render_template('dashboard.html', eventIDs=res)
 
 @app.route('/addgroup', methods=['POST'])
 def add_group():
@@ -90,4 +122,5 @@ def deleteEvent():
     return res
 
 if __name__ == "__main__":
+    app.secret_key = os.urandom(12)
     app.run(host="0.0.0.0")

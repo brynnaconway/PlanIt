@@ -4,7 +4,8 @@ import json
 from flaskext.mysql import MySQL
 from data_gen.generate_data import get_functions
 from util import deserialize, qfy
-
+from werkzeug import generate_password_hash, check_password_hash
+import urllib
 
 class DB(object):
     """docstring for ClassName"""
@@ -67,13 +68,28 @@ class DB(object):
         self.conn.commit()
         return res
 
+    def sign_in(self, data):
+        d = deserialize(data)
+        email = urllib.unquote_plus(d['inputEmail'])
+        password = d['inputPassword']
+        res = self.query('''SELECT personID, password FROM people WHERE email like "{}" limit 1;'''.format(email))
+        if len(res) is 0:
+            return json.dumps({'error': "User does not exist"})
+        else:
+            if check_password_hash(res[0][1], password):
+                return {'personID': str(res[0][0]), 'valid' : True}
+            else:
+                return {'valid' : False}
+
     def add_person(self,data):
         d = deserialize(data)
-        name = d['inputName']
+        name = urllib.unquote_plus(d['inputName'])
         num = d['inputNum']
+        email = urllib.unquote_plus(d['inputEmail'])
+        password = d['inputPassword']
 
-        res = self.query('''INSERT into people (name, phoneNumber) 
-                        VALUES ('{}','{}');'''.format(name, num))
+        res = self.query('''INSERT into people (name, phoneNumber, email, password) 
+                        VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, generate_password_hash(password)))
 
         if len(res) is 0:
             return json.dumps({'message': 'User created successfully !'})
