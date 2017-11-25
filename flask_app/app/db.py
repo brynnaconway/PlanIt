@@ -1,6 +1,6 @@
 #! /usr/bin/env DB
 import json
-
+from flask import session
 from flaskext.mysql import MySQL
 from data_gen.generate_data import get_functions
 from util import deserialize, qfy
@@ -114,7 +114,7 @@ class DB(object):
 
 
     def delete_event(self, data):
-        res = self.query('''DELETE FROM events WHERE eventID='{}';'''.format('422'))
+        res = self.query('''DELETE FROM events WHERE eventID='{}';'''.format(data))
 
         if len(res) is 0:
             return json.dumps({'message': 'Event deleted successfully !'})

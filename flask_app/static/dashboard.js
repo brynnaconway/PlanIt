@@ -6,7 +6,7 @@ $(function() {
             success: function(response) {
                 console.log(response);
             },
-            error: function(error) {
+            error: function(error) { 
                 console.log(error);
             }
         });

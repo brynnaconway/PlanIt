@@ -117,7 +117,7 @@ def createEvent():
 @app.route('/deleteEvent', methods=['POST'])
 def deleteEvent():
     data = request.get_data()
-    data = data.split('=')[0]
+    data = data.split('=')[1]
     res = db.delete_event(data)
     return res
 
