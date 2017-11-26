@@ -27,7 +27,8 @@ def signIn():
     if request.method == 'POST':
         data = request.get_data()
         res = db.sign_in(data)
-        if res == 'valid':
+        print(res)
+        if res['valid']:
             personID = res['personID']
             session['personID'] = personID
             session['loggedIn'] = True 
@@ -42,6 +43,7 @@ def signIn():
 def dashboard():
     try:
         personID = session['personID']
+        print(personID)
         eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
         print "EVENT IDs: ", eventIDs
         return render_template('dashboard.html', eventIDs=eventIDs)
@@ -76,6 +78,7 @@ def add_person():
     data = request.get_data()
     print "data is ", data
     res = db.add_person(data)
+    print('res:{}'.format(res))
     return res
 
 @app.route('/addmembership')

@@ -48,8 +48,8 @@ CREATE TABLE people(
 	personID INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50),
 	phoneNumber VARCHAR(20),
-        email VARCHAR(50),
-        password VARCHAR(50),
+  email VARCHAR(50),
+  password VARCHAR(93),
 	PRIMARY KEY (personID)
 );
 
