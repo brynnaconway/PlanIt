@@ -91,8 +91,11 @@ class DB(object):
         res = self.query('''INSERT into people (name, phoneNumber, email, password) 
                         VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, generate_password_hash(password)))
 
+        new_id = self.query('select LAST_INSERT_ID()')[0][0]
         if len(res) is 0:
             return json.dumps({'message': 'User created successfully !'})
+            session['loggedIn']=True
+            session['personID'] = new_id
         else:
             return json.dumps({'error': str(data[0])})
 

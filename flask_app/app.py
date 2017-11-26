@@ -27,14 +27,14 @@ def signIn():
     if request.method == 'POST':
         data = request.get_data()
         res = db.sign_in(data)
-        if res['valid']:
+        if res == 'valid':
             personID = res['personID']
             session['personID'] = personID
             session['loggedIn'] = True 
             return redirect(url_for('dashboard', personID=personID))
         else:
-            session['personID'] = None 
-            return json.dumps(res) 
+            session['personID'] = None
+            return json.dumps(res)
     else:
        return render_template('root.html')
 
@@ -42,10 +42,11 @@ def signIn():
 def dashboard():
     try:
         personID = session['personID']
-        eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))    
+        eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
         print "EVENT IDs: ", eventIDs
         return render_template('dashboard.html', eventIDs=eventIDs)
-    except:
+    except Exception as e:
+        print(e)
         return redirect(url_for('homepage'))
 
 @app.route('/signOut')

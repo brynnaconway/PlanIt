@@ -5,6 +5,7 @@ $(function() {
             type: 'POST',
             success: function(response) {
                 console.log(response);
+                window.location = '/dashboard'
             },
             error: function(error) { 
                 console.log(error);
