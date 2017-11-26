@@ -8,11 +8,10 @@ import selenium.webdriver.support.ui as ui
 import time
 
 
-def sign_up():
+def sign_up(driver):
 
     print('Signing up...')
 
-    driver = webdriver.Chrome()
     try:
         driver.get("localhost:5000/signUp")
         elem = driver.find_element_by_id("inputName")
@@ -37,7 +36,22 @@ def sign_up():
         ac.move_to_element(button).click().perform()
 
         print('Done.')
-        _ = raw_input('Enter any key to close window >')
+
+
+
+    except Exception as e:
+        print(e)
+        driver.close()
+
+def new_event(driver):
+    print('Making New Event')
+    try:
+        elem = driver.find_element_by_id('btnAddEvent')
+        elem.click()
+
+        elem = driver.find_element_by_id('btnExistingGroup')
+        elem.click()
+        print('Done.')
 
     except Exception as e:
         print(e)
@@ -45,4 +59,10 @@ def sign_up():
 
 
 if __name__ == '__main__':
-    sign_up()
+    driver = webdriver.Chrome()
+    sign_up(driver)
+    time.sleep(1)
+    new_event(driver)
+
+    _ = raw_input('Enter any key to close window >')
+    driver.close()

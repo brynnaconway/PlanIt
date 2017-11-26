@@ -14,7 +14,7 @@ app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
 
-@app.route('/', methods=['POST', 'GET'])  
+@app.route('/', methods=['POST', 'GET'])
 def homepage():
         return render_template('root.html')
 
@@ -108,6 +108,7 @@ def add_membership():
     print data
     res = db.add_membership(data)
 
+
 @app.route('/eventDetails')
 def eventDetails():
     return render_template('eventDetails.html')
@@ -123,6 +124,12 @@ def deleteEvent():
     data = request.get_data()
     data = data.split('=')[1]
     res = db.delete_event(data)
+    return res
+
+@app.route('/getGroups',methods=['POST'])
+def getGroups():
+    res = db.getGroups(session['personID'])
+    print(res)
     return res
 
 if __name__ == "__main__":

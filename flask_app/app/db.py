@@ -1,6 +1,6 @@
 #! /usr/bin/env DB
 import json
-from flask import session
+from flask import session, jsonify
 from flaskext.mysql import MySQL
 from data_gen.generate_data import get_functions
 from util import deserialize, qfy
@@ -108,11 +108,12 @@ class DB(object):
         return str(id[0][0])
 
     def add_event(self, data):
-        res = self.query('''INSERT into events (eventID, groupID) VALUES (0,'{}');'''.format('171'))
+        res = self.query('''INSERT into events (eventID, groupID) VALUES (0,{});'''.format(''))
         newID = self.query('''SELECT last_insert_id() FROM events;''')
 
+
         if len(res) is 0:
-            return json.dumps({'message': 'Event created successfully !'})
+            return json.dumps({'message': 'Event created successfully !','id':newID})
         else:
             return json.dumps({'error': str(data[0])})
 
@@ -124,3 +125,18 @@ class DB(object):
             return json.dumps({'message': 'Event deleted successfully !'})
         else:
             return json.dumps({'error': str(data[0])})
+
+    def getGroups(self, uid):
+        uid = 1
+        res = self.query('''
+            SELECT g.groupID, g.groupName from groups g WHERE g.groupID in (
+            SELECT groupID from memberships where personID = {});
+            '''.format(uid))
+
+        groups = {l[1]:l[0] for l in res}
+
+        print(groups)
+        if len(groups.keys()) <=0:
+            return {'valid':False}
+        else:
+            return jsonify({'groups':groups, 'valid': True})
