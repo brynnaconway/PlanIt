@@ -74,7 +74,7 @@ class DB(object):
         password = d['inputPassword']
         res = self.query('''SELECT personID, password FROM people WHERE email like "{}" limit 1;'''.format(email))
         if len(res) is 0:
-            return json.dumps({'error': "User does not exist"})
+            return {'valid': False}
         else:
             if check_password_hash(res[0][1], password):
                 return {'personID': str(res[0][0]), 'valid' : True}
