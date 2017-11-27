@@ -101,16 +101,48 @@ class DB(object):
             return json.dumps({'error': str(data[0])})
 
     def add_group(self, data):
-        res = self.query('''INSERT into groups (groupID, groupName) 
-                        VALUES ({},'{}');'''.format(0, data))
+        print(session)
+        data = deserialize(data)
+        print(data)
+        if data['new_group'] == 'true':
+            name = data['name']
+            print('INSERTING new group')
+            res = self.query('''INSERT into groups (groupID, groupName) 
+                        VALUES ({},'{}');'''.format(0, name))
+            new_id = self.query('select LAST_INSERT_ID()')[0][0]
 
-        id = self.query('''SELECT groupID from groups where groupName = {};'''.format(qfy(data)))
-        return str(id[0][0])
+            res = self.query('''INSERT into memberships (groupID, personID) 
+                        VALUES ({},{})'''.format(new_id, session['personID']))
+
+            session['eventGroup'] = new_id
+
+            if 'eventID' in session.keys():
+                print('Updating EVENT with GROUPID')
+                self.query(''' UPDATE events SET groupID={}
+                    WHERE eventID = {};\n'''.format(new_id, session['eventID']))
+
+            print(session)
+            return jsonify({'valid':True, 'id':new_id})
+        else:
+            assert 'id' in data.keys()
+            session['eventGroup'] = data['id']
+
+            if 'eventID' in session.keys():
+                print('Updating EVENT with GROUPID')
+                q = ''' UPDATE events SET groupID={}
+                     WHERE eventID = {};\n'''.format(data['id'], session['eventID'])
+                self.query(q)
+
+
+            return jsonify({'valid':True})
+
 
     def add_event(self, data):
-        res = self.query('''INSERT into events (eventID, groupID) VALUES (0,{});'''.format(''))
-        newID = self.query('''SELECT last_insert_id() FROM events;''')
-
+        print('INSERTING new event')
+        res = self.query('''INSERT into events (eventID) VALUES (0);''')
+        newID = self.query('''SELECT LAST_INSERT_ID() from events''')[0][0]
+        print(newID)
+        session['eventID'] = newID
 
         if len(res) is 0:
             return json.dumps({'message': 'Event created successfully !','id':newID})
@@ -127,7 +159,8 @@ class DB(object):
             return json.dumps({'error': str(data[0])})
 
     def getGroups(self, uid):
-        uid = 1
+        # uid = 1
+        print('SELECTING group IDS')
         res = self.query('''
             SELECT g.groupID, g.groupName from groups g WHERE g.groupID in (
             SELECT groupID from memberships where personID = {});
@@ -140,3 +173,13 @@ class DB(object):
             return {'valid':False}
         else:
             return jsonify({'groups':groups, 'valid': True})
+
+    def add_membership(self, data):
+        data = json.loads(data)
+        assert 'ids' in data.keys()
+        for id in data['ids']:
+            id = int(id)
+            res = self.query('''INSERT into memberships (groupID, personID) 
+                        VALUES ({},{})'''.format(session['eventGroup'], id))
+
+        return jsonify({'valid': True})

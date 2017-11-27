@@ -1,64 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>PlanIt</title>
-        <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">
-        <link rel="stylesheet" href="/static/root.css">
-    </head>
+<head>
+    <title>PlanIt</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/static/root.css">
+</head>
 
-    <body>
+<body>
 
-        <div class="container">
-            <div class="header">
-                <nav>
-                    <ul class="nav nav-pills pull-right">
-                        <li role="presentation" ><a href="main">Home</a></li>
-                        <li role="presentation"><a href="#">Sign In</a></li>
-                        <li role="presentation" class="active"><a href="#">Sign Up</a></li>
-                    </ul>
-                </nav>
-            </div>
+<div class="container">
+    <div class="header">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"><a href="/dashboard">Home</a></li>
+                <li role="presentation"><a href="#">Sign In</a></li>
+                <li role="presentation" class="active"><a href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </div>
 
-            <div class="jumbotron">
-                <h1>People Search</h1>
-                <form class="form-signin">
-                    <label for="inputName" class="sr-only">Name</label>
-                    <input type="name" name="queryName" id="queryName" class="form-control" placeholder="Name" required autofocus>
-                    <button id="btnPeopleSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
-                </form>
+    <div class="jumbotron">
 
-            <div class="container" id="search-results">
-              <table id="results" class="table display table-striped table-hover clickable-row">
+        <h3>Selected Names:</h3>
+        <div class="container" id="selection">
+            <table class="table table-hover" id="selectionTable">
                 <thead>
                 </thead>
                 <tbody>
                 </tbody>
-              </table>
-            </div>
-
+            </table>
         </div>
 
-                     <h3>Selected Names:</h3>
-            <div class="container" id="selection">
-              <table class="table table-hover">
+        <button id="btnConfirmGroup" class="btn btn-lg btn-primary btn-block" type="button">Confirm Group Members</button>
+
+
+        <h1>Add to Group</h1>
+        <form class="form-signin">
+            <label for="inputName" class="sr-only">Name</label>
+            <input type="name" name="queryName" id="queryName" class="form-control" placeholder="Name" required
+                   autofocus>
+            <button id="btnPeopleSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
+        </form>
+
+        <div class="container" id="search-results">
+            <table id="results" class="table display table-striped table-hover clickable-row">
                 <thead>
                 </thead>
                 <tbody>
                 </tbody>
-              </table>
-            </div>
+            </table>
+        </div>
+
+    </div>
 
 
-            <footer class="footer">
-                <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
-            </footer>
+    <footer class="footer">
+        <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
+    </footer>
 
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script src="/static/people.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/static/people.js"></script>
 
 
-
-    </body>
+</body>
 </html>

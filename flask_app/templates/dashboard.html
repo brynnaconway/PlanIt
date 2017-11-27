@@ -37,43 +37,31 @@
             {% endfor %}
         </ul>
 
+{#        add new event#}
         <button id="btnAddEvent" class="btn btn-lg btn-primary btn-block" type="button">Add Event</button>
 
+{#        pick bt new and existing group#}
         <button id="btnNewGroup" class="btn btn-lg btn-block" type="button" style="display:none">New Group</button>
-        <button id="btnExistingGroup" class="btn btn-lg btn-block" type="button" style="display:none">Existing Group
-        </button>
+        <button id="btnExistingGroup" class="btn btn-lg btn-block" type="button" style="display:none">Existing Group</button>
 
+{#        if you want to pick an old group#}
+        <div class="form-group" style="display:none; height:30px" id="dropdownExistingGroup">
+            <label for="existingGroupSelect">Select an existing group:</label>
+            <select class="form-control" id="existingGroupSelect">
+            </select>
+            <button id="btnSelectExistingGroup" class="btn btn-lg btn-block"  type="button">Confirm</button>
+        </div>
+
+{#        make a new group#}
         <div class="col-lg-6" style="display:none" id="textinputNewEventName">
             <div class="input-group">
                 <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
                 <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Create!</button>
+            <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
           </span>
             </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
 
-
-
-
-        {#        <div class="dropdown">#}
-        {#            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example#}
-        {#                <span class="caret"></span></button>#}
-        {#            <ul class="dropdown-menu">#}
-        {#                <li><a href="#">HTML</a></li>#}
-        {#                <li><a href="#">CSS</a></li>#}
-        {#                <li><a href="#">JavaScript</a></li>#}
-        {#            </ul>#}
-        {#        </div>#}
-
-        <div class="dropdown" id="dropdownExistingGroup" style="display:none">
-            <button class="btn btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">
-                Group Name
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-            </ul>
-        </div>
 
     </div>
 
