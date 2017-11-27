@@ -1,62 +1,85 @@
 /**
  * Created by benedict on 10/31/17.
  */
-$(function() {
-    $('#btnPeopleSearch').click(function() {
+$(function () {
+    $('#btnPeopleSearch').click(function () {
         // $('#search-results').toggle();
         $.ajax({
             url: '/searchpeople',
             data: $('form').serialize(),
             type: 'POST',
-            success: function(response) {
+            success: function (response) {
                 $("#search-results tr").remove();
                 stuff = response['data']
-                for (item in stuff){
+                for (item in stuff) {
                     var row = $("<tr>");
                     row.id = stuff[item][2];
-                    // console.log(row.id);
-                    row.append($("<td>" +stuff[item][0]+ "</td>"))
-                        .append($("<td>" +stuff[item][1]+ "</td>"))
+                    row.append($("<td>" + stuff[item][0] + "</td>"))
+                        .append($("<td>" + stuff[item][2] + "</td>"))
                     $("#search-results tbody").append(row);
                 }
 
 
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
     });
 });
 
-$(function() {
-    $('#btnNewGroup').click(function() {
+$(function () {
+    $('#btnNewGroup').click(function () {
         console.log($('#groupName').val())
         $.ajax({
             url: '/addgroup',
             data: $('#groupName').val(),
             type: 'POST',
-            success: function(response) {
+            success: function (response) {
                 window.location = '/addmembership?id=' + response;
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
     });
 });
 
-// $(document).ready(function() {
-//     var table = $('#results').DataTable();
-//     $('#results tbody').on( 'click', 'tr', function () {
-//         console.log( table.row( this ).data() );} );
-// });
+$(function () {
+    $('#btnConfirmGroup').click(function () {
+            var selids = [];
+            var table = document.getElementById("selectionTable");
+            for (var i = 0, row; row = table.rows[i]; i++) {
+                selids.push(parseInt(row.cells[1].innerText))
+            }
+            console.log(selids);
 
-$(function() {
-    $(".clickable-row").click(function() {
-        console.log($(this.data()))
+            $.ajax({
+                url: '/addmembership',
+                data: JSON.stringify({ids:selids}),
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                success: function (response) {
+                    window.location = '/createEventDetails';
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    );
+});
+
+
+$(document).ready(function () {
+    var table = $('#results');
+    $('#results tbody').on('click', 'tr', function () {
+        name = this.firstElementChild.textContent;
+        id = parseInt(this.lastElementChild.textContent)
         var row = $("<tr>");
-        row.append($("<td>" +$(this).name + "</td>"))
+        row.append($("<td>" + name + "</td>"))
+        row.append($("<td>" + id + "</td>"))
         $("#selection tbody").append(row);
-        });
+
     });
+});

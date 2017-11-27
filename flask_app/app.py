@@ -14,9 +14,16 @@ app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
 
-@app.route('/', methods=['POST', 'GET'])  
+@app.route('/', methods=['POST', 'GET'])
 def homepage():
+    try:
+        if session['loggedIn']:
+            render_template('dashboard.html')
+        else:
+            return render_template('root.html')
+    except KeyError:
         return render_template('root.html')
+
 
 @app.route('/signUp')
 def signUp():
@@ -27,7 +34,6 @@ def signIn():
     if request.method == 'POST':
         data = request.get_data()
         res = db.sign_in(data)
-        print(res)
         if res['valid']:
             personID = res['personID']
             session['personID'] = personID
@@ -43,9 +49,7 @@ def signIn():
 def dashboard():
     try:
         personID = session['personID']
-        print(personID)
         eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
-        print "EVENT IDs: ", eventIDs
         return render_template('dashboard.html', eventIDs=eventIDs)
     except Exception as e:
         print(e)
@@ -76,12 +80,10 @@ def reset_db():
 @app.route('/addperson', methods=['POST'])
 def add_person():
     data = request.get_data()
-    print "data is ", data
     res = db.add_person(data)
-    print('res:{}'.format(res))
     return res
 
-@app.route('/addmembership')
+@app.route('/pickPeople')
 def get_people():
     return render_template('people.html')
 
@@ -92,21 +94,19 @@ def search_people():
     res = db.query('''SELECT name,phoneNumber,personID FROM people WHERE name LIKE '%{}%';'''.format(d['queryName']))
     jres = jsonify(data=res)
     # jres = json.dumps(dict(res))
-    print jres
     return jres
 
 @app.route('/addgroup', methods=['POST'])
 def add_group():
     data = request.get_data()
-    print data
     res = db.add_group(data)
     return res
 
 @app.route('/addmembership', methods=['POST'])
 def add_membership():
     data = request.get_data()
-    print data
     res = db.add_membership(data)
+    return res
 
 @app.route('/eventDetails')
 def eventDetails():
@@ -124,6 +124,15 @@ def deleteEvent():
     data = data.split('=')[1]
     res = db.delete_event(data)
     return res
+
+@app.route('/getGroups',methods=['POST'])
+def getGroups():
+    res = db.getGroups(session['personID'])
+    return res
+
+@app.route('/createEventDetails')
+def createEventDetails():
+    return render_template('createEventDetails.html')
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

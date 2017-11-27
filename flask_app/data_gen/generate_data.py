@@ -136,8 +136,8 @@ def get_functions():
 
 if __name__ == '__main__':
     # gen_lodging()
-    gen_timerange()
-
+    # gen_timerange()
+    pass
 
 
 
