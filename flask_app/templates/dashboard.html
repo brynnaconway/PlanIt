@@ -3,77 +3,76 @@
 <head>
     <title>PlanIt</title>
     <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
-    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css"
-          rel="stylesheet">
-    <link rel="stylesheet" href="/static/root.css">
+    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/dashboard.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/dashboard.js"></script>
 
 
 </head>
 
-<body>
-<!-- Top Navbar -->
-<nav class="navbar">
-    <a class="navbar-brand text-primary" href="/dashboard">Home</a>
-    <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
-</nav>
-<div class="container">
+<body> 
 
-    <div class="jumbotron">
-        <h1>Event Dashboard</h1>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <a class="navbar-brand text-primary" href="/dashboard">Home</a>
+        <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
+    </nav>
+    <div class="container">
 
-        <ul>
-            {% for eventID in eventIDs %}
-                <div class="delete_button">
-                    <li>
-                        <a href="/eventDetails" id=eventID> {{ eventID }} </a>
-                        <button id="btnDelete" class="btn btn-sm btn-danger" type="button"
-                                onclick=deleteEvent({{ eventID }})> Delete
-                        </button>
-                    </li>
+        <div class="jumbotron">
+            <h1 class=display-6>Event Dashboard</h1>
 
-                </div>
-            {% endfor %}
-        </ul>
+            <ul>
+                {% for eventID in eventIDs %}
+                    <div class="delete_button">
+                        <li class=eventsList>
+                            <a href="/eventDetails" id=eventID> {{ eventID }} </a>
+                            <button id="btnDelete" class="btn btn-sm btn-danger" type="button"
+                                    onclick=deleteEvent({{ eventID }})> Delete
+                            </button>
+                        </li>
 
-{#        add new event#}
-        <button id="btnAddEvent" class="btn btn-lg btn-primary btn-block" type="button">Add Event</button>
+                    </div>
+                {% endfor %}
+            </ul>
 
-{#        pick bt new and existing group#}
-        <button id="btnNewGroup" class="btn btn-lg btn-block" type="button" style="display:none">New Group</button>
-        <button id="btnExistingGroup" class="btn btn-lg btn-block" type="button" style="display:none">Existing Group</button>
+                     
 
-{#        if you want to pick an old group#}
-        <div class="form-group" style="display:none; height:30px" id="dropdownExistingGroup">
-            <label for="existingGroupSelect">Select an existing group:</label>
-            <select class="form-control" id="existingGroupSelect">
-            </select>
-            <button id="btnSelectExistingGroup" class="btn btn-lg btn-block"  type="button">Confirm</button>
+    {#        add new event#}
+            <button id="btnAddEvent" class="btn btn-lg btn-primary btn-block" type="button">Add Event</button>
+
+    {#        pick bt new and existing group#}
+            <button id="btnNewGroup" class="btn btn-lg btn-block" type="button" style="display:none">New Group</button>
+            <button id="btnExistingGroup" class="btn btn-lg btn-block" type="button" style="display:none">Existing Group</button>
+
+    {#        if you want to pick an old group#}
+            <div class="form-group" style="display:none; height:30px" id="dropdownExistingGroup">
+                <label for="existingGroupSelect">Select an existing group:</label>
+                <select class="form-control" id="existingGroupSelect">
+                </select>
+                <button id="btnSelectExistingGroup" class="btn btn-lg btn-block"  type="button">Confirm</button>
+            </div> 
+
+    {#        make a new group#}
+            <div class="col-lg-6" style="display:none" id="textinputNewEventName">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
+                    <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
+            </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+
+
         </div>
 
-{#        make a new group#}
-        <div class="col-lg-6" style="display:none" id="textinputNewEventName">
-            <div class="input-group">
-                <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
-                <span class="input-group-btn">
-            <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
-          </span>
-            </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
-
+        <footer class="footer">
+            <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
+        </footer>
 
     </div>
-
-    <footer class="footer">
-        <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
-    </footer>
-
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/static/dashboard.js"></script>
 
 </body>
 </html>
