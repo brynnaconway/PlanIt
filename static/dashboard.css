@@ -1,3 +1,31 @@
 #eventID {
 	margin-right: 20px; 
 }
+
+#btnDelete {
+	display: none; 
+}
+
+#eventID:hover + #btnDelete, #btnDelete:hover {
+	display: block;
+	float: right;
+	margin-left: 0px;  
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  background:url("background.jpg"); 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  height: 100%;
+  position: relative;
+}
+
+body {
+  background:rgba(255, 255, 255, 0.25); 
+}

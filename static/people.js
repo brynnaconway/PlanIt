@@ -86,6 +86,7 @@ $(document).ready(function () {
                 row.append($("<td>" + name + "</td>"));
                 row.append($("<td>" + response["id"] + "</td>"));
                 $("#selection tbody").append(row);
+                $('#myModal modal-body').modal('hide');
             },
             error: function (error) {
                 console.log(error);

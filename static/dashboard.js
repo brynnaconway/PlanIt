@@ -14,7 +14,7 @@ $(function () {
             }
         });
     });
-});
+}); 
 
 
 $(function () {
@@ -24,6 +24,7 @@ $(function () {
         document.getElementById("btnExistingGroup").style.display = "none";
     });
 });
+
 
 
 $(function () {

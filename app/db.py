@@ -74,7 +74,7 @@ class DB(object):
         password = d['inputPassword']
         res = self.query('''SELECT personID, password FROM people WHERE email like "{}" limit 1;'''.format(email))
         if len(res) is 0:
-            return json.dumps({'error': "User does not exist"})
+            return {'valid': False}
         else:
             if check_password_hash(res[0][1], password):
                 return {'personID': str(res[0][0]), 'valid' : True}
@@ -85,6 +85,7 @@ class DB(object):
         d = deserialize(data)
         name = urllib.unquote_plus(d['inputName'])
         email = urllib.unquote_plus(d['inputEmail'])
+        newUserForGroup = False 
         try:
             num = d['inputNum']
         except KeyError:
@@ -93,21 +94,23 @@ class DB(object):
             password = generate_password_hash(d['inputPassword'])
         except KeyError:
             # No password, don't log in
+            newUserForGroup = True
             password = generate_password_hash(d['inputEmail'])
 
         res = self.query('''INSERT into people (name, phoneNumber, email, password) 
                         VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, password))
         new_id = self.query('select LAST_INSERT_ID()')[0][0]
-
         print('add_res{}'.format(res))
 
         if len(res) is not 0:
             return {'error': str(data[0])}
-        elif password:
+        elif not newUserForGroup: 
             session['loggedIn']=True
             session['personID'] =new_id
+            print "personID: ", session['personID']
             return {'message': 'User created successfully !', 'id':new_id}
         else:
+            print "personID in else: ", session['personID']            
             return {'message': 'User created successfully !', 'id':new_id}
 
 
