@@ -84,21 +84,32 @@ class DB(object):
     def add_person(self,data):
         d = deserialize(data)
         name = urllib.unquote_plus(d['inputName'])
-        num = d['inputNum']
         email = urllib.unquote_plus(d['inputEmail'])
-        password = d['inputPassword']
+        try:
+            num = d['inputNum']
+        except KeyError:
+            num = None
+        try:
+            password = generate_password_hash(d['inputPassword'])
+        except KeyError:
+            # No password, don't log in
+            password = generate_password_hash(d['inputEmail'])
 
         res = self.query('''INSERT into people (name, phoneNumber, email, password) 
-                        VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, generate_password_hash(password)))
-
+                        VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, password))
         new_id = self.query('select LAST_INSERT_ID()')[0][0]
+
         print('add_res{}'.format(res))
-        if len(res) is 0:
+
+        if len(res) is not 0:
+            return {'error': str(data[0])}
+        elif password:
             session['loggedIn']=True
             session['personID'] =new_id
-            return json.dumps({'message': 'User created successfully !'})
+            return {'message': 'User created successfully !', 'id':new_id}
         else:
-            return json.dumps({'error': str(data[0])})
+            return {'message': 'User created successfully !', 'id':new_id}
+
 
     def add_group(self, data):
         print(session)

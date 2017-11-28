@@ -29,23 +29,6 @@ $(function () {
 });
 
 $(function () {
-    $('#btnNewGroup').click(function () {
-        console.log($('#groupName').val())
-        $.ajax({
-            url: '/addgroup',
-            data: $('#groupName').val(),
-            type: 'POST',
-            success: function (response) {
-                window.location = '/addmembership?id=' + response;
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    });
-});
-
-$(function () {
     $('#btnConfirmGroup').click(function () {
             var selids = [];
             var table = document.getElementById("selectionTable");
@@ -53,10 +36,9 @@ $(function () {
                 selids.push(parseInt(row.cells[1].innerText))
             }
             console.log(selids);
-
             $.ajax({
                 url: '/addmembership',
-                data: JSON.stringify({ids:selids}),
+                data: JSON.stringify({ids: selids}),
                 contentType: "application/json; charset=utf-8",
                 type: 'POST',
                 success: function (response) {
@@ -66,6 +48,7 @@ $(function () {
                     console.log(error);
                 }
             });
+
         }
     );
 });
@@ -80,6 +63,34 @@ $(document).ready(function () {
         row.append($("<td>" + name + "</td>"))
         row.append($("<td>" + id + "</td>"))
         $("#selection tbody").append(row);
+
+    });
+});
+
+
+
+$(document).ready(function () {
+    $('#btnSendNewPerson').click(function () {
+        name = document.getElementById('newPersonName').value;
+        email = document.getElementById('newPersonEmail').value;
+        phone = document.getElementById('newPersonPhone').value;
+
+        $('#myModal modal-body').find('textarea,input').val('');
+        $.ajax({
+            url: '/addperson',
+            data: {inputName: name, inputEmail: email, inputNum: phone},
+            contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            success: function (response) {
+                var row = $("<tr>");
+                row.append($("<td>" + name + "</td>"));
+                row.append($("<td>" + response["id"] + "</td>"));
+                $("#selection tbody").append(row);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
 
     });
 });
