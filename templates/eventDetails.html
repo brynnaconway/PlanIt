@@ -32,9 +32,14 @@
                         </li>
                         {% endfor %}
                     </ul>
-                <
+                    <div class="members-count"></div>
+                    <div class="members-list"></div>
+                    <div class="messages"></div>
+                    <form class="message-form" id="message-form" onsubmit="return false;">
+                        <input class="message-form__input" placeholder="Type a message..." type="text"/>
+                        <input class="message-form__button" value="Send" type="submit"/>
+                    </form>
                 </div>
-
                 <footer class="footer">
                     <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
                 </footer>
@@ -42,7 +47,9 @@
             </div>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
             <script src="/static/root.js"></script>
+            <script src="/static/eventDetails.js"></script>
 
         </body>
     </html>
