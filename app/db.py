@@ -84,21 +84,35 @@ class DB(object):
     def add_person(self,data):
         d = deserialize(data)
         name = urllib.unquote_plus(d['inputName'])
-        num = d['inputNum']
         email = urllib.unquote_plus(d['inputEmail'])
-        password = d['inputPassword']
+        newUserForGroup = False 
+        try:
+            num = d['inputNum']
+        except KeyError:
+            num = None
+        try:
+            password = generate_password_hash(d['inputPassword'])
+        except KeyError:
+            # No password, don't log in
+            newUserForGroup = True
+            password = generate_password_hash(d['inputEmail'])
 
         res = self.query('''INSERT into people (name, phoneNumber, email, password) 
-                        VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, generate_password_hash(password)))
-
+                        VALUES ('{}','{}', '{}', '{}');'''.format(name, num, email, password))
         new_id = self.query('select LAST_INSERT_ID()')[0][0]
         print('add_res{}'.format(res))
-        if len(res) is 0:
+
+        if len(res) is not 0:
+            return {'error': str(data[0])}
+        elif not newUserForGroup: 
             session['loggedIn']=True
             session['personID'] =new_id
-            return json.dumps({'message': 'User created successfully !'})
+            print "personID: ", session['personID']
+            return {'message': 'User created successfully !', 'id':new_id}
         else:
-            return json.dumps({'error': str(data[0])})
+            print "personID in else: ", session['personID']            
+            return {'message': 'User created successfully !', 'id':new_id}
+
 
     def add_group(self, data):
         print(session)

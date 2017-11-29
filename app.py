@@ -81,7 +81,8 @@ def reset_db():
 def add_person():
     data = request.get_data()
     res = db.add_person(data)
-    return res
+    print "Response: ", res
+    return jsonify(res)
 
 @app.route('/pickPeople')
 def get_people():

@@ -3,18 +3,23 @@
 import random
 import uuid
 from app.util import *
+from werkzeug import generate_password_hash, check_password_hash
+from random_words import RandomWords
+rw = RandomWords()
 random.seed()
 
 
 def gen_people(db):
     with open('./data_gen/names.txt') as f:
-        names = ["'" + line.strip('\n').strip('\t') + "'" for line in f]
+        names = [(line.strip('\n').strip('\t') , ''.join(line.strip('\n').strip('\t').strip('\s').split(' ')) + '@nd.edu' ) for line in f]
+    password = generate_password_hash('password')
+
 
     query = ''
-    for name in names:
+    for name, email in names:
         num = random.randint(1000000000, 9999999999)
-        query += " INSERT INTO people (personID, name, phoneNumber)" \
-                 " VALUES (0, {}, {});\n".format(name, str(num))
+        query += '''INSERT into people (personID, name, phoneNumber, email, password) 
+                        VALUES (0, '{}','{}', '{}', '{}');'''.format(name, num, email, password)
 
     return query
 
@@ -68,12 +73,14 @@ def gen_events(db):
     query = ''
     # Each group has at least one event
     for gid in groupIDs:
-        query += '''INSERT INTO events (eventID, groupID) VALUES (0,{});\n'''.format(gid)
+        name = ' '.join(rw.random_words(count=2))
+        query += '''INSERT INTO events (eventID, groupID, eventName) VALUES (0,{},'{}');\n'''.format(gid, name)
 
     # Some groups have more than one, possible more than two
     for _ in range(0, int(.25 * len(groupIDs))):
+        name = ' '.join(rw.random_words(count=2))
         gid = random.choice(groupIDs)
-        query += '''INSERT INTO events (eventID, groupID) VALUES (0,{});\n'''.format(gid)
+        query += '''INSERT INTO events (eventID, groupID, eventName) VALUES (0,{}, '{}');\n'''.format(gid,name)
 
     return query
 
@@ -116,13 +123,14 @@ def update_events(db):
                                      'WHERE eventID = {};'.format(event[0]))
         commitCount = int(db.query('SELECT SUM(decision) from commits WHERE eventID = {}'.format(event[0]))[0][0])
         lodge = random.choice(votes)[1]
+        admin = random.choice(votes)[0]
 
         # DATETIMES are bullshit
         start = "'" + random.choice(votes)[2].strftime('%Y-%m-%d %H:%M:%S') +"'"
         stop = "'" + random.choice(votes)[3].strftime('%Y-%m-%d %H:%M:%S') +"'"
 
-        query += ''' UPDATE events SET lodgeID = {},start = {}, stop = {},confirmCount = {} 
-            WHERE eventID = {};\n'''.format(lodge, start, stop, commitCount, event[0])
+        query += ''' UPDATE events SET lodgeID = {},start = {}, stop = {},confirmCount = {}, admin = {}add     
+            WHERE eventID = {};\n'''.format(lodge, start, stop, commitCount, event[0], admin)
     return query
 
 
