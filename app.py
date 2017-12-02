@@ -49,7 +49,7 @@ def signIn():
 def dashboard():
     try:
         personID = session['personID']
-        eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
+        eventIDs = db.single_attr_query('''SELECT eventName FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
         return render_template('dashboard.html', eventIDs=eventIDs)
     except Exception as e:
         print(e)

@@ -1,11 +1,10 @@
-$(function () {
+/*$(function () {
     $('#btnAddEvent').click(function () {
         $.ajax({
             url: '/createEvent',
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                document.getElementById('btnAddEvent').style.display = "none"
                 document.getElementById("btnNewGroup").style.display = "inline";
                 document.getElementById("btnExistingGroup").style.display = "inline";
             },
@@ -14,7 +13,7 @@ $(function () {
             }
         });
     });
-}); 
+}); */
 
 
 $(function () {
@@ -25,17 +24,15 @@ $(function () {
     });
 });
 
-
-
 $(function () {
-    $('#btnExistingGroup').click(function () {
+    $('#myModal').on('show.bs.modal', function () {
         $.ajax({
             url: '/getGroups',
             type: 'POST',
             success: function (response) {
                 console.log(response);
                 if (response['valid'] == false) {
-                    window.alert("You're not in any groups yet, make a new one! ");
+                    pass;
                 } else {
                     for (name in response['groups']) {
                         $('#existingGroupSelect').append($('<option>', {
@@ -43,9 +40,9 @@ $(function () {
                             text: name
                         }));
                     }
-                    document.getElementById('dropdownExistingGroup').style.display = "inline";
-                    document.getElementById("btnNewGroup").style.display = "none";
-                    document.getElementById("btnExistingGroup").style.display = "none";
+                    //document.getElementById('dropdownExistingGroup').style.display = "inline";
+                    //document.getElementById("btnNewGroup").style.display = "none";
+                    //document.getElementById("btnExistingGroup").style.display = "none";
                 }
             },
             error: function (error) {

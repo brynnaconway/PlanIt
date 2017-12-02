@@ -1,31 +1,80 @@
 #eventID {
-	margin-right: 20px; 
+  font-size: 230%;
+  margin-left: 4%;
+  margin-right: 4%; 
+	display: flex; 
+  justify-content: center;
+  align-items: center; 
 }
 
+#modalTitle {
+  text-align: center;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+#navbarHome {
+  margin-right : auto;
+}
+
+#dropdownExistingGroup {
+  display: none; 
+  height: 30px; 
+}
+
+#existingGroupSelect {
+  height: 10%;
+}
+
+#column {
+  padding-left: 5px;
+  padding-right: 5px; 
+}
+
+#card {
+  border-radius: 7px; 
+}
+
+.w3-container {
+  padding-left: 50px; 
+  padding-right: 50px;
+}
+
+.jumbotron {
+  padding-top: 5px; 
+  padding-top: 5px; 
+  padding-left: 30px; 
+  padding-right:30px;
+}
+
+.row {
+  min-height: 200px; 
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#myEvents {
+  padding-bottom: 10px; 
+}
+
+#btnAddEvent { 
+  font-size: 600%;   
+} 
+
 #btnDelete {
-	display: none; 
+	display: none;
+  color: white;  
+  text-align: right; 
+  margin: 2px; 
+  font-size: 150%; 
 }
 
 #eventID:hover + #btnDelete, #btnDelete:hover {
 	display: block;
-	float: right;
-	margin-left: 0px;  
+  z-index: 2; 
 }
 
-body, html {
-  height: 100%;
-  margin: 0;
-}
-
-html {
-  background:url("background.jpg"); 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; 
-  height: 100%;
-  position: relative;
-}
-
-body {
-  background:rgba(255, 255, 255, 0.25); 
+#textinputNewEventName {
+  display: none; 
 }
