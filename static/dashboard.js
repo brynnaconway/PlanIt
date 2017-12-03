@@ -20,6 +20,8 @@ $(function () {
         if ($(this).val() == '_createNewGroup') {
             document.getElementById("textinputNewGroupName").style.display = "inline";
             document.getElementById("existingGroupSelect").style.display = "none";
+            document.getElementById("groupSelectLabel").style.display = "none";
+            //document.getElementById("newGroupNameLabel").style.display = "inline";            
         }
     });
 });
@@ -28,6 +30,7 @@ $(function () {
     $('#myModal').on('show.bs.modal', function () {
         document.getElementById("existingGroupSelect").style.display = "block"; 
         document.getElementById("textinputNewGroupName").style.display = "none";
+        document.getElementById("selectPeople").style.display = "none"; 
         $.ajax({
             url: '/getGroups',
             type: 'POST',

@@ -33,63 +33,93 @@
                             </div>
 
                             <!-- Choose group --> 
-                            <div class="form-group">
+                            <div class="form-group" id="chooseGroupInput">
 
                                 <!-- Dropdown -->                         
-                                <label for="existingGroupSelect">Participants (Group)</label>
+                                <label for="existingGroupSelect" id=groupSelectLabel>Participants (Group)</label>
                                 <select class="form-control" id="existingGroupSelect"></select>
                                 
                                 <!-- Input box to create new group --> 
-                                <div class="col-lg-6" id="textinputNewGroupName">
+                                <div id="textinputNewGroupName">
+                                    <label for="newGroupName">Participants (Group)</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
                                         </span>
-                                    </div> <!-- /input-group -->
-                                </div> <!-- /.col-lg-6 -->
+                                    </div>
+                                </div> 
 
                             </div>
                         </fieldset>
                     </form>
 
+
+
                     <!-- Select people to add to group --> 
                      <div id=selectPeople>
 
-                        <h4>Selected New Members:</h4>
-                        <div class="container" id="selection">
-                            <table class="table table-hover" id="selectionTable">
+                         <!-- Show members to be added to new group --> 
+                        <label>Selected Members of New Group:</label>
+                        <div class="container w-100" id="selection">
+                            <table class="table" id="selectionTable">
                                 <thead> 
                                 </thead>
                                 <tbody>
+                                    <tr id=noMembers>
+                                        <td>You are currently the only member of this group.</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <button id="btnConfirmGroup" class="btn btn-lg btn-primary btn-block" type="button">Confirm Group Members
-                        </button>
+                        <button id="btnConfirmGroup" class="btn btn-primary btn-lg btn-block" type="button">Confirm Members and Create Group</button>
+                        
+                         <!-- Search box --> 
+                         <div id=addMembersOptions>
+                            <form class="form-signin">
+
+                                <label for="queryName" id=addMembersLabel>Add Members to Group</label> 
+                                <div class="input-group">                           
+                                    <input type="name" name="queryName" id="queryName" class="form-control" placeholder="Search for name" required autofocus>
+                                    <span class="input-group-btn">
+                                        <button id="btnPeopleSearch" class="btn btn-default" type="button">Search</button>
+                                    </span>
+                                    <button id="newUserButton" class="btn btn-default">Create New User</button>                                
+                                </div>
 
 
-                        <h1>Add to Group</h1>
-                        <form class="form-signin">
-                            <label for="inputName" class="sr-only">Name</label>
-                            <input type="name" name="queryName" id="queryName" class="form-control" placeholder="Name" required
-                                autofocus>
-                            <button id="btnPeopleSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
-                            <button type="btnOpenModal" class="btn btn-info btn-lg">New
-                                Person
-                            </button>
+                            </form>
 
+                            <!-- Search results --> 
+                            <div class="container w-100" id="search-results">
+                                <table id="results" class="table display table-striped table-hover clickable-row">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Create new user form --> 
+                        <form id="newUserForm">
+                            <legend id="newUserInfoLegend">New User Information</legend>
+                            <div class="form-group">
+                                <label for="newPersonName">Name</label>
+                                    <input type="text" class="form-control" id="newPersonName" placeholder="First Last">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newPersonEmail">Email</label>
+                                <input type="email" class="form-control" id="newPersonEmail" placeholder="email@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newPersonPhone">Phone (Not required)</label>
+                                <input type="text" class="form-control" id="newPersonPhone" placeholder="000-000-0000">
+                            </div>
                         </form>
-
-                        <div class="container" id="search-results">
-                            <table id="results" class="table display table-striped table-hover clickable-row">
-                                <thead>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
 
                     </div>
 

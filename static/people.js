@@ -1,6 +1,8 @@
 $(function () {
     $('#btnPeopleSearch').click(function () {
         // $('#search-results').toggle();
+        document.getElementById('newUserForm').style.display = "none";
+
         $.ajax({
             url: '/searchpeople',
             data: $('form').serialize(),
@@ -12,7 +14,7 @@ $(function () {
                     var row = $("<tr>");
                     row.id = stuff[item][2];
                     row.append($("<td>" + stuff[item][0] + "</td>"))
-                        .append($("<td>" + stuff[item][2] + "</td>"))
+                    row.append($("<td>" + stuff[item][2] + "</td>"))
                     $("#search-results tbody").append(row);
                 }
 
@@ -54,6 +56,7 @@ $(function () {
 $(document).ready(function () {
     var table = $('#results');
     $('#results tbody').on('click', 'tr', function () {
+        document.getElementById("noMembers").style.display = "none"; 
         name = this.firstElementChild.textContent;
         id = parseInt(this.lastElementChild.textContent)
         var row = $("<tr>");
@@ -71,6 +74,8 @@ $(document).ready(function () {
         name = document.getElementById('newPersonName').value;
         email = document.getElementById('newPersonEmail').value;
         phone = document.getElementById('newPersonPhone').value;
+        document.getElementById('addMembersOptions').style.display = "inline";         
+        document.getElementById('newUserForm').style.display = "none";         
 
         $('#myModal modal-body').find('textarea,input').val('');
         $.ajax({
@@ -90,5 +95,13 @@ $(document).ready(function () {
             }
         });
 
+    });
+});
+
+
+$(document).ready(function () {
+    $('#newUserButton').click(function () {
+        document.getElementById('addMembersOptions').style.display = "none";         
+        document.getElementById('newUserForm').style.display = "inline"; 
     });
 });

@@ -46,6 +46,7 @@
   padding-top: 5px; 
   padding-left: 30px; 
   padding-right:30px;
+  border-radius: 7px;
 }
 
 .row {
@@ -81,4 +82,56 @@
 
 #selectPeople {
   display: none; 
+  margin-top: 18px; 
+}
+
+#search-results {
+  max-height: 28vh; 
+  overflow: auto; 
+  margin-top: 20px;
+  padding-left: 0px;
+  border-radius: 7px;
+}
+
+#selection {
+  max-height: 28vh;
+  overflow: auto; 
+  padding-left: 0px; 
+}
+
+#chooseGroupInput {
+  margin-bottom: 0px; 
+}
+
+#results {
+  border-left: 1px solid #ddd;
+}
+
+#newUserButton {
+  float: right; 
+}
+
+#btnPeopleSearch {
+  border-radius: 3px; 
+}
+
+#btnConfirmGroup {
+  margin-top: 15px; 
+}
+
+#addMembersLabel {
+  margin-top: 25px; 
+}
+
+#newGroupNameLabel {
+  display: none; 
+}
+
+#newUserForm {
+  display: none; 
+  margin-top: 20px; 
+}
+
+#newUserInfoLegend {
+  margin-top: 20px; 
 }
