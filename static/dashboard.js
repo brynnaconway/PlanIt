@@ -15,22 +15,29 @@
     });
 }); */
 
-
 $(function () {
-    $('#btnNewGroup').click(function () {
-        document.getElementById("textinputNewEventName").style.display = "inline";
-        document.getElementById("btnNewGroup").style.display = "none";
-        document.getElementById("btnExistingGroup").style.display = "none";
+    $('#existingGroupSelect').change(function() {
+        if ($(this).val() == '_createNewGroup') {
+            document.getElementById("textinputNewGroupName").style.display = "inline";
+            document.getElementById("existingGroupSelect").style.display = "none";
+        }
     });
 });
 
 $(function () {
     $('#myModal').on('show.bs.modal', function () {
+        document.getElementById("existingGroupSelect").style.display = "block"; 
+        document.getElementById("textinputNewGroupName").style.display = "none";
         $.ajax({
             url: '/getGroups',
             type: 'POST',
             success: function (response) {
                 console.log(response);
+                var select = document.getElementById("existingGroupSelect");
+                select.length = 0;
+                for (i=0; i<= select.length; i++) {
+                    select.remove(i);
+                }
                 if (response['valid'] == false) {
                     pass;
                 } else {
@@ -40,9 +47,10 @@ $(function () {
                             text: name
                         }));
                     }
-                    //document.getElementById('dropdownExistingGroup').style.display = "inline";
-                    //document.getElementById("btnNewGroup").style.display = "none";
-                    //document.getElementById("btnExistingGroup").style.display = "none";
+                    $('#existingGroupSelect').append($('<option>', {
+                        value: '_createNewGroup',
+                        text: "Create a new group..."
+                    }));
                 }
             },
             error: function (error) {
@@ -60,7 +68,10 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/pickPeople'
+                document.getElementById("btnCreateNewGroup").style.display = "none";
+                document.getElementById("newGroupName").setAttribute("readonly", true);
+                //window.location = '/pickPeople'
+                document.getElementById("selectPeople").style.display = "block"; 
                 // document.getElementById("existingGroupBtn").style.visibility = "visible";
             },
             error: function (error) {
@@ -105,3 +116,5 @@ function deleteEvent(eventID) {
         }
     });
 }
+
+

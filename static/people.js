@@ -1,6 +1,3 @@
-/**
- * Created by benedict on 10/31/17.
- */
 $(function () {
     $('#btnPeopleSearch').click(function () {
         // $('#search-results').toggle();

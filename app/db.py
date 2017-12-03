@@ -119,7 +119,7 @@ class DB(object):
         data = deserialize(data)
         print(data)
         if data['new_group'] == 'true':
-            name = data['name']
+            name = urllib.unquote_plus(data['name'])
             print('INSERTING new group')
             res = self.query('''INSERT into groups (groupID, groupName) 
                         VALUES ({},'{}');'''.format(0, name))

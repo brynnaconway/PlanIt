@@ -75,6 +75,10 @@
   z-index: 2; 
 }
 
-#textinputNewEventName {
+#textinputNewGroupName {
+  display: none; 
+}
+
+#selectPeople {
   display: none; 
 }

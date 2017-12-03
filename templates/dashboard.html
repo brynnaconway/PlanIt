@@ -32,34 +32,69 @@
                                 <input type="text" class="form-control" id="eventName" placeholder="Enter event name">
                             </div>
 
-                            <div class="form-group">                        
+                            <!-- Choose group --> 
+                            <div class="form-group">
+
+                                <!-- Dropdown -->                         
                                 <label for="existingGroupSelect">Participants (Group)</label>
                                 <select class="form-control" id="existingGroupSelect"></select>
+                                
+                                <!-- Input box to create new group --> 
+                                <div class="col-lg-6" id="textinputNewGroupName">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
+                                        </span>
+                                    </div> <!-- /input-group -->
+                                </div> <!-- /.col-lg-6 -->
+
                             </div>
                         </fieldset>
                     </form>
-                    {#        pick bt new and existing group#}
-                    <button id="btnNewGroup" class="btn btn-lg btn-block" type="button">New Group</button>
-                    <button id="btnExistingGroup" class="btn btn-lg btn-block" type="button">Existing Group</button>
 
-                    {#        if you want to pick an old group#}
-                    <div class="form-group" id="dropdownExistingGroup">
-                        <label for="existingGroupSelect">Select an existing group:</label>
-                        <select class="form-control" id="existingGroupSelect">
-                        </select>
-                        <button id="btnSelectExistingGroup" class="btn btn-lg btn-block"  type="button">Confirm</button>
-                    </div> 
+                    <!-- Select people to add to group --> 
+                     <div id=selectPeople>
 
-                    {#        make a new group#}
-                    <div class="col-lg-6" id="textinputNewEventName">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
-                            <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
-                    </span>
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                </div>
+                        <h4>Selected New Members:</h4>
+                        <div class="container" id="selection">
+                            <table class="table table-hover" id="selectionTable">
+                                <thead> 
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button id="btnConfirmGroup" class="btn btn-lg btn-primary btn-block" type="button">Confirm Group Members
+                        </button>
+
+
+                        <h1>Add to Group</h1>
+                        <form class="form-signin">
+                            <label for="inputName" class="sr-only">Name</label>
+                            <input type="name" name="queryName" id="queryName" class="form-control" placeholder="Name" required
+                                autofocus>
+                            <button id="btnPeopleSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
+                            <button type="btnOpenModal" class="btn btn-info btn-lg">New
+                                Person
+                            </button>
+
+                        </form>
+
+                        <div class="container" id="search-results">
+                            <table id="results" class="table display table-striped table-hover clickable-row">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div> <!-- Closing modal body tag --> 
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -106,6 +141,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/static/dashboard.js"></script>
+    <script src="/static/people.js"></script>
 
 </body>
 </html>
