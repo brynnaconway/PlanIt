@@ -129,7 +129,7 @@ def update_events(db):
         start = "'" + random.choice(votes)[2].strftime('%Y-%m-%d %H:%M:%S') +"'"
         stop = "'" + random.choice(votes)[3].strftime('%Y-%m-%d %H:%M:%S') +"'"
 
-        query += ''' UPDATE events SET lodgeID = {},start = {}, stop = {},confirmCount = {}, admin = {}add     
+        query += ''' UPDATE events SET lodgeID = {},start = {}, stop = {},confirmCount = {}, admin = {}
             WHERE eventID = {};\n'''.format(lodge, start, stop, commitCount, event[0], admin)
     return query
 
