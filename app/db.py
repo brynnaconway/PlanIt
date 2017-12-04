@@ -66,9 +66,15 @@ class DB(object):
     def single_attr_query(self, q):
         cur = self.conn.cursor()
         cur.execute(q)
-        res = [l[0] for l in cur.fetchall()]
-        self.conn.commit()
-        return res
+        try:
+            res = [l[0] for l in cur.fetchall()]
+            res = str(res)
+            self.conn.commit()
+            return res
+        except:
+            res = [l[0] for  l in cur.fetchall()]
+            self.conn.commit()
+            return res
 
     def sign_in(self, data):
         d = deserialize(data)
