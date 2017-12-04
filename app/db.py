@@ -66,15 +66,9 @@ class DB(object):
     def single_attr_query(self, q):
         cur = self.conn.cursor()
         cur.execute(q)
-        try: 
-            res = [l[0] for l in cur.fetchall()]
-            res = str(res)
-            self.conn.commit()
-            return res
-        except:
-            res = [l[0] for  l in curr.fetchall()]
-            self.conn.commit()
-            return res
+        res = [l[0] for l in cur.fetchall()]
+        self.conn.commit()
+        return res
 
     def sign_in(self, data):
         d = deserialize(data)
@@ -169,6 +163,19 @@ class DB(object):
 
         if len(res) is 0:
             return json.dumps({'message': 'Location added successfully !','id':location})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def submit_location_vote(self, data):
+        print('UPDATING location vote')
+        #eventID = session['eventID']
+        eventID = 1;
+        data = deserialize(data)
+        location = urllib.unquote_plus(data['location'])
+        print(location)
+        res = self.query('''UPDATE locations set votes = votes + 1 where location = '{}' and eventID = {};'''.format(location, eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location vote updated successfully !','id':location})
         else:
             return json.dumps({'error': str(data[0])})
 

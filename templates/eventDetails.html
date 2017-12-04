@@ -28,10 +28,11 @@
                           <legend>Choose a location for your adventure</legend>
                           {% for location in locations %}
                             {% for l in location %}
+
                           <div class="form-check">
 
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="optionsRadios" value= {{ location }} checked="">
+                              <input type="radio" id="location" class="form-check-input" name="optionsRadios" value = "{{ l }}" checked="">
                               {{ l }}
                             </label>
                            
@@ -48,7 +49,9 @@
                                  </span>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
-
+                    <div>
+                        <button type="button" class="btn btn-success" id="btnSubmitLocationVote">Submit your Vote</button>
+                    </div>    
                 </div>
                     <!--<h1>Event Dashboard</h1>
 
