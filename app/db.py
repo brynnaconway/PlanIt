@@ -187,7 +187,7 @@ class DB(object):
             groupID = self.query('''SELECT LAST_INSERT_ID() from groups''')[0][0]
             print "groupID: ", groupID
         print('INSERTING new event')
-        res = self.query('''INSERT into events (eventID, eventName, groupID) VALUES (0, '{}', {});'''.format(eventName, groupID))
+        res = self.query('''INSERT into events (eventID, eventName, groupID,admin) VALUES (0, '{}', {},{});'''.format(eventName, groupID,session['personID']))
         newID = self.query('''SELECT LAST_INSERT_ID() from events''')[0][0]
         print(newID)
         session['eventID'] = newID
