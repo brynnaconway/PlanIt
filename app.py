@@ -6,7 +6,7 @@ from flask import Flask, render_template,request, jsonify, redirect, url_for, se
 from app.db import DB
 import yaml
 import os
-
+import urllib
 from app.util import deserialize
 
 config = yaml.load(open('planit.config'))
@@ -111,7 +111,17 @@ def add_membership():
 
 @app.route('/eventDetails')
 def eventDetails():
-    return render_template('eventDetails.html')
+    #eventID = session['eventID'] //To be uncommented when merged with Brynna's code 
+    eventID = 1;
+    locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
+    return render_template('eventDetails.html', locations = locations)
+
+@app.route('/addlocation', methods=['POST'])
+def addLocation():
+    data = request.get_data()
+    res = db.add_location(data)
+    return res
+
 
 @app.route('/createEvent', methods=['POST'])
 def createEvent():

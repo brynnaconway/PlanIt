@@ -64,9 +64,15 @@ class DB(object):
     def single_attr_query(self, q):
         cur = self.conn.cursor()
         cur.execute(q)
-        res = [l[0] for l in cur.fetchall()]
-        self.conn.commit()
-        return res
+        try: 
+            res = [l[0] for l in cur.fetchall()]
+            res = str(res)
+            self.conn.commit()
+            return res
+        except:
+            res = [l[0] for  l in curr.fetchall()]
+            self.conn.commit()
+            return res
 
     def sign_in(self, data):
         d = deserialize(data)
@@ -113,7 +119,6 @@ class DB(object):
             print "personID in else: ", session['personID']            
             return {'message': 'User created successfully !', 'id':new_id}
 
-
     def add_group(self, data):
         print(session)
         data = deserialize(data)
@@ -150,6 +155,19 @@ class DB(object):
 
             return jsonify({'valid':True})
 
+
+    def add_location(self, data):
+        print('INSERTING new location')
+        #eventID = session['eventID']
+        eventID = 1;
+        data = deserialize(data)
+        location = urllib.unquote_plus(data['location'])
+        res = self.query('''INSERT into locations (location, eventID, votes) VALUES ('{}', {}, 0);'''.format(location, eventID))
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Location added successfully !','id':location})
+        else:
+            return json.dumps({'error': str(data[0])})
 
     def add_event(self, data):
         print('INSERTING new event')

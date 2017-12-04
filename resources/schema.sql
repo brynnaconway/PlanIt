@@ -73,3 +73,12 @@ CREATE TABLE commits (
   decision BIT,
   PRIMARY KEY (personID, eventID)
 );
+
+DROP TABLE IF EXISTS locations;
+CREATE TABLE locations (
+  locationID      INT NOT NULL AUTO_INCREMENT,
+  location    VARCHAR(50),
+  eventID        INT,
+  votes         INT,
+  PRIMARY KEY (locationID, eventID)
+);

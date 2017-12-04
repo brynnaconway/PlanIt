@@ -1,4 +1,24 @@
-const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
+$(function () {
+    $('#btnAddNewLocation').click(function () {
+        $.ajax({
+            url: '/addlocation',
+            data: {new_location: true, location: $('#newLocation').val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+                // document.getElementById("existingGroupBtn").style.visibility = "visible";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+
+
+/*const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
 const drone = new ScaleDrone(CHANNEL_ID, {
     data: {
         name: getRandomName(),
@@ -115,4 +135,4 @@ function sendMessage() {
         room: 'observable-room',
         message: value,
     });
-}
+}*/

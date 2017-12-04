@@ -23,7 +23,34 @@
                 </div>
 
                 <div class="jumbotron">
-                    <h1>Event Dashboard</h1>
+                    <h1> Event Details </h1>
+                    <fieldset class="form-group">
+                          <legend>Choose a location for your adventure</legend>
+                          {% for location in locations %}
+                            {% for l in location %}
+                          <div class="form-check">
+
+                            <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="optionsRadios" value= {{ location }} checked="">
+                              {{ l }}
+                            </label>
+                           
+                          </div>
+                          {% endfor %}
+                          {% endfor %}
+                        </fieldset>
+
+                        <div class="col-lg-6" id="textinputNewLocation">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
+                                 </span>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+
+                </div>
+                    <!--<h1>Event Dashboard</h1>
 
                     <ul>
                         {% for event in eventIDs %}
@@ -39,7 +66,7 @@
                         <input class="message-form__input" placeholder="Type a message..." type="text"/>
                         <input class="message-form__button" value="Send" type="submit"/>
                     </form>
-                </div>
+                </div> !-->
                 <footer class="footer">
                     <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
                 </footer>
