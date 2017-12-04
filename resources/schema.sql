@@ -77,7 +77,7 @@ CREATE TABLE commits (
 DROP TABLE IF EXISTS locations;
 CREATE TABLE locations (
   locationID      INT NOT NULL AUTO_INCREMENT,
-  location    VARCHAR(50),
+  location    VARCHAR(100),
   eventID        INT,
   votes         INT,
   PRIMARY KEY (locationID, eventID)

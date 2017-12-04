@@ -66,11 +66,11 @@ class DB(object):
         cur.execute(q)
         try: 
             res = [l[0] for l in cur.fetchall()]
-            res = str(res)
+            # res = str(res)
             self.conn.commit()
             return res
         except:
-            res = [l[0] for  l in curr.fetchall()]
+            res = [l[0] for  l in cur.fetchall()]
             self.conn.commit()
             return res
 

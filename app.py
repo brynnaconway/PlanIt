@@ -3,6 +3,8 @@ import json
 
 from flaskext.mysql import MySQL
 from flask import Flask, render_template,request, jsonify, redirect, url_for, session
+
+from app import location
 from app.db import DB
 import yaml
 import os
@@ -144,6 +146,12 @@ def getGroups():
 @app.route('/createEventDetails')
 def createEventDetails():
     return render_template('createEventDetails.html')
+
+@app.route('/getLocationSuggestions', methods=['POST'])
+def getLocationSuggestions():
+    data = request.get_data()
+    return location.getLocationSuggestions(data)
+
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

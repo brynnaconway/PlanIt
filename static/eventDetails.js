@@ -16,6 +16,31 @@ $(function () {
     });
 });
 
+$(function () {
+    $('#textinputNewLocation').change(function () {
+        let input = document.getElementById('newLocation').value;
+        $.ajax({
+            url: '/getLocationSuggestions',
+            data: {input: input},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                for (val in response) {
+                    let descript = response[val]['description'];
+                    let row = $("<option>");
+                    row.val(descript);
+                    $("#suggestionList").append(row);
+                }
+                document.getElementById('suggestionList').click();
+
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    });
+});
 
 
 /*const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
