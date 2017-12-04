@@ -7,6 +7,8 @@ from util import deserialize, qfy
 from werkzeug import generate_password_hash, check_password_hash
 import urllib
 
+
+
 class DB(object):
     """docstring for ClassName"""
     def __init__(self, app, config):
@@ -106,7 +108,7 @@ class DB(object):
             return {'error': str(data[0])}
         elif not newUserForGroup: 
             session['loggedIn']=True
-            session['personID'] =new_id
+            session['personID'] = new_id
             print "personID: ", session['personID']
             return {'message': 'User created successfully !', 'id':new_id}
         else:
@@ -155,7 +157,7 @@ class DB(object):
     def add_event(self, data):
         d = deserialize(data)
         eventName = urllib.unquote_plus(d['eventName'])
-        groupID = d['groupID']
+        groupID = session['eventGroup']
         print "eventName: ", eventName
         if groupID == "_createNewGroup":
             groupID = self.query('''SELECT LAST_INSERT_ID() from groups''')[0][0]
@@ -191,10 +193,7 @@ class DB(object):
         groups = {l[1]:l[0] for l in res}
 
         print(groups)
-        if len(groups.keys()) <=0:
-            return {'valid':False}
-        else:
-            return jsonify({'groups':groups, 'valid': True})
+        return jsonify({'groups':groups, 'valid': True})
 
     def add_membership(self, data):
         data = json.loads(data)
