@@ -138,7 +138,7 @@ def addLocation():
 @app.route('/submitLocationVote', methods=['POST'])
 def submitLocationVote():
     data = request.get_data()
-    res = db.submit_location_vote(data)
+    res = db.submit_location_vote(data, session['eventDetailsID'])
     return res
 
 @app.route('/createEvent', methods=['POST'])
