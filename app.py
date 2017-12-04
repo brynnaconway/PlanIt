@@ -110,18 +110,27 @@ def add_membership():
     res = db.add_membership(data)
     return res
 
-@app.route('/eventDetails')
+@app.route('/setEventDetailsID', methods=['POST'])
+def setEventDetailsID():
+    data = request.get_data()
+    print "DATA: ", data 
+    eventID = data.split('=')[1]
+    print "eventID: ", eventID
+    session['eventDetailsID'] = eventID
+    #return redirect(url_for('eventDetails'))
+    return eventID
+
+@app.route('/eventDetails', methods=['POST', 'GET'])
 def eventDetails():
-    #eventID = session['eventID'] //To be uncommented when merged with Brynna's code 
-    eventID = 1;
+    print "session[eventDetailsID]: ", session['eventDetailsID']
+    eventID = session['eventDetailsID']
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
-    locationIDs = db.query('''SELECT locationID FROM locations where eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', locations = locations, locationIDs = locationIDs)
+    return render_template('eventDetails.html', locations = locations)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
     data = request.get_data()
-    res = db.add_location(data)
+    res = db.add_location(data, session['eventDetailsID'])
     return res
 
 @app.route('/submitLocationVote', methods=['POST'])

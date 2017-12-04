@@ -153,10 +153,10 @@ class DB(object):
             return jsonify({'valid':True})
 
 
-    def add_location(self, data):
+    def add_location(self, data, eventID):
         print('INSERTING new location')
         #eventID = session['eventID']
-        eventID = 1;
+        eventID = eventID;
         data = deserialize(data)
         location = urllib.unquote_plus(data['location'])
         res = self.query('''INSERT into locations (location, eventID, votes) VALUES ('{}', {}, 0);'''.format(location, eventID))
