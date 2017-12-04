@@ -45,12 +45,13 @@ def signIn():
     else:
        return render_template('root.html')
 
-@app.route('/dashboard')  
+@app.route('/dashboard', methods=['POST', 'GET'])  
 def dashboard():
     try:
         personID = session['personID']
         eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
-        return render_template('dashboard.html', eventIDs=eventIDs)
+        names = db.single_attr_query('''SELECT eventName FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
+        return render_template('dashboard.html', eventData=zip(eventIDs, names))
     except Exception as e:
         print(e)
         return redirect(url_for('homepage'))
@@ -116,6 +117,7 @@ def eventDetails():
 @app.route('/createEvent', methods=['POST'])
 def createEvent():
     data = request.get_data()
+    print "data: ", data
     res = db.add_event(data)
     return res
 
