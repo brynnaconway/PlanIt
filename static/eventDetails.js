@@ -15,7 +15,6 @@ $(function () {
         });
     });
 });
-
 $(function () {
     $('#textinputNewLocation').change(function () {
         let input = document.getElementById('newLocation').value;
@@ -37,9 +36,30 @@ $(function () {
             },
             error: function (error) {
                 console.log(error)
+
             }
         });
     });
+
+});
+
+$(function () {
+    $('#btnSubmitLocationVote').click(function () {
+        $.ajax({
+            url: '/submitLocationVote',
+            data: {submit_vote: true, location: $("input[name=optionsRadios]:checked").val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+                // document.getElementById("existingGroupBtn").style.visibility = "visible";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
 });
 
 

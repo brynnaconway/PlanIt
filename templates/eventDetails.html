@@ -29,11 +29,12 @@
             <legend>Choose a location for your adventure</legend>
             {% for location in locations %}
                 {% for l in location %}
+
                     <div class="form-check">
 
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios"
-                                   value={{ location }} checked="">
+                            <input type="radio" id="location" class="form-check-input" name="optionsRadios"
+                                   value="{{ l }}" checked="">
                             {{ l }}
                         </label>
 
@@ -42,39 +43,30 @@
             {% endfor %}
         </fieldset>
 
-        <div class="col-lg-6" id="textinputNewLocation">
-            <div class="input-group">
-                <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
-                       list="suggestionList">
-                <datalist id="suggestionList">
-                </datalist>
-                <span class="input-group-btn">
+    </div>
+
+    <div class="col-lg-6" id="textinputNewLocation">
+        <div class="input-group">
+            <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
+                   list="suggestionList">
+            <datalist id="suggestionList">
+            </datalist>
+            <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
                                  </span>
-            </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
 
-    </div>
-    <!--<h1>Event Dashboard</h1>
+</div>
 
-                    <ul>
-                        {% for event in eventIDs %}
-                        <li> 
-                            <a href = "/eventDetails"> {{event}} </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <div class="members-count"></div>
-                    <div class="members-list"></div>
-                    <div class="messages"></div>
-                    <form class="message-form" id="message-form" onsubmit="return false;">
-                        <input class="message-form__input" placeholder="Type a message..." type="text"/>
-                        <input class="message-form__button" value="Send" type="submit"/>
-                    </form>
-                </div> !-->
-    <footer class="footer">
-        <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
-    </footer>
+<div>
+    <button type="button" class="btn btn-success" id="btnSubmitLocationVote">Submit your Vote</button>
+</div>
+</div>
+
+<footer class="footer">
+    <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
+</footer>
 
 </div>
 
