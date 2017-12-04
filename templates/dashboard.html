@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
     <link rel="stylesheet" type="text/css" href="/static/background.css">
     <link rel="stylesheet" type="text/css" href="/static/dashboard.css">  
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:300,400|Dosis:300|Inconsolata" rel="stylesheet">
 </head>
 
 
@@ -20,7 +21,8 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title w-100 text-primary" id=modalTitle>Create an Event</h3> 
+                    <h3 class="modal-title w-100 text-primary" id=modalTitle>New Event</h3> 
+                    <button type="button" id=closeModal class="close" data-dismiss="modal">&times;</button>                    
                 </div>
                 <div class="modal-body">
                     <form class=form-signin id=newEventForm method=POST>
@@ -165,10 +167,6 @@
 
 
         </div>
-
-        <footer class="footer">
-            <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
-        </footer>
  
     </div>
 

@@ -10,6 +10,9 @@ forgot-password {
   top: 38%; 
   left: 50%; 
   transform: translate(-50%, -50%);
+  font-family: 'Lato', sans-serif;
+  font-family: 'Nixie One', cursive;
+  font-family: 'Fanwood Text', serif;
 }
 
 .title {
