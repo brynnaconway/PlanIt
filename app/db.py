@@ -120,6 +120,7 @@ class DB(object):
         print(data)
         if data['new_group'] == 'true':
             name = urllib.unquote_plus(data['name'])
+            name.replace("'","''")
             print('INSERTING new group')
             res = self.query('''INSERT into groups (groupID, groupName) 
                         VALUES ({},'{}');'''.format(0, name))

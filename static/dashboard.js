@@ -27,6 +27,18 @@ $(function () {
 });
 
 $(function () {
+    $('#myModal').on('hide.bs.modal', function () {
+        document.getElementById("newUserForm").reset();  
+        document.getElementById("newEventForm").reset();
+        document.getElementById("btnCreateNewGroup").style.display = "inline";
+        document.getElementById("newGroupName").readOnly = false;  
+        document.getElementById("searchBox").reset();
+        $("#search-results tr").remove();   
+        // TODO: remove rows from members tables too, except first row                           
+    })
+})
+
+$(function () {
     $('#myModal').on('show.bs.modal', function () {
         document.getElementById("existingGroupSelect").style.display = "block"; 
         document.getElementById("textinputNewGroupName").style.display = "none";
@@ -72,7 +84,7 @@ $(function () {
             success: function (response) {
                 console.log(response);
                 document.getElementById("btnCreateNewGroup").style.display = "none";
-                document.getElementById("newGroupName").setAttribute("readonly", true);
+                document.getElementById("newGroupName").readOnly = true;
                 //window.location = '/pickPeople'
                 document.getElementById("selectPeople").style.display = "block"; 
                 // document.getElementById("existingGroupBtn").style.visibility = "visible";

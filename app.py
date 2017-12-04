@@ -49,8 +49,9 @@ def signIn():
 def dashboard():
     try:
         personID = session['personID']
-        eventIDs = db.single_attr_query('''SELECT eventName FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
-        return render_template('dashboard.html', eventIDs=eventIDs)
+        eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
+        names = db.single_attr_query('''SELECT eventName FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
+        return render_template('dashboard.html', eventData=zip(eventIDs, names))
     except Exception as e:
         print(e)
         return redirect(url_for('homepage'))
