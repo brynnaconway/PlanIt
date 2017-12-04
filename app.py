@@ -45,7 +45,7 @@ def signIn():
     else:
        return render_template('root.html')
 
-@app.route('/dashboard')  
+@app.route('/dashboard', methods=['POST', 'GET'])  
 def dashboard():
     try:
         personID = session['personID']
@@ -117,6 +117,7 @@ def eventDetails():
 @app.route('/createEvent', methods=['POST'])
 def createEvent():
     data = request.get_data()
+    print "data: ", data
     res = db.add_event(data)
     return res
 

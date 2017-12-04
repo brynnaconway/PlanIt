@@ -1,12 +1,13 @@
 /*$(function () {
-    $('#btnAddEvent').click(function () {
+    $('#createEvent').click(function (event) {
+        //console.log("Form data: ", document.getElementById('newEventform').serialize());
+        event.preventDefault();
         $.ajax({
             url: '/createEvent',
+            data: $('newEventform').serialize(),
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                document.getElementById("btnNewGroup").style.display = "inline";
-                document.getElementById("btnExistingGroup").style.display = "inline";
             },
             error: function (error) {
                 console.log(error);
@@ -14,6 +15,26 @@
         });
     });
 }); */
+
+$(function() {
+    $("#newEventForm").submit(function(event) {
+        $.ajax({
+            url: '/createEvent',
+            data: $('#newEventForm').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log("From data: ", $('#newEventForm').serialize());
+                console.log(response);
+                window.location = "/dashboard";
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+        event.preventDefault();
+    });
+});
+
 
 $(function () {
     $('#existingGroupSelect').change(function() {

@@ -23,13 +23,13 @@
                     <h3 class="modal-title w-100 text-primary" id=modalTitle>Create an Event</h3> 
                 </div>
                 <div class="modal-body">
-                    <form id=newEventForm>
+                    <form class=form-signin id=newEventForm method=POST>
                         <fieldset>
                         
                             <!-- Event Name --> 
                             <div class="form-group">
                                 <label for="eventName">Event Name</label>
-                                <input type="text" class="form-control" id="eventName" placeholder="Enter event name">
+                                <input type="text" class="form-control" name=eventName id="eventName" placeholder="Enter event name" required>
                             </div>
 
                             <!-- Choose group --> 
@@ -37,7 +37,7 @@
 
                                 <!-- Dropdown -->                         
                                 <label for="existingGroupSelect" id=groupSelectLabel>Participants (Group)</label>
-                                <select class="form-control" id="existingGroupSelect"></select>
+                                <select class="form-control" id="existingGroupSelect" name=groupID></select>
                                 
                                 <!-- Input box to create new group --> 
                                 <div id="textinputNewGroupName">
@@ -77,7 +77,7 @@
                         
                         <!-- Search box and results for users and button to create new user --> 
                          <div id=addMembersOptions>
-                            <form class="form-signin" id="searchBox">
+                            <form class="form-signin" id="searchBox" method=POST>
                                 <label for="queryName" id=addMembersLabel>Add Members to Group</label> 
                                 <div class="input-group"> 
 
@@ -129,6 +129,7 @@
                 </div> <!-- Closing modal body tag --> 
 
                 <div class="modal-footer">
+                    <button type=submit id=createEvent form=newEventForm value=Submit class="btn btn-primary">Create Event</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

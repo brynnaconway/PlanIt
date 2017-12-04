@@ -100,7 +100,8 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $('#newUserButton').click(function () {
+    $('#newUserButton').click(function (event) {
+        event.preventDefault(); 
         document.getElementById('addMembersOptions').style.display = "none";         
         document.getElementById('newUserForm').style.display = "inline"; 
     });

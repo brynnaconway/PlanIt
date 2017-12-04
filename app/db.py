@@ -153,8 +153,15 @@ class DB(object):
 
 
     def add_event(self, data):
+        d = deserialize(data)
+        eventName = urllib.unquote_plus(d['eventName'])
+        groupID = d['groupID']
+        print "eventName: ", eventName
+        if groupID == "_createNewGroup":
+            groupID = self.query('''SELECT LAST_INSERT_ID() from groups''')[0][0]
+            print "groupID: ", groupID
         print('INSERTING new event')
-        res = self.query('''INSERT into events (eventID) VALUES (0);''')
+        res = self.query('''INSERT into events (eventID, eventName, groupID) VALUES (0, '{}', {});'''.format(eventName, groupID))
         newID = self.query('''SELECT LAST_INSERT_ID() from events''')[0][0]
         print(newID)
         session['eventID'] = newID
