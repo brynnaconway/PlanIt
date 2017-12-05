@@ -62,7 +62,6 @@ $(function () {
             success: function (response) {
                 console.log(response);
                 window.location = '/eventDetails'
-                // document.getElementById("existingGroupBtn").style.visibility = "visible";
             },
             error: function (error) {
                 console.log(error);
