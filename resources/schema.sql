@@ -9,6 +9,7 @@ CREATE TABLE events (
   groupID      INT,
   confirmCount INT,
   admin        INT,
+  location     INT,
   PRIMARY KEY (eventID)
 );
 
@@ -61,6 +62,7 @@ CREATE TABLE votes (
   personID  INT NOT NULL,
   groupID   INT NOT NULL,
   lodgeVote INT,
+  locationVote INT,
   startVote DATETIME,
   stopVote  DATETIME,
   PRIMARY KEY (eventID, personID)
@@ -78,8 +80,8 @@ CREATE TABLE commits (
 DROP TABLE IF EXISTS locations;
 CREATE TABLE locations (
   locationID      INT NOT NULL AUTO_INCREMENT,
-  location    VARCHAR(100),
+  location    VARCHAR(150),
   eventID        INT,
-  votes         INT,
+  votes       INT,
   PRIMARY KEY (locationID, eventID)
 );
