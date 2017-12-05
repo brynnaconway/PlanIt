@@ -164,3 +164,24 @@ body {
   padding-top: 10px; 
 }
 
+.btn-primary {
+  color:#fff;
+  background-color:#2C3E50;
+  border-color:#2C3E50
+}
+
+.btn-primary:hover{
+  color:#fff;
+  background-color:#1e2b37;
+  border-color:#1a252f
+}
+
+.btn-primary:focus,.btn-primary.focus {
+  -webkit-box-shadow:0 0 0 0.2rem rgba(44,62,80,0.5);
+  box-shadow:0 0 0 0.2rem rgba(44,62,80,0.5)
+}
+  
+.btn-primary.disabled,.btn-primary:disabled {
+  background-color:#2C3E50;
+  border-color:#2C3E50
+}
