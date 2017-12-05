@@ -86,7 +86,29 @@
                     <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info</div>
 
                 </div>
+                {% endfor %}
+                {% endfor %}
+            </fieldset>
 
+            <div class="col-lg-6" id="textinputNewLocation">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
+                    list="suggestionList">
+                    <datalist id="suggestionList">
+                    </datalist>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
+                    </span>
+
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+
+            <div>
+                <button type="button" class="btn btn-success" id="btnSubmitLocationVote">Submit your Vote</button>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-info" id="btnClosePoll" value="{{ adminBool }}" onclick="submitLocation()">Close this Poll</button>
             </div>
         </div>
     </div>

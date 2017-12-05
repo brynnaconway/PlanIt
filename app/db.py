@@ -178,6 +178,14 @@ class DB(object):
         else:
             return json.dumps({'error': str(data[0])})
 
+    def submit_location(self, eventID, location):
+        eventID = eventID
+        res = self.query('''UPDATE events SET locationID = (select locationID from locations where eventID = {} and location = '{}');'''.format(eventID, location))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location updated in events !','id':eventID})
+        else:
+            return json.dumps({'error': str(data[0])})
+
     def add_event(self, data):
         d = deserialize(data)
         eventName = urllib.unquote_plus(d['eventName'])
