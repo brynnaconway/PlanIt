@@ -12,6 +12,7 @@
 
 #jumbotronContent {
     padding: 15px; 
+    padding-top: 20px; 
 }
 
 .nav-tabs .nav-link {
@@ -26,6 +27,27 @@
     background-color: #eee;
     border: 1px solid #eee;
     border-bottom-color: transparent;
+}
+
+#radioLabel {
+    padding-left: 2rem; 
+}
+
+#location {
+    margin: 2.5px; 
+}
+
+#radioFieldset {
+    margin-bottom: 3px;
+}
+
+#textinputNewLocation {
+    padding-left: 0px; 
+    margin-bottom: 20px; 
+}
+
+#btnClosePoll {
+    margin-left: 8px; 
 }
 
 /*.members-count,

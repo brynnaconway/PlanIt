@@ -135,12 +135,13 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
+                console.log("groupID: ", response['id']);
                 document.getElementById("btnCreateNewGroup").style.display = "none";
                 document.getElementById("newGroupName").readOnly = true;
                 //window.location = '/pickPeople'
                 document.getElementById("selectPeople").style.display = "block";
                 // document.getElementById("existingGroupBtn").style.visibility = "visible";
-                cache.save(response[id], 'groupID')
+                cache.save(response['id'], 'groupID')
 
             },
             error: function (error) {

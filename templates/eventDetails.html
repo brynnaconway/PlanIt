@@ -44,26 +44,20 @@
 
                     <!-- Locations tab content --> 
                     <div class="tab-pane active" id="locations" role="tabpanel">
-                        <fieldset class="form-group">
+                        <fieldset class="form-group" id=radioFieldset>
                             <legend>Choose a location for your adventure</legend>
                             {% for location in locations %}
                             {% for l in location %}
 
                             <div class="form-check">
-
-                                <label class="form-check-label">
-                                    <input type="radio" id="location" class="form-check-input" name="optionsRadios"
-                                    value="{{ l }}" checked="">
-                                    {{ l }}
-                                </label>
-
+                                <input type="radio" id="location" class="form-check-input" name="optionsRadios" value="{{ l }}" checked="">
+                                <label class="form-check-label" id=radioLabel>{{ l }}</label>
                             </div>
                             {% endfor %}
                             {% endfor %}
                         </fieldset>
 
-
-                        <div class="col-lg-6" id="textinputNewLocation">
+                        <div class="col-6" id="textinputNewLocation">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
                                 list="suggestionList">
@@ -76,11 +70,11 @@
                         </div><!-- /.col-lg-6 -->
 
                         <div>
-                            <button type="button" class="btn btn-success" id="btnSubmitLocationVote">Submit your Vote</button>
+                            <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote</button>
+                            <button type="button" class="btn btn-danger" id="btnClosePoll" value="{{ adminBool }}" onclick="submitLocation()">Close this Poll</button>                            
                         </div>
 
                         <div>
-                            <button type="button" class="btn btn-info" id="btnClosePoll" value="{{ adminBool }}" onclick="submitLocation()">Close this Poll</button>
                         </div>
                     </div>
 
