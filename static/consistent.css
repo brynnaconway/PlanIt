@@ -1,0 +1,46 @@
+.w3-container {
+  padding-left: 50px; 
+  padding-right: 50px;
+}
+
+.jumbotron {
+  padding-top: 5px; 
+  padding-top: 5px; 
+  padding-left: 30px; 
+  padding-right:30px;
+  border-radius: 7px; 
+}
+
+.navbar {
+  margin-bottom: 5px; 
+  padding-bottom: 0px;
+}
+#navbarHome {
+  margin-right : auto;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.btn-primary {
+  color:#fff;
+  background-color:#2C3E50;
+  border-color:#2C3E50
+}
+
+.btn-primary:hover{
+  color:#fff;
+  background-color:#1e2b37;
+  border-color:#1a252f
+}
+
+.btn-primary:focus,.btn-primary.focus {
+  -webkit-box-shadow:0 0 0 0.2rem rgba(44,62,80,0.5);
+  box-shadow:0 0 0 0.2rem rgba(44,62,80,0.5)
+}
+  
+.btn-primary.disabled,.btn-primary:disabled {
+  background-color:#2C3E50;
+  border-color:#2C3E50;
+}
