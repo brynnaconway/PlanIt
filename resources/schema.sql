@@ -4,6 +4,7 @@ CREATE TABLE events (
   eventName    VARCHAR(30),
   start        DATETIME,
   stop         DATETIME,
+  locationID   INT, 
   lodgeID      INT,
   groupID      INT,
   confirmCount INT,

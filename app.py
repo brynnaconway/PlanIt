@@ -126,8 +126,16 @@ def setEventDetailsID():
 def eventDetails():
     print "session[eventDetailsID]: ", session['eventDetailsID']
     eventID = session['eventDetailsID']
+    admin = db.query('''SELECT admin from events where eventID = {};'''.format(eventID))
+    if int(admin[0][0]) == int(session['personID']):
+        print "IN***"
+        adminBool = True
+    else:
+        print "FALSE*****"
+        adminBool = False
+    print "adminBOOL: ", adminBool
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', locations = locations)
+    return render_template('eventDetails.html', locations = locations, adminBool = adminBool)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
@@ -139,6 +147,14 @@ def addLocation():
 def submitLocationVote():
     data = request.get_data()
     res = db.submit_location_vote(data, session['eventDetailsID'])
+    return res
+
+@app.route('/submitLocation', methods=['POST'])
+def submitLocation():
+    eventID = session['eventDetailsID']
+    location = db.query('''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    print "LOCATION: ", location[0][0]
+    res = db.submit_location(eventID, location[0][0])
     return res
 
 @app.route('/createEvent', methods=['POST'])

@@ -1,3 +1,13 @@
+window.onload = function() {
+    let adminBool = $('#btnClosePoll').val();
+    console.log("adminBool: ", adminBool);
+    if (String(adminBool) == "False"){
+        document.getElementById('btnClosePoll').style.display = 'none';
+    }
+    return true;
+}
+
+
 $(function () {
     $('#btnAddNewLocation').click(function () {
         $.ajax({
@@ -62,7 +72,19 @@ $(function () {
 
 });
 
-
+function submitLocation() {
+    $.ajax({
+            url: '/submitLocation',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+}
 /*const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
 const drone = new ScaleDrone(CHANNEL_ID, {
     data: {
