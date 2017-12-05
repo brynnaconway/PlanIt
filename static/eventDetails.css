@@ -1,20 +1,17 @@
 .jumbotron {
     padding: 0px; 
     border-top-left-radius: 0px; 
-    border-top-right-radius: 0px; 
+    border-top-right-radius: 0.35rem; 
 }
 
 #tabs {
     border-top-left-radius: 0.55rem;
     border-top-right-radius: 0.55rem;
+    margin-top: 5px;
 }
 
 #jumbotronContent {
     padding: 15px; 
-}
-
-.nav-link:active {
-    background-color: #cfd9db
 }
 
 .nav-tabs .nav-link {
@@ -23,11 +20,14 @@
     color: #2C3E50;
 }
 
-#leftTab {
-    border-top: 2px solid #2C3E50;
-    border-left: 2px solid #2C3E50;
-    border-right: 2px solid #2C3E50;
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #2C3E50;
+    cursor: default;
+    background-color: #eee;
+    border: 1px solid #eee;
+    border-bottom-color: transparent;
 }
+
 /*.members-count,
 .members-list,
 .messages {

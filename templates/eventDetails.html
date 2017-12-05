@@ -24,57 +24,69 @@
     <div class="w3-container">
 
         <!-- Tabs --> 
-        <ul class="nav nav-tabs w-100" id="tabs">
+        <ul class="nav nav-tabs w-100" role=tablist id="tabs">
             <li class="nav-item">
-                <a class="nav-link leftTab" data-toggle="tab" href="#locations">Destination</a>
+                <a class="nav-link" id=defaultTab data-toggle="tab" href="#locations" role=tab>Destination</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link middleTab" data-toggle="tab" href="#time">Time</a>
+                <a class="nav-link" id=tab data-toggle="tab" href="#time" role=tab>Time</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link rightTab" data-toggle="tab" href="#lodging">Lodging</a>
+                <a class="nav-link" id=tab data-toggle="tab" href="#lodging" role=tab>Lodging</a>
             </li>
         </ul>
 
         <div class="jumbotron">
             <div id=jumbotronContent> 
 
-                <fieldset class="form-group">
-                    <legend>Choose a location for your adventure</legend>
-                    {% for location in locations %}
-                    {% for l in location %}
+                <!-- Tab panes -->
+                <div class="tab-content">
 
-                    <div class="form-check">
+                    <!-- Locations tab content --> 
+                    <div class="tab-pane active" id="locations" role="tabpanel">
+                        <fieldset class="form-group">
+                            <legend>Choose a location for your adventure</legend>
+                            {% for location in locations %}
+                            {% for l in location %}
 
-                        <label class="form-check-label">
-                            <input type="radio" id="location" class="form-check-input" name="optionsRadios"
-                            value="{{ l }}" checked="">
-                            {{ l }}
-                        </label>
+                            <div class="form-check">
 
+                                <label class="form-check-label">
+                                    <input type="radio" id="location" class="form-check-input" name="optionsRadios"
+                                    value="{{ l }}" checked="">
+                                    {{ l }}
+                                </label>
+
+                            </div>
+                            {% endfor %}
+                            {% endfor %}
+                        </fieldset>
+
+                        <div class="col-lg-6" id="textinputNewLocation">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
+                                list="suggestionList">
+                                <datalist id="suggestionList">
+                                </datalist>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-success" id="btnSubmitLocationVote">Submit your Vote</button>
+                        </div>
                     </div>
-                    {% endfor %}
-                    {% endfor %}
-                </fieldset>
 
+                    <!-- Time tab content --> 
+                    <div class="tab-pane" id="time" role="tabpanel">Time</div>
 
+                    <!-- Lodging tab content --> 
+                    <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info</div>
 
-                <div class="col-lg-6" id="textinputNewLocation">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
-                        list="suggestionList">
-                        <datalist id="suggestionList">
-                        </datalist>
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
-                        </span>
-
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-
-                <div>
-                    <button type="button" class="btn btn-success" id="btnSubmitLocationVote">Submit your Vote</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -85,6 +97,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
 <script src="/static/root.js"></script>
 <script src="/static/eventDetails.js"></script>
 

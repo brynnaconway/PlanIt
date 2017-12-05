@@ -1,3 +1,7 @@
+window.onload = function() {
+    $('#tabs a:first').tab('show'); 
+}
+
 $(function () {
     $('#btnAddNewLocation').click(function () {
         $.ajax({
