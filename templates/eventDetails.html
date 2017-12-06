@@ -18,7 +18,7 @@
 
 <!-- Top Navbar -->
 <nav class="navbar">
-    <a class="navbar-brand text-primary" id=navbarHome href="/dashboard">Home</a>
+    <a class="navbar-brand text-primary" id=navbarHome href="/dashboard">Dashboard</a>
     <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
 </nav>
 
@@ -45,41 +45,48 @@
 
                 <!-- Locations tab content -->
                 <div class="tab-pane active" id="locations" role="tabpanel">
-                    <fieldset class="form-group" id=radioFieldset>
-                        <legend>Choose a location for your adventure</legend>
-                        {% for location in locations %}
-                            {% for l in location %}
+                    <div id=locationsInProgressContent>
+                        <fieldset class="form-group" id=radioFieldset>
+                            <legend>Choose a location for your adventure</legend>
+                            {% for location in locations %}
+                                {% for l in location %}
 
-                                <div class="form-check">
-                                    <input type="radio" id="location" class="form-check-input" name="optionsRadios"
-                                           value="{{ l }}" checked="">
-                                    <label class="form-check-label" id=radioLabel>{{ l }}</label>
-                                </div>
+                                    <div class="form-check">
+                                        <input type="radio" id="location" class="form-check-input" name="optionsRadios"
+                                               value="{{ l }}" checked="">
+                                        <label class="form-check-label" id=radioLabel>{{ l }}</label>
+                                    </div>
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                    </fieldset>
+                        </fieldset>
 
-                    <div class="col-6" id="textinputNewLocation">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
-                                   list="suggestionList">
-                            <datalist id="suggestionList">
-                            </datalist>
-                            <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
-                                </span>
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
+                        <div class="col-6" id="textinputNewLocation">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="newLocation"
+                                       placeholder="Or add a new location"
+                                       list="suggestionList">
+                                <datalist id="suggestionList">
+                                </datalist>
+                                <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button"
+                                                id="btnAddNewLocation">Add!</button>
+                                    </span>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
 
-                    <div>
-                        <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote
-                        </button>
-                        <button type="button" class="btn btn-danger" id="btnClosePoll" value="{{ adminBool }}"
-                                onclick="submitLocation()">Close this Poll
-                        </button>
-                    </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote
+                            </button>
+                            <button type="button" class="btn btn-danger" id="btnCloseLocationsPoll"
+                                    value="{{ adminBool }}">Close this Poll
+                            </button>
+                        </div>
 
-                    <div>
+                    </div> <!-- /inProgressContent -->
+
+                    <div id=finalizedLocationContent>
+                        <legend id=chosenDestination>Chosen Destination:</legend>
+                        <h1 id=destinationName>{{ finalLocation }}</h1>
                     </div>
                 </div>
 
@@ -158,6 +165,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Lodging tab content -->
                 <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info
                     <div class="tab-pane active" id="locations" role="tabpanel">
@@ -173,8 +181,8 @@
                                     <th>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" id='regular'
-                                                       name="lodgingRadio">{{ name }}</label>
+                                                <input type="radio" id='regular' name="lodgingRadio"
+                                                       value="{{ name }}">{{ name }}</label>
                                         </div>
                                     </th>
                                     <th>{{ address }}</th>
@@ -187,8 +195,8 @@
 
                     </div>
 
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-                            data-target="#myModal">New Lodging
+                    <button id="addLodgebtn" type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#myModal">Add a Lodge
                     </button>
 
                     <div class="modal fade" id="myModal" role="dialog">
@@ -197,19 +205,18 @@
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;
-                                    </button>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <form class="form-signin" id="newLodgeForm" method=POST>
                                         <fieldset>
-                                            <legend id="newLodgeInfoLegend" style="font-size: 125%;">New
-                                                Lodge Information
+                                            <legend id="newLodgeInfoLegend" style="font-size: 125%;">New Lodge
+                                                Information
                                             </legend>
                                             <div class="form-group">
                                                 <label for="newLodgeName">Lodge Name</label>
-                                                <input type="text" class="form-control" name=lodgeName
-                                                       id="newLodgeName" placeholder="ABC Hotel">
+                                                <input type="text" class="form-control" name=lodgeName id="newLodgeName"
+                                                       placeholder="ABC Hotel">
                                             </div>
 
                                             <div class="form-group">
@@ -220,8 +227,8 @@
 
                                             <div class="form-group">
                                                 <label for="newLodgeURL">URL (Not required)</label>
-                                                <input type="text" class="form-control" name=lodgeURL
-                                                       id="newLodgeURL" placeholder="www.abc.com">
+                                                <input type="text" class="form-control" name=lodgeURL id="newLodgeURL"
+                                                       placeholder="www.abc.com">
                                             </div>
 
                                             <div class="form-group">
@@ -231,36 +238,49 @@
                                             </div>
                                         </fieldset>
 
-                                        <button type=submit value=Submit class="btn btn-primary"
-                                                id="btnAddNewLodge" form=newLodgeForm>Add Lodge Option
+                                        <button type=submit value=Submit class="btn btn-primary" id="btnAddNewLodge"
+                                                form=newLodgeForm>Add Lodge Option
                                         </button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Close
-                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
+
                             </div>
+
+
                         </div>
+                    </div>
+                    <div id="buttonDiv">
+                        <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote for
+                            Lodging
+                        </button>
 
-
-                    </div> <!-- close lodging tab content -->
-                </div>
-
+                        <button type="button" class="btn btn-danger" id="btnCloseLodgePoll" value="{{ adminBool }}"
+                                onclick="submitLodge()">Close this Poll
+                        </button>
+                    </div>
+                </div> <!-- close lodging tab content -->
             </div>
+
         </div>
     </div>
+</div>
 
+<button type="button" class="btn" style="visibility: hidden; width:0px" id="inProgressData"
+        value="{{ inProgressData[0] }}" onclick=""></button>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
-    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
-    <script src="/static/root.js"></script>
-    <script src="/static/eventDetails.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+<script src="/static/root.js"></script>
+<script src="/static/eventDetails.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
 </body>
 </html>
+

@@ -56,6 +56,7 @@ body {
 }
 
 .jumbotron {
+  background-color: rgba(238, 238, 238, .8);
   padding-top: 5px; 
   padding-top: 5px; 
   padding-left: 30px; 
@@ -134,7 +135,9 @@ body {
 }
 
 #btnPeopleSearch {
-  border-radius: 3px; 
+  border-bottom-right-radius: 3px; 
+  border-top-right-radius: 3px; 
+  padding-bottom: 7px; 
 }
 
 #btnConfirmGroup {
