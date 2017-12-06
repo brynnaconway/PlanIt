@@ -7,6 +7,8 @@ const drone = new ScaleDrone(CHANNEL_ID, {
     },
 });
 
+let members = [];
+
 const DOM = {
     membersCount: document.querySelector('.members-count'),
     membersList: document.querySelector('.members-list'),
@@ -78,6 +80,14 @@ drone.on('open', error=> {
     });
 });
 
+drone.on('close', event => {
+    console.log('Connectionn was closed', event);
+});
+
+drone.on('error', error => {
+    console.error(error);
+});
+
 window.onload = function() {
     $('#tabs a:first').tab('show'); 
     let adminBool = $('#btnClosePoll').val();
@@ -105,6 +115,7 @@ $(function () {
         });
     });
 });
+
 $(function () {
     $('#textinputNewLocation').change(function () {
         let input = document.getElementById('newLocation').value;
@@ -133,16 +144,6 @@ $(function () {
 
 });
 
-function createMemberElement(member) {
-    const { name, color } = member.clientData;
-    console.log(member.clientData);
-    const el = document.createElement('div');
-    // here is where colon and timestamp can be added i think
-    el.appendChild(document.createTextNode(name));
-    el.className = 'member';
-    el.style.color = color;
-    return el;
-}
       
 $(function () {
     $('#btnSubmitLocationVote').click(function () {
@@ -176,16 +177,8 @@ function submitLocation() {
         });
 }
 
-function addMessageToListDOM(text, member) {
-    const el = DOM.messages;
-    const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
-    el.appendChild(createMessageElement(text, member));
-    if(wasTop) {
-        el.scrollTop = el.scrollHeight - el.clientHeight;
-    }
-}
-
 DOM.form.addEventListener('submit', sendMessage);
+
 function sendMessage() {
     const value = DOM.input.value; // value is message for messages table
     var dt = new Date($.now());
@@ -217,6 +210,42 @@ function sendMessage() {
             console.log(err);
         }
     });
+}
+
+function createMemberElement(member) {
+    const { name, color } = member.clientData;
+    console.log(member.clientData);
+    const el = document.createElement('div');
+    // here is where colon and timestamp can be added i think
+    el.appendChild(document.createTextNode(name));
+    el.className = 'member';
+    el.style.color = color;
+    return el;
+}
+
+function updateMembersDOM() {
+    DOM.membersCount.innerText = `${members.length} users in room:`;
+    DOM.membersList.innerHTML = '';
+    members.forEach(member =>
+        DOM.membersList.appendChild(createMemberElement(member))
+    );
+}
+
+function createMessageElement(text, member) {
+    const el = document.createElement('div');
+    el.appendChild(createMemberElement(member));
+    el.appendChild(document.createTextNode(text));
+    el.className = 'message';
+    return el;
+}
+
+function addMessageToListDOM(text, member) {
+    const el = DOM.messages;
+    const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
+    el.appendChild(createMessageElement(text, member));
+    if(wasTop) {
+        el.scrollTop = el.scrollHeight - el.clientHeight;
+    }
 }
 
 function showMessages() {

@@ -37,7 +37,17 @@
         </ul>
 
         <div class="jumbotron">
+            <div id="chatbox" class="chatbox">
+                <div class="members-count"></div>
+                <div class="members-list"></div>
+                <div class="messages"></div>
+                <form class="message-form" id="message-form" onsubmit="return false;">
+                    <input class="message-form__input" placeholder="Type a message..." type="text"/>
+                    <input class="message-form__button" value="Send" type="submit"/>
+                </form>
+   </div>
             <div id=jumbotronContent> 
+               <button id="chatButton" class="chatButton" onclick="showMessages()">Chat</button>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
@@ -169,15 +179,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
-  <div id="chatbox" class="chatbox">
-                        <div class="members-count"></div>
-                        <div class="members-list"></div>
-                        <div class="messages"></div>
-                        <form class="message-form" id="message-form" onsubmit="return false;">
-                            <input class="message-form__input" placeholder="Type a message..." type="text"/>
-                            <input class="message-form__button" value="Send" type="submit"/>
-                        </form>
-   </div>
-   <button id="chatButton" class="chatButton" onclick="showMessages()">Chat</button>
+
 </body>
 </html>
