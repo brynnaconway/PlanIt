@@ -134,7 +134,9 @@ body {
 }
 
 #btnPeopleSearch {
-  border-radius: 3px; 
+  border-bottom-right-radius: 3px; 
+  border-top-right-radius: 3px; 
+  padding-bottom: 7px; 
 }
 
 #btnConfirmGroup {
