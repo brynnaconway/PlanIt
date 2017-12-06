@@ -1,4 +1,6 @@
 window.onload = function() {
+    if data = "lodge":
+        console.log("LODGE")
     $('#tabs a:first').tab('show'); 
     let adminBool = $('#btnClosePoll').val();
     console.log("adminBool: ", adminBool);
@@ -95,13 +97,13 @@ $(function () {
             success: function (response) {
                 console.log("From data: ", $('#newLodgeForm').serialize());
                 console.log(response);
-                window.location = "/eventDetails";
+                window.location = "/eventDetails?data=lodge";
             },
             error: function (error) {
                 console.log(error);
             }
         });
-        event.preventDefault();
+        //event.preventDefault();
     });
 });
 
