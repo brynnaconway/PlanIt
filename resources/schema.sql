@@ -73,3 +73,12 @@ CREATE TABLE commits (
   decision BIT,
   PRIMARY KEY (personID, eventID)
 );
+
+DROP TABLE IF EXISTS messages;
+CREATE TABLE messages (
+    personID INT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    eventID INT NOT NULL,
+    message VARCHAR(256),
+    PRIMARY KEY (personID, timestamp)
+);
