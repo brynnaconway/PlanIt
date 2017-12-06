@@ -82,18 +82,92 @@
                     <div class="tab-pane" id="time" role="tabpanel">Time</div>
 
                     <!-- Lodging tab content --> 
-                    <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info</div>
-                </div>
+                    <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info
+                        <div class="tab-pane active" id="locations" role="tabpanel">
+                            <table>
+                              <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>url</th>
+                                <th>Price</th>
+                            </tr> 
+                            {% for name, address, url, price in lodgeData %}
+                            <tr>
+                                <th> 
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" id='regular' name="lodgingRadio">{{ name }}</label>
+                                        </div>
+                                    </th> 
+                                    <th>{{ address }}</th>
+                                    <th>{{ url }}</th>
+                                    <th>{{ price }}</th>
+                                </tr>
+                                {% endfor %}
 
-        </div>
-    </div>
+                            </table>
+
+                        </div>
+                        
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>  
+
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              </div>
+                              <div class="modal-body">
+                                  <form class="form-signin" id="newLodgeForm" method=POST>
+                                    <fieldset>
+                                      <legend id="newLodgeInfoLegend" style="font-size: 125%;">New Lodge Information</legend>
+                                      <div class="form-group">
+                                        <label for="newLodgeName">Lodge Name</label>
+                                        <input type="text" class="form-control" name=lodgeName id="newLodgeName" placeholder="ABC Hotel">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newLodgeAddress">Lodge Address</label>
+                                        <input type="text" class="form-control" name=lodgeAddress id="newLodgeAddress" placeholder="12345 ABC Street">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newLodgeURL">URL (Not required)</label>
+                                        <input type="text" class="form-control" name=lodgeURL id="newLodgeURL" placeholder="www.abc.com">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newLodgePrice">Price</label>
+                                        <input type="number" class="form-control" name=lodgePrice id="newLodgePrice" placeholder="100">
+                                    </div>
+                                    </fieldset>
+
+                                    <button type=submit value=Submit class="btn btn-primary" id="btnAddNewLodge" form=newLodgeForm >Add Lodge Option</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+
+          </div> <!-- close lodging tab content -->
+      </div>
+
+  </div>
 </div>
-
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
 <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
 <script src="/static/root.js"></script>
 <script src="/static/eventDetails.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
 </body>
 </html>

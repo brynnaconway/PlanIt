@@ -31,9 +31,12 @@ CREATE TABLE groups (
 DROP TABLE IF EXISTS lodging;
 CREATE TABLE lodging (
   lodgeID INT          NOT NULL AUTO_INCREMENT,
+  eventID INT,
+  name   VARCHAR(60),
   price   REAL         NOT NULL,
   address VARCHAR(100) NOT NULL,
   url     VARCHAR(200),
+  votes   INT,
   PRIMARY KEY (lodgeID)
 );
 

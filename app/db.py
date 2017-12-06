@@ -186,6 +186,23 @@ class DB(object):
         else:
             return json.dumps({'error': str(data[0])})
 
+    def add_lodge(self, data, eventID):
+        d = deserialize(data)
+        lodgeName = urllib.unquote_plus(d['lodgeName'])
+        lodgeName.replace("'","''")
+        lodgeAddress = urllib.unquote_plus(d['lodgeAddress'])
+        lodgeAddress.replace("'","''")
+        lodgeURL = urllib.unquote_plus(d['lodgeURL'])
+        lodgePrice = d['lodgePrice']
+        print('INSERTING new lodge')
+        print "lodgeName: ", lodgeName
+        res = self.query('''INSERT into lodging (name, address, url, price, votes, eventID) VALUES ('{}', '{}', '{}', {}, 0, {});'''.format(lodgeName, lodgeAddress, lodgeURL, lodgePrice, eventID))
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Lodge added successfully !'})
+        else:
+            return json.dumps({'error': str(data[0])})
+
     def add_event(self, data):
         d = deserialize(data)
         eventName = urllib.unquote_plus(d['eventName'])

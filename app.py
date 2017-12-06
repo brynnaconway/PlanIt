@@ -135,7 +135,8 @@ def eventDetails():
         adminBool = False
     print "adminBOOL: ", adminBool
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', locations = locations, adminBool = adminBool)
+    lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
+    return render_template('eventDetails.html', locations = locations, adminBool = adminBool, lodgeData = lodgeData)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
@@ -155,6 +156,13 @@ def submitLocation():
     location = db.query('''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
     print "LOCATION: ", location[0][0]
     res = db.submit_location(eventID, location[0][0])
+    return res
+
+@app.route('/addlodge', methods=['POST'])
+def addLodge():
+    data = request.get_data()
+    print "LODGE data: ", data
+    res = db.add_lodge(data, session['eventDetailsID'])
     return res
 
 @app.route('/createEvent', methods=['POST'])
