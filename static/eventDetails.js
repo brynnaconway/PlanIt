@@ -1,5 +1,5 @@
 window.onload = function() {
-    var url = location.href;
+    /*var url = location.href;
     url = url.split("data=")[1]
     console.log(url)
     if (String(url) == "lodge") {
@@ -7,13 +7,9 @@ window.onload = function() {
     }
     else {
         $('#tabs a:first').tab('show');
-    }
+    }*/
+    $('#tabs a:first').tab('show');
 
-    /*if url == "lodge":
-    #    $('#tabs a:third').tab('show');
-    else if url == "location":
-        $('#tabs a:first').tab('show'); 
-    else*/
 
     let adminBool = $('#btnClosePoll').val();
     console.log("adminBool: ", adminBool);
@@ -110,7 +106,7 @@ $(function () {
             success: function (response) {
                 console.log("From data: ", $('#newLodgeForm').serialize());
                 console.log(response);
-                window.location = "/eventDetails?data=lodge";
+                window.location = "/eventDetails";
             },
             error: function (error) {
                 console.log(error);

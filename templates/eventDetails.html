@@ -109,8 +109,8 @@
 
                         </div>
                         
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open Modal</button>  
-
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add a Lodge</button>  
+                    
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">
 
@@ -149,12 +149,18 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
+                          </div>  
+
                       </div>
+
 
                   </div>
               </div>
-
+              <div>
+                                              <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote</button>
+                        
+                        <button type="button" class="btn btn-danger" id="btnCloseLodgePoll" value="{{ adminBool }}" onclick="submitLodge()">Close this Poll</button>
+            </div>
           </div> <!-- close lodging tab content -->
       </div>
 
