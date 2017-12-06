@@ -203,6 +203,27 @@ class DB(object):
         else:
             return json.dumps({'error': str(data[0])})
 
+    def submit_lodge_vote(self, data, eventID):
+        print('UPDATING lodge vote')
+        eventID = eventID;
+        data = deserialize(data)
+        lodgeName = urllib.unquote_plus(data['lodgeName'])
+        print "LodgeName: " , lodgeName
+        res = self.query('''UPDATE lodging set votes = votes + 1 where name = '{}' and eventID = {};'''.format(lodgeName, eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location vote updated successfully !','id':lodgeName})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def submit_lodge(self, eventID, lodgeID):
+        eventID = eventID
+        lodgeID = lodgeID
+        res = self.query('''UPDATE events SET lodgeID = {} where eventID = {};'''.format(lodgeID, eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location updated in events !','id':lodgeID})
+        else:
+            return json.dumps({'error': str(data[0])})
+
     def add_event(self, data):
         d = deserialize(data)
         eventName = urllib.unquote_plus(d['eventName'])

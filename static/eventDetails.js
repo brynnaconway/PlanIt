@@ -15,7 +15,10 @@ window.onload = function() {
     console.log("adminBool: ", adminBool);
     if (String(adminBool) == "False"){
         document.getElementById('btnClosePoll').style.display = 'none';
+        document.getElementById('btnCloseLodgePoll').style.display = 'none';
+
     }
+
     return true;
 }
 
@@ -82,9 +85,41 @@ $(function () {
 
 });
 
+$(function () {
+    $('#btnSubmitLodgeVote').click(function () {
+        $.ajax({
+            url: '/submitLodgeVote',
+            data: {submit_vote: true, lodgeName: $("input[name=lodgingRadio]:checked").val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+});
+
 function submitLocation() {
     $.ajax({
             url: '/submitLocation',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+}
+
+function submitLodge() {
+    $.ajax({
+            url: '/submitLodge',
             type: 'POST',
             success: function (response) {
                 console.log(response);

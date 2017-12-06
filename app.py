@@ -158,11 +158,25 @@ def submitLocation():
     res = db.submit_location(eventID, location[0][0])
     return res
 
+@app.route('/submitLodge', methods=['POST'])
+def submitLodge():
+    eventID = session['eventDetailsID']
+    lodge = db.query('''SELECT lodgeID from lodging WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    print "Lodge: ", lodge[0][0]
+    res = db.submit_lodge(eventID, lodge[0][0])
+    return res
+
 @app.route('/addlodge', methods=['POST'])
 def addLodge():
     data = request.get_data()
     print "LODGE data: ", data
     res = db.add_lodge(data, session['eventDetailsID'])
+    return res
+
+@app.route('/submitLodgeVote', methods=['POST'])
+def submitLodgeVote():
+    data = request.get_data()
+    res = db.submit_lodge_vote(data, session['eventDetailsID'])
     return res
 
 @app.route('/createEvent', methods=['POST'])

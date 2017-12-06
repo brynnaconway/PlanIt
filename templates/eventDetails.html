@@ -96,7 +96,7 @@
                                 <th> 
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" id='regular' name="lodgingRadio">{{ name }}</label>
+                                            <input type="radio" id='regular' name="lodgingRadio" value="{{ name }}">{{ name }}</label>
                                         </div>
                                     </th> 
                                     <th>{{ address }}</th>
@@ -109,7 +109,7 @@
 
                         </div>
                         
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add a Lodge</button>  
+                        <button id="addLodgebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add a Lodge</button>  
                     
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">
@@ -152,12 +152,12 @@
                           </div>  
 
                       </div>
-
+ 
 
                   </div>
               </div>
-              <div>
-                                              <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote</button>
+              <div id="buttonDiv">
+                    <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote for Lodging</button>
                         
                         <button type="button" class="btn btn-danger" id="btnCloseLodgePoll" value="{{ adminBool }}" onclick="submitLodge()">Close this Poll</button>
             </div>
