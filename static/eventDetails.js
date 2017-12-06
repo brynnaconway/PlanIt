@@ -1,7 +1,20 @@
 window.onload = function() {
-    if data = "lodge":
-        console.log("LODGE")
-    $('#tabs a:first').tab('show'); 
+    var url = location.href;
+    url = url.split("data=")[1]
+    console.log(url)
+    if (String(url) == "lodge") {
+        $('#tabs a:third').tab('show');
+    }
+    else {
+        $('#tabs a:first').tab('show');
+    }
+
+    /*if url == "lodge":
+    #    $('#tabs a:third').tab('show');
+    else if url == "location":
+        $('#tabs a:first').tab('show'); 
+    else*/
+
     let adminBool = $('#btnClosePoll').val();
     console.log("adminBool: ", adminBool);
     if (String(adminBool) == "False"){
