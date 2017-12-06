@@ -11,6 +11,7 @@ import time
 from selenium.webdriver.support.select import Select
 
 
+
 def sign_up(driver):
     print('Signing up...')
 
@@ -39,6 +40,19 @@ def sign_up(driver):
     print('Done.')
 
 
+def login(driver):
+    driver.get("localhost:5000")
+    elem = driver.find_element_by_id("inputEmail")
+    elem.click()
+    elem.send_keys("bbecker5@nd.edu")
+
+    elem = driver.find_element_by_id("inputPassword")
+    elem.click()
+    elem.send_keys("b")
+
+    driver.find_element_by_id("btnSignIn").click()
+
+
 def new_event(driver):
     print('Making New Event')
     elem = driver.find_element_by_id('btnAddEvent')
@@ -47,7 +61,6 @@ def new_event(driver):
 
 
 def event_details(driver):
-
     print('Making event details')
     elem = driver.find_element_by_id('eventName')
     elem.click()
@@ -88,22 +101,4 @@ def event_details(driver):
 
     driver.find_element_by_id('createEvent').click()
 
-
     print('Done.')
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome()
-    try:
-        sign_up(driver)
-        time.sleep(1)
-        new_event(driver)
-        time.sleep(1)
-        event_details(driver)
-        _ = raw_input('Enter any key to close window >')
-        driver.close()
-    except Exception as e:
-        traceback.print_exc()
-        print(e)
-        _ = raw_input('Enter any key to close window >')
-        driver.close()

@@ -10,7 +10,9 @@ CREATE TABLE events (
   confirmCount INT,
   admin        INT,
   location     INT,
-  inProgress   INT,
+  locationsInProgress   INT,
+  timeInProgress   INT,
+  lodgingInProgress   INT,
   PRIMARY KEY (eventID)
 );
 
@@ -38,7 +40,6 @@ CREATE TABLE lodging (
   address VARCHAR(100) NOT NULL,
   url     VARCHAR(200),
   votes   INT,
-  inProgress  INT, 
   PRIMARY KEY (lodgeID)
 );
 
@@ -48,7 +49,6 @@ CREATE TABLE timerange (
   eventID  INT      NOT NULL,
   start    DATETIME NOT NULL,
   stop     DATETIME NOT NULL,
-  inProgress  INT, 
   PRIMARY KEY (personID, eventID, start)
 );
 
@@ -98,6 +98,5 @@ CREATE TABLE locations (
   location    VARCHAR(150),
   eventID        INT,
   votes       INT,
-  inProgress  INT, 
   PRIMARY KEY (locationID, eventID)
 );

@@ -168,8 +168,8 @@ def get_functions():
 if __name__ == '__main__':
     # gen_lodging()
     # gen_timerange()
-    gen_locations()
-
+    # gen_locations()
+    pass
 
 
     # def gen_commits(db):
