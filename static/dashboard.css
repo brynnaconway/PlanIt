@@ -141,6 +141,10 @@ body {
   margin-top: 15px; 
 }
 
+#btnCreateNewGroup {
+  padding-bottom: 7px; 
+}
+
 #newGroupNameLabel {
   display: none; 
 }
