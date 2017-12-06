@@ -153,6 +153,7 @@ def submitLocationVote():
 
 @app.route('/submitLocation', methods=['POST'])
 def submitLocation():
+    res = db.query(''' UPDATE events SET locationsInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))    
     eventID = session['eventDetailsID']
     location = db.query('''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
     print "LOCATION: ", location[0][0]

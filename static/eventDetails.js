@@ -2,22 +2,27 @@ window.onload = function() {
     $('#tabs a:first').tab('show'); 
     let adminBool = $('#btnCloseLocationsPoll').val();
     var inProgressData = $('#inProgressData').val(); 
-    console.log("locationsInProgress: ", inProgressData); 
+    console.log("locationsInProgress: ", inProgressData[1]); 
     console.log("adminBool: ", adminBool);
     if (String(adminBool) == "False"){
         document.getElementById('btnCloseLocationsPoll').style.display = 'none';
     }
+    if (inProgressData[1] == 1) {
+        document.getElementById('locationsInProgressContent').style.display = 'none';
+    }
+
     return true;
 }
 
 $(function () { 
     $('#btnCloseLocationsPoll').click(function () {
         $.ajax({
-            url: '/updateLocationsInProgress',
+            url: '/submitLocation',
             type: 'POST',
             success: function (response) {
                 console.log(response);
                 window.location = '/eventDetails'
+                console.log(response); 
             },
             error: function (error) {
                 console.log(error);
@@ -89,7 +94,7 @@ $(function () {
 
 });
 
-function submitLocation() {
+/*function submitLocation() {
     $.ajax({
             url: '/submitLocation',
             type: 'POST',
@@ -101,7 +106,7 @@ function submitLocation() {
                 console.log(error);
             }
         });
-}
+}*/
 
 $(function () {
     $("#newLodgeForm").submit(function (event) {
