@@ -86,5 +86,6 @@ CREATE TABLE locations (
   location    VARCHAR(150),
   eventID        INT,
   votes       INT,
+  inProgress  INT, 
   PRIMARY KEY (locationID, eventID)
 );
