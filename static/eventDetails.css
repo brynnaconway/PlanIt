@@ -72,6 +72,14 @@
     color: #2C3E50;
 }
 
+#buttonDiv {
+    margin-top: 7px;
+}
+
+#addLodgebtn {
+    margin-top: 7px;
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;

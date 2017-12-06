@@ -6,6 +6,7 @@ window.onload = function() {
     console.log("adminBool: ", adminBool);
     if (String(adminBool) == "False"){
         document.getElementById('btnCloseLocationsPoll').style.display = 'none';
+        document.getElementById('btnCloseLodgePoll').style.display = 'none';        
     }
     if (inProgressData[1] == 1) {
         document.getElementById('locationsInProgressContent').style.display = 'none';
@@ -98,9 +99,11 @@ $(function () {
 
 });
 
-/*function submitLocation() {
-    $.ajax({
-            url: '/submitLocation',
+$(function () {
+    $('#btnSubmitLodgeVote').click(function () {
+        $.ajax({
+            url: '/submitLodgeVote',
+            data: {submit_vote: true, lodgeName: $("input[name=lodgingRadio]:checked").val()},
             type: 'POST',
             success: function (response) {
                 console.log(response);
@@ -110,7 +113,23 @@ $(function () {
                 console.log(error);
             }
         });
-}*/
+    });
+
+});
+
+function submitLodge() {
+    $.ajax({
+            url: '/submitLodge',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+}
 
 $(function () {
     $("#newLodgeForm").submit(function (event) {
@@ -128,7 +147,7 @@ $(function () {
                 console.log(error);
             }
         });
-        event.preventDefault();
+        //event.preventDefault();
     });
 });
 
