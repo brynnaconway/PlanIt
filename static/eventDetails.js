@@ -1,8 +1,9 @@
 const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
+var username = getName();
 const drone = new ScaleDrone(CHANNEL_ID, {
     data: {
-        name: getRandomName(),
-        color: getRandomColor(),
+        name: username,
+        color: getRandomColor()
     },
 });
 
@@ -22,6 +23,13 @@ function getRandomName() {
               "_" +
               nouns[Math.floor(Math.random() * nouns.length)]
              );
+}
+
+function getName() {
+    return $.ajax({
+        url: "/getName",
+        async: false
+    }).responseText;
 }
 
 function getRandomColor() {
@@ -72,7 +80,9 @@ drone.on('open', error=> {
 
 function createMemberElement(member) {
     const { name, color } = member.clientData;
+    console.log(member.clientData);
     const el = document.createElement('div');
+    // here is where colon and timestamp can be added i think
     el.appendChild(document.createTextNode(name));
     el.className = 'member';
     el.style.color = color;
@@ -106,7 +116,10 @@ function addMessageToListDOM(text, member) {
 
 DOM.form.addEventListener('submit', sendMessage);
 function sendMessage() {
-    const value = DOM.input.value;
+    const value = DOM.input.value; // value is message for messages table
+    var dt = new Date($.now());
+    var timestamp = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + " " + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
+    console.log("timestamp: " + timestamp.replace('+', ' '));
     if(value === '') {
         return;
     }
@@ -115,4 +128,37 @@ function sendMessage() {
         room: 'observable-room',
         message: value,
     });
+
+    console.log("sendMessage() data: "+{timestamp: value});
+    $.ajax({
+        url: '/sendMessage',
+        type: 'POST',
+        data: {
+            "timestamp": timestamp,
+            "message": value,
+        },
+        success: function(res) {
+            console.log("sendMessage success");
+            console.log(res);
+        },
+        error: function(err) {
+            console.log("sendMessage failure");
+            console.log(err);
+        }
+    });
+}
+
+function showMessages() {
+    var x = document.getElementById("chatbox");
+    var y = document.getElementById("chatButton");
+    if(x.style.display === "none") {
+        //console.log("none -> block");
+        x.style.display = "block";
+        //y.style.display = "none";
+    }
+    else {
+        //console.log("block -> none");
+        x.style.display = "none";
+        //y.style.display = "block";
+    }
 }

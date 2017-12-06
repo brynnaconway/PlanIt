@@ -5,6 +5,7 @@
             <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">
             <link rel="stylesheet" href="/static/root.css">
+            <link rel ="stylesheet" href="/static/eventDetails.css">
         </head>
 
         <body>
@@ -32,14 +33,18 @@
                         </li>
                         {% endfor %}
                     </ul>
-                    <div class="members-count"></div>
-                    <div class="members-list"></div>
-                    <div class="messages"></div>
-                    <form class="message-form" id="message-form" onsubmit="return false;">
-                        <input class="message-form__input" placeholder="Type a message..." type="text"/>
-                        <input class="message-form__button" value="Send" type="submit"/>
-                    </form>
+                    <div id="chatbox" class="chatbox">
+                        <div class="members-count"></div>
+                        <div class="members-list"></div>
+                        <div class="messages"></div>
+                        <form class="message-form" id="message-form" onsubmit="return false;">
+                            <input class="message-form__input" placeholder="Type a message..." type="text"/>
+                            <input class="message-form__button" value="Send" type="submit"/>
+                        </form>
+                    </div>
+                <button id="chatButton" class="chatButton" onclick="showMessages()">Chat</button>
                 </div>
+
                 <footer class="footer">
                     <p><img src='/static/small_hat.png'/> DataWizards 2017 </p>
                 </footer>

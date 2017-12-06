@@ -4,6 +4,7 @@ import json
 from flaskext.mysql import MySQL
 from flask import Flask, render_template,request, jsonify, redirect, url_for, session
 from app.db import DB
+import urllib
 import yaml
 import os
 
@@ -109,8 +110,15 @@ def add_membership():
     res = db.add_membership(data)
     return res
 
+@app.route('/getName')
+def getName():
+    userID = session['personID']
+    name = db.query('''SELECT name FROM people WHERE personID={};'''.format(userID))
+    return name[0][0]
+
 @app.route('/eventDetails')
 def eventDetails():
+    ## Need to pull previous conversations from database here ##
     return render_template('eventDetails.html')
 
 @app.route('/createEvent', methods=['POST'])
@@ -134,6 +142,18 @@ def getGroups():
 @app.route('/createEventDetails')
 def createEventDetails():
     return render_template('createEventDetails.html')
+
+@app.route('/sendMessage',methods=['POST'])
+def sendMessage():
+    data = request.get_data()
+    d = deserialize(data)
+
+    timestamp = urllib.unquote(d['timestamp']).decode('utf8')
+    message = d['message']
+    personID = session['personID']
+    ## eventID = session['eventDetailsID']
+
+    return data
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
