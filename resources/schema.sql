@@ -90,6 +90,7 @@ CREATE TABLE messages (
     eventID INT NOT NULL,
     message VARCHAR(256),
     PRIMARY KEY (personID, timestamp)
+);
 
 DROP TABLE IF EXISTS locations;
 CREATE TABLE locations (
