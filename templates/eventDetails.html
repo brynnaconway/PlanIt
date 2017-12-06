@@ -44,37 +44,36 @@
 
                     <!-- Locations tab content --> 
                     <div class="tab-pane active" id="locations" role="tabpanel">
-                        <fieldset class="form-group" id=radioFieldset>
-                            <legend>Choose a location for your adventure</legend>
-                            {% for location in locations %}
-                            {% for l in location %}
+                        <div id=locationsInProgressContent>
+                            <fieldset class="form-group" id=radioFieldset>
+                                <legend>Choose a location for your adventure</legend>
+                                {% for location in locations %}
+                                {% for l in location %}
 
-                            <div class="form-check">
-                                <input type="radio" id="location" class="form-check-input" name="optionsRadios" value="{{ l }}" checked="">
-                                <label class="form-check-label" id=radioLabel>{{ l }}</label>
+                                <div class="form-check">
+                                    <input type="radio" id="location" class="form-check-input" name="optionsRadios" value="{{ l }}" checked="">
+                                    <label class="form-check-label" id=radioLabel>{{ l }}</label>
+                                </div>
+                                {% endfor %}
+                                {% endfor %}
+                            </fieldset>
+
+                            <div class="col-6" id="textinputNewLocation">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
+                                    list="suggestionList">
+                                    <datalist id="suggestionList">
+                                    </datalist>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+
+                            <div>
+                                <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote</button>
+                                <button type="button" class="btn btn-danger" id="btnCloseLocationsPoll" value="{{ adminBool }}" onclick="submitLocation()">Close this Poll</button>                            
                             </div>
-                            {% endfor %}
-                            {% endfor %}
-                        </fieldset>
-
-                        <div class="col-6" id="textinputNewLocation">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
-                                list="suggestionList">
-                                <datalist id="suggestionList">
-                                </datalist>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
-                                </span>
-                            </div><!-- /input-group -->
-                        </div><!-- /.col-lg-6 -->
-
-                        <div>
-                            <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote</button>
-                            <button type="button" class="btn btn-danger" id="btnClosePoll" value="{{ adminBool }}" onclick="submitLocation()">Close this Poll</button>                            
-                        </div>
-
-                        <div>
                         </div>
                     </div>
 
@@ -161,13 +160,16 @@
   </div>
 </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
-<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
-<script src="/static/root.js"></script>
-<script src="/static/eventDetails.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+
+    <button type="button" class="btn" style="visibility: hidden; width:0px" id="inProgressData" value="{{ inProgressData[0] }}" onclick=""></button>                            
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+    <script src="/static/root.js"></script>
+    <script src="/static/eventDetails.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
 </body>
 </html>

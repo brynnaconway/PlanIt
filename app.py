@@ -134,9 +134,10 @@ def eventDetails():
         print "FALSE*****"
         adminBool = False
     print "adminBOOL: ", adminBool
+    inProgressData = db.query('''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(eventID))        
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', locations = locations, adminBool = adminBool, lodgeData = lodgeData)
+    return render_template('eventDetails.html', inProgressData=inProgressData, locations = locations, adminBool = adminBool, lodgeData = lodgeData)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
@@ -193,6 +194,10 @@ def getLocationSuggestions():
     data = request.get_data()
     return location.getLocationSuggestions(data)
 
+@app.route('/updateLocationsInProgress', methods=['POST'])
+def updateLocationsInProgress():
+    res = db.query(''' UPDATE events SET locationsInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))
+    return res
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
