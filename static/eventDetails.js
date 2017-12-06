@@ -1,8 +1,8 @@
-window.onload = function() {
-    $('#tabs a:first').tab('show'); 
+window.onload = function () {
+    $('#tabs a:first').tab('show');
     let adminBool = $('#btnClosePoll').val();
     console.log("adminBool: ", adminBool);
-    if (String(adminBool) == "False"){
+    if (String(adminBool) == "False") {
         document.getElementById('btnClosePoll').style.display = 'none';
     }
     return true;
@@ -73,21 +73,21 @@ $(function () {
 
 function submitLocation() {
     $.ajax({
-            url: '/submitLocation',
-            type: 'POST',
-            success: function (response) {
-                console.log(response);
-                window.location = '/eventDetails'
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+        url: '/submitLocation',
+        type: 'POST',
+        success: function (response) {
+            console.log(response);
+            window.location = '/eventDetails'
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 }
 
 $(function () {
     $("#newLodgeForm").submit(function (event) {
-        console.log("data: ", $('#newLodgeForm').serialize()); 
+        console.log("data: ", $('#newLodgeForm').serialize());
         $.ajax({
             url: '/addlodge',
             data: $('#newLodgeForm').serialize(),
@@ -105,3 +105,59 @@ $(function () {
     });
 });
 
+// $(function () {
+//     $("#newTimeForm").submit(function (event) {
+//         let start = $('#datetimepickerStart').data("DateTimePicker").date();
+//         let stop = $('#datetimepickerStop').data("DateTimePicker").date();
+//         $.ajax({
+//             url: '/submitTime',
+//             data: {start: start, stop: stop},
+//             type: 'POST',
+//             success: function (response) {
+//                 console.log(response);
+//                 window.location = '/eventDetails'
+//             },
+//             error: function (error) {
+//                 console.log(error);
+//             }
+//         });
+//         event.preventDefault();
+//
+//     });
+// });
+$(function () {
+    $("#btnAddNewTime").click(function () {
+        let start = $('#datetimepickerStart').data("DateTimePicker").date();
+        let stop = $('#datetimepickerStop').data("DateTimePicker").date();
+        console.log(start);
+        $.ajax({
+            url: '/submitTime',
+            data: {start: start._d, stop: stop._d},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+$(function () {
+    $('#datetimepickerStart').datetimepicker({
+        format: "YYYY-M-D H:m:s"
+
+    });
+    $('#datetimepickerStop').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
+        format: "YYYY-M-D H:m:s"
+    });
+    $("#datetimepickerStart").on("dp.change", function (e) {
+        $('#datetimepickerStop').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepickerStop").on("dp.change", function (e) {
+        $('#datetimepickerStart').data("DateTimePicker").maxDate(e.date);
+    });
+});

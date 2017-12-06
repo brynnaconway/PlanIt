@@ -7,11 +7,8 @@ from flask import jsonify
 from app.util import deserialize
 
 config = yaml.load(open('planit.config'))
-print config['google_api_key']
 
 def getLocationSuggestions(data):
-    print config['google_api_key']
-
     d = deserialize(data)
     input = urllib.unquote_plus(d['input'])
 

@@ -3,171 +3,264 @@
 <head>
     <title>PlanIt</title>
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">      
-    <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
-    <link rel="stylesheet" href="/static/root.css">        
+    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css"
+          rel="stylesheet">
+    <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/root.css">
     <link rel="stylesheet" href="/static/background.css">
     <link rel="stylesheet" href="/static/consistent.css">
     <link rel="stylesheet" href="/static/eventDetails.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600" rel="stylesheet">     
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Top Navbar -->
-    <nav class="navbar"> 
-        <a class="navbar-brand text-primary" id=navbarHome href="/dashboard">Home</a>
-        <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
-    </nav>
+<!-- Top Navbar -->
+<nav class="navbar">
+    <a class="navbar-brand text-primary" id=navbarHome href="/dashboard">Home</a>
+    <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
+</nav>
 
-    <div class="w3-container">
+<div class="w3-container">
 
-        <!-- Tabs --> 
-        <ul class="nav nav-tabs w-100" role=tablist id="tabs">
-            <li class="nav-item">
-                <a class="nav-link" id=defaultTab data-toggle="tab" href="#locations" role=tab>Destination</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id=tab data-toggle="tab" href="#time" role=tab>Time</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id=tab data-toggle="tab" href="#lodging" role=tab>Lodging</a>
-            </li>
-        </ul>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs w-100" role=tablist id="tabs">
+        <li class="nav-item">
+            <a class="nav-link" id=defaultTab data-toggle="tab" href="#locations" role=tab>Destination</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id=tab data-toggle="tab" href="#time" role=tab>Time</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id=tab data-toggle="tab" href="#lodging" role=tab>Lodging</a>
+        </li>
+    </ul>
 
-        <div class="jumbotron">
-            <div id=jumbotronContent> 
+    <div class="jumbotron">
+        <div id=jumbotronContent>
 
-                <!-- Tab panes -->
-                <div class="tab-content">
+            <!-- Tab panes -->
+            <div class="tab-content">
 
-                    <!-- Locations tab content --> 
-                    <div class="tab-pane active" id="locations" role="tabpanel">
-                        <fieldset class="form-group" id=radioFieldset>
-                            <legend>Choose a location for your adventure</legend>
-                            {% for location in locations %}
+                <!-- Locations tab content -->
+                <div class="tab-pane active" id="locations" role="tabpanel">
+                    <fieldset class="form-group" id=radioFieldset>
+                        <legend>Choose a location for your adventure</legend>
+                        {% for location in locations %}
                             {% for l in location %}
 
-                            <div class="form-check">
-                                <input type="radio" id="location" class="form-check-input" name="optionsRadios" value="{{ l }}" checked="">
-                                <label class="form-check-label" id=radioLabel>{{ l }}</label>
-                            </div>
+                                <div class="form-check">
+                                    <input type="radio" id="location" class="form-check-input" name="optionsRadios"
+                                           value="{{ l }}" checked="">
+                                    <label class="form-check-label" id=radioLabel>{{ l }}</label>
+                                </div>
                             {% endfor %}
-                            {% endfor %}
-                        </fieldset>
+                        {% endfor %}
+                    </fieldset>
 
-                        <div class="col-6" id="textinputNewLocation">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
-                                list="suggestionList">
-                                <datalist id="suggestionList">
-                                </datalist>
-                                <span class="input-group-btn">
+                    <div class="col-6" id="textinputNewLocation">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="newLocation" placeholder="Or add a new location"
+                                   list="suggestionList">
+                            <datalist id="suggestionList">
+                            </datalist>
+                            <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" id="btnAddNewLocation">Add!</button>
                                 </span>
-                            </div><!-- /input-group -->
-                        </div><!-- /.col-lg-6 -->
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
 
-                        <div>
-                            <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote</button>
-                            <button type="button" class="btn btn-danger" id="btnClosePoll" value="{{ adminBool }}" onclick="submitLocation()">Close this Poll</button>                            
-                        </div>
-
-                        <div>
-                        </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote
+                        </button>
+                        <button type="button" class="btn btn-danger" id="btnClosePoll" value="{{ adminBool }}"
+                                onclick="submitLocation()">Close this Poll
+                        </button>
                     </div>
 
-                    <!-- Time tab content --> 
-                    <div class="tab-pane" id="time" role="tabpanel">Time</div>
+                    <div>
+                    </div>
+                </div>
 
-                    <!-- Lodging tab content --> 
-                    <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info
-                        <div class="tab-pane active" id="locations" role="tabpanel">
-                            <table>
-                              <tr>
+                <!-- Time tab content -->
+                <div class="tab-pane" id="time" role="tabpanel">Time
+                    <div class="tab-pane active" id="time" role="tabpanel">
+                        <table>
+                            <tr>
+                                <th>Available from</th>
+                                <th>Available to</th>
+                            </tr>
+                            {% for start, stop in timeData %}
+                                <tr>
+                                    <th>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" id='timeRadioBtn' name="timeRadio">{{ start }}
+                                            </label>
+                                        </div>
+                                        {#                                        {{ start }}#}
+                                    </th>
+                                    <th>{{ stop }}</th>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+
+                    </div>
+
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#timeModal">New
+                        Availability
+                    </button>
+
+                    <div class="modal fade" id="timeModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-signin" id=newTimeForm method=POST>
+                                        <fieldset>
+                                            <legend id="newTimeInfoLegend" style="font-size: 125%;">New Time Information
+                                            </legend>
+                                            <div class="form-group">
+                                                <div class='input-group date' id='datetimepickerStart'>
+                                                    <input type='text' class="form-control" name=startTime/>
+                                                    <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class='input-group date' id='datetimepickerStop'>
+                                                    <input type='text' class="form-control" name=stopTime/>
+                                                    <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        {#                                        <button type=submit value=Submit class="btn btn-primary"#}
+                                        {#                                                id="btnAddNewTime" form=newTimeForm>Add Lodge Option#}
+                                        {#                                        </button>#}
+                                        <button type="button" value=Add class="btn btn-primary" id="btnAddNewTime"> Add
+                                            Availability
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Lodging tab content -->
+                <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info
+                    <div class="tab-pane active" id="locations" role="tabpanel">
+                        <table>
+                            <tr>
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>url</th>
                                 <th>Price</th>
-                            </tr> 
+                            </tr>
                             {% for name, address, url, price in lodgeData %}
-                            <tr>
-                                <th> 
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" id='regular' name="lodgingRadio">{{ name }}</label>
+                                <tr>
+                                    <th>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" id='regular'
+                                                       name="lodgingRadio">{{ name }}</label>
                                         </div>
-                                    </th> 
+                                    </th>
                                     <th>{{ address }}</th>
                                     <th>{{ url }}</th>
                                     <th>{{ price }}</th>
                                 </tr>
-                                {% endfor %}
+                            {% endfor %}
 
-                            </table>
+                        </table>
 
-                        </div>
-                        
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>  
+                    </div>
 
-                        <div class="modal fade" id="myModal" role="dialog">
-                            <div class="modal-dialog">
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                            data-target="#myModal">New Lodging
+                    </button>
 
-                              <!-- Modal content-->
-                              <div class="modal-content">
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              </div>
-                              <div class="modal-body">
-                                  <form class="form-signin" id="newLodgeForm" method=POST>
-                                    <fieldset>
-                                      <legend id="newLodgeInfoLegend" style="font-size: 125%;">New Lodge Information</legend>
-                                      <div class="form-group">
-                                        <label for="newLodgeName">Lodge Name</label>
-                                        <input type="text" class="form-control" name=lodgeName id="newLodgeName" placeholder="ABC Hotel">
-                                    </div>
+                                    <button type="button" class="close" data-dismiss="modal">&times;
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-signin" id="newLodgeForm" method=POST>
+                                        <fieldset>
+                                            <legend id="newLodgeInfoLegend" style="font-size: 125%;">New
+                                                Lodge Information
+                                            </legend>
+                                            <div class="form-group">
+                                                <label for="newLodgeName">Lodge Name</label>
+                                                <input type="text" class="form-control" name=lodgeName
+                                                       id="newLodgeName" placeholder="ABC Hotel">
+                                            </div>
 
-                                    <div class="form-group">
-                                        <label for="newLodgeAddress">Lodge Address</label>
-                                        <input type="text" class="form-control" name=lodgeAddress id="newLodgeAddress" placeholder="12345 ABC Street">
-                                    </div>
+                                            <div class="form-group">
+                                                <label for="newLodgeAddress">Lodge Address</label>
+                                                <input type="text" class="form-control" name=lodgeAddress
+                                                       id="newLodgeAddress" placeholder="12345 ABC Street">
+                                            </div>
 
-                                    <div class="form-group">
-                                        <label for="newLodgeURL">URL (Not required)</label>
-                                        <input type="text" class="form-control" name=lodgeURL id="newLodgeURL" placeholder="www.abc.com">
-                                    </div>
+                                            <div class="form-group">
+                                                <label for="newLodgeURL">URL (Not required)</label>
+                                                <input type="text" class="form-control" name=lodgeURL
+                                                       id="newLodgeURL" placeholder="www.abc.com">
+                                            </div>
 
-                                    <div class="form-group">
-                                        <label for="newLodgePrice">Price</label>
-                                        <input type="number" class="form-control" name=lodgePrice id="newLodgePrice" placeholder="100">
-                                    </div>
-                                    </fieldset>
+                                            <div class="form-group">
+                                                <label for="newLodgePrice">Price</label>
+                                                <input type="number" class="form-control" name=lodgePrice
+                                                       id="newLodgePrice" placeholder="100">
+                                            </div>
+                                        </fieldset>
 
-                                    <button type=submit value=Submit class="btn btn-primary" id="btnAddNewLodge" form=newLodgeForm >Add Lodge Option</button>
-                                </form>
+                                        <button type=submit value=Submit class="btn btn-primary"
+                                                id="btnAddNewLodge" form=newLodgeForm>Add Lodge Option
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                      </div>
+                        </div>
 
-                  </div>
-              </div>
 
-          </div> <!-- close lodging tab content -->
-      </div>
+                    </div> <!-- close lodging tab content -->
+                </div>
 
-  </div>
-</div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
-<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
-<script src="/static/root.js"></script>
-<script src="/static/eventDetails.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+    <script src="/static/root.js"></script>
+    <script src="/static/eventDetails.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
 </body>
 </html>

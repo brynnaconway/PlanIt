@@ -136,7 +136,8 @@ def eventDetails():
     print "adminBOOL: ", adminBool
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', locations = locations, adminBool = adminBool, lodgeData = lodgeData)
+    times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
+    return render_template('eventDetails.html', locations = locations, adminBool = adminBool, lodgeData = lodgeData, timeData=times)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
@@ -192,6 +193,11 @@ def createEventDetails():
 def getLocationSuggestions():
     data = request.get_data()
     return location.getLocationSuggestions(data)
+
+@app.route('/submitTime',methods=['POST'])
+def submitTime():
+    data = request.get_data()
+    return db.addNewTime(data)
 
 
 if __name__ == "__main__":
