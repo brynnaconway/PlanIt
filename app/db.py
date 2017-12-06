@@ -301,3 +301,13 @@ class DB(object):
             return json.dumps({'message': 'Location updated in events !', 'id': lodgeID})
         else:
             return json.dumps({'error': str(data[0])})
+          
+    def add_message(self, data):
+        message = urllib.unquote_plus(data['message']).replace("'", "''")
+
+        res = self.query('''INSERT INTO messages (personID, timestamp, eventID, message)
+                VALUES ({},'{}',{},'{}');'''.format(int(data['personID']),
+                    urllib.unquote_plus(data['timestamp']), int(data['eventID']),
+                    message))
+
+        return jsonify({'valid': True})

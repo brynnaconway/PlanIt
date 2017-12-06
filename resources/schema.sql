@@ -83,6 +83,15 @@ CREATE TABLE commits (
   PRIMARY KEY (personID, eventID)
 );
 
+DROP TABLE IF EXISTS messages;
+CREATE TABLE messages (
+    personID INT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    eventID INT NOT NULL,
+    message VARCHAR(256),
+    PRIMARY KEY (personID, timestamp)
+);
+
 DROP TABLE IF EXISTS locations;
 CREATE TABLE locations (
   locationID      INT NOT NULL AUTO_INCREMENT,

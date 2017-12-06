@@ -38,6 +38,15 @@
     </ul>
 
     <div class="jumbotron">
+      <div id="chatbox" class="chatbox">
+                <div class="members-count"></div>
+                <div class="members-list"></div>
+                <div class="messages"></div>
+                <form class="message-form" id="message-form" onsubmit="return false;">
+                    <input class="message-form__input" placeholder="Type a message..." type="text"/>
+                    <input class="message-form__button" value="Send" type="submit"/>
+                </form>
+   </div>
         <div id=jumbotronContent>
 
             <!-- Tab panes -->
@@ -281,6 +290,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+
 </body>
 </html>
 

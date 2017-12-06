@@ -96,44 +96,73 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
-/*.members-count,
+.members-count,
 .members-list,
 .messages {
     border: 1px solid #e4e4e4;
     padding: 15px;
     margin-bottom: 15px;
+    /*background-color: #ddd;*/
+    border: 1px solid #000000;
 }
 
 .messages {
     flex-shrink: 1;
     overflow: auto;
+    background-color: #ddd;
 }
 
 .message {
     padding: 5px 0;
+    background-color: #ddd;
 }
 
 .message .member {
     display: inline-block;
+    background-color: #ddd;
 }
 
 .member {
     padding-right: 10px;
     position: relative;
+    background-color: #ddd;
 }
 
 .message-form {
     display: flex;
     flex-shrink: 0;
+    background-color: #ddd;
 }
 
 .message-form__input {
     flex-grow: 1;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #000000;
     padding: 10px 15px;
     font-size: 16px;
+    background-color: #ddd;
 }
 
 .message-form__button {
     margin: 10px;
-}*/
+    background-color: #ddd;
+}
+
+.chatButton {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.jumbotron {
+    position: relative;
+}
+
+.chatbox {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    border: 3px solid #73AD21;
+    background-color: #ddd;
+}
+}
