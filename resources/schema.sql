@@ -10,6 +10,7 @@ CREATE TABLE events (
   confirmCount INT,
   admin        INT,
   location     INT,
+  inProgress   INT,
   PRIMARY KEY (eventID)
 );
 
