@@ -4,10 +4,12 @@ CREATE TABLE events (
   eventName    VARCHAR(30),
   start        DATETIME,
   stop         DATETIME,
+  locationID   INT, 
   lodgeID      INT,
   groupID      INT,
   confirmCount INT,
   admin        INT,
+  location     INT,
   PRIMARY KEY (eventID)
 );
 
@@ -29,9 +31,12 @@ CREATE TABLE groups (
 DROP TABLE IF EXISTS lodging;
 CREATE TABLE lodging (
   lodgeID INT          NOT NULL AUTO_INCREMENT,
+  eventID INT,
+  name   VARCHAR(60),
   price   REAL         NOT NULL,
   address VARCHAR(100) NOT NULL,
   url     VARCHAR(200),
+  votes   INT,
   PRIMARY KEY (lodgeID)
 );
 
@@ -60,6 +65,7 @@ CREATE TABLE votes (
   personID  INT NOT NULL,
   groupID   INT NOT NULL,
   lodgeVote INT,
+  locationVote INT,
   startVote DATETIME,
   stopVote  DATETIME,
   PRIMARY KEY (eventID, personID)
@@ -72,4 +78,13 @@ CREATE TABLE commits (
   groupID  INT NOT NULL,
   decision BIT,
   PRIMARY KEY (personID, eventID)
+);
+
+DROP TABLE IF EXISTS locations;
+CREATE TABLE locations (
+  locationID      INT NOT NULL AUTO_INCREMENT,
+  location    VARCHAR(150),
+  eventID        INT,
+  votes       INT,
+  PRIMARY KEY (locationID, eventID)
 );

@@ -1,4 +1,76 @@
-.members-count,
+.jumbotron {
+    padding: 0px; 
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0.35rem; 
+}
+
+#tabs {
+    border-top-left-radius: 0.55rem;
+    border-top-right-radius: 0.55rem;
+    margin-top: 5px;
+}
+
+#jumbotronContent {
+    padding: 15px; 
+    padding-top: 20px; 
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0.55rem;
+    border-top-right-radius: 0.55rem;
+    color: #2C3E50;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #2C3E50;
+    cursor: default;
+    background-color: #eee;
+    border: 1px solid #eee;
+    border-bottom-color: transparent;
+}
+
+#radioLabel {
+    padding-left: 2rem; 
+}
+
+#location {
+    margin: 2.5px; 
+}
+
+#radioFieldset {
+    margin-bottom: 3px;
+}
+
+#textinputNewLocation {
+    padding-left: 0px; 
+    margin-bottom: 20px; 
+}
+
+#btnClosePoll {
+    margin-left: 8px; 
+}
+
+#btnAddNewLocation { 
+    padding-bottom: 7px; 
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/*.members-count,
 .members-list,
 .messages {
     border: 1px solid #e4e4e4;
@@ -38,4 +110,4 @@
 
 .message-form__button {
     margin: 10px;
-}
+}*/

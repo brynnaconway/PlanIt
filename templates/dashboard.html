@@ -152,8 +152,8 @@
                 {% for eventID, eventName in eventData %}
                 <div class="col-sm-4" id=column>
                     <div class="card text-center text-light bg-primary h-100" id=card>
-                        <div class=showDelete><button id=btnDelete class="close btn" aria-label="Close" type="button" onclick=deleteEvent({{ eventID }})><span aria-hidden="true">&times;</span></button></div>                        
-                        <a href="/eventDetails" id=eventID class="card-title h-100 text-white"> {{eventName}}</a>
+                        <button id=btnDelete class="close btn" aria-label="Close" type="button" onclick=deleteEvent({{ eventID }})><span aria-hidden="true">&times;</span></button>                        
+                        <a href="" id=eventID onclick="go_to_eventDetails(event, {{ eventID }})" class="card-title h-100 text-white"> {{eventName}}</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -171,6 +171,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
     <script src="/static/dashboard.js"></script>
     <script src="/static/people.js"></script>
 

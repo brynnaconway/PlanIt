@@ -135,12 +135,13 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
+                console.log("groupID: ", response['id']);
                 document.getElementById("btnCreateNewGroup").style.display = "none";
                 document.getElementById("newGroupName").readOnly = true;
                 //window.location = '/pickPeople'
                 document.getElementById("selectPeople").style.display = "block";
                 // document.getElementById("existingGroupBtn").style.visibility = "visible";
-                cache.save(response[id], 'groupID')
+                cache.save(response['id'], 'groupID')
 
             },
             error: function (error) {
@@ -186,5 +187,44 @@ function deleteEvent(eventID) {
         }
     });
 }
+
+function go_to_eventDetails(event, eventID) {
+    console.log("eventID: ", eventID)
+    event.preventDefault();
+    $.ajax({
+            url: '/setEventDetailsID',
+            data: {eventID: eventID},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+}
+
+/*$(function () {
+    $('#eventID').click(function (event) {
+        //var eventID = $(this).data('eventID');
+        var eventID = document.getElementById('eventID').value;
+        console.log("eventID: ", eventID)
+        event.preventDefault();
+        $.ajax({
+            url: '/eventDetails',
+            data: {eventID: eventID},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+                // document.getElementById("existingGroupBtn").style.visibility = "visible";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});*/
 
 
