@@ -135,10 +135,14 @@ def eventDetails():
         adminBool = False
     print "adminBOOL: ", adminBool
     finalLocation = db.query('''select location from locations where locations.locationID=(select locationID from events where eventID={});'''.format(eventID))
+    try:
+        finalLocation = finalLocation[0][0]
+    except:
+        finalLocation = "Location not finalized."
     inProgressData = db.query('''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(eventID))        
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', finalLocation=finalLocation[0][0], inProgressData=inProgressData, locations = locations, adminBool = adminBool, lodgeData = lodgeData)
+    return render_template('eventDetails.html', finalLocation=finalLocation, inProgressData=inProgressData, locations = locations, adminBool = adminBool, lodgeData = lodgeData)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():

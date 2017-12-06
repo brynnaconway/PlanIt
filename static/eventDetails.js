@@ -10,7 +10,9 @@ window.onload = function() {
     if (inProgressData[1] == 1) {
         document.getElementById('locationsInProgressContent').style.display = 'none';
         document.getElementById('finalizedLocationContent').style.display = 'block';
-        
+    }
+    else {
+        document.getElementById('finalizedLocationContent').style.display = 'none';
     }
 
     return true;
