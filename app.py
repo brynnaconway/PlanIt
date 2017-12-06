@@ -3,11 +3,13 @@ import json
 
 from flaskext.mysql import MySQL
 from flask import Flask, render_template,request, jsonify, redirect, url_for, session
+
+from app import location
 from app.db import DB
 import urllib
 import yaml
 import os
-
+import urllib
 from app.util import deserialize
 
 config = yaml.load(open('planit.config'))
@@ -46,12 +48,13 @@ def signIn():
     else:
        return render_template('root.html')
 
-@app.route('/dashboard')  
+@app.route('/dashboard', methods=['POST', 'GET'])  
 def dashboard():
     try:
         personID = session['personID']
         eventIDs = db.single_attr_query('''SELECT eventID FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
-        return render_template('dashboard.html', eventIDs=eventIDs)
+        names = db.single_attr_query('''SELECT eventName FROM events WHERE groupID IN ( select groupID FROM memberships WHERE personID = {});'''.format(personID))
+        return render_template('dashboard.html', eventData=zip(eventIDs, names))
     except Exception as e:
         print(e)
         return redirect(url_for('homepage'))
@@ -116,14 +119,63 @@ def getName():
     name = db.query('''SELECT name FROM people WHERE personID={};'''.format(userID))
     return name[0][0]
 
-@app.route('/eventDetails')
+@app.route('/setEventDetailsID', methods=['POST'])
+def setEventDetailsID():
+    data = request.get_data()
+    print "DATA: ", data 
+    eventID = data.split('=')[1]
+    print "eventID: ", eventID
+    session['eventDetailsID'] = eventID
+    #return redirect(url_for('eventDetails'))
+    return eventID
+
+@app.route('/eventDetails', methods=['POST', 'GET'])
 def eventDetails():
-    ## Need to pull previous conversations from database here ##
-    return render_template('eventDetails.html')
+    print "session[eventDetailsID]: ", session['eventDetailsID']
+    eventID = session['eventDetailsID']
+    admin = db.query('''SELECT admin from events where eventID = {};'''.format(eventID))
+    if int(admin[0][0]) == int(session['personID']):
+        print "IN***"
+        adminBool = True
+    else:
+        print "FALSE*****"
+        adminBool = False
+    print "adminBOOL: ", adminBool
+    locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
+    lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
+    return render_template('eventDetails.html', locations = locations, adminBool = adminBool, lodgeData = lodgeData)
+
+@app.route('/addlocation', methods=['POST'])
+def addLocation():
+    data = request.get_data()
+    res = db.add_location(data, session['eventDetailsID'])
+    return res
+
+@app.route('/submitLocationVote', methods=['POST'])
+def submitLocationVote():
+    data = request.get_data()
+    res = db.submit_location_vote(data, session['eventDetailsID'])
+    return res
+
+@app.route('/submitLocation', methods=['POST'])
+def submitLocation():
+    eventID = session['eventDetailsID']
+    location = db.query('''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    print "LOCATION: ", location[0][0]
+    res = db.submit_location(eventID, location[0][0])
+    return res
+
+@app.route('/addlodge', methods=['POST'])
+def addLodge():
+    data = request.get_data()
+    print "LODGE data: ", data
+    res = db.add_lodge(data, session['eventDetailsID'])
+    return res
 
 @app.route('/createEvent', methods=['POST'])
 def createEvent():
     data = request.get_data()
+    print "data: ", data
     res = db.add_event(data)
     return res
 
@@ -154,6 +206,11 @@ def sendMessage():
     ## eventID = session['eventDetailsID']
 
     return data
+
+@app.route('/getLocationSuggestions', methods=['POST'])
+def getLocationSuggestions():
+    data = request.get_data()
+    return location.getLocationSuggestions(data)
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

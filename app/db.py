@@ -7,6 +7,8 @@ from util import deserialize, qfy
 from werkzeug import generate_password_hash, check_password_hash
 import urllib
 
+
+
 class DB(object):
     """docstring for ClassName"""
     def __init__(self, app, config):
@@ -106,20 +108,20 @@ class DB(object):
             return {'error': str(data[0])}
         elif not newUserForGroup: 
             session['loggedIn']=True
-            session['personID'] =new_id
+            session['personID'] = new_id
             print "personID: ", session['personID']
             return {'message': 'User created successfully !', 'id':new_id}
         else:
             print "personID in else: ", session['personID']            
             return {'message': 'User created successfully !', 'id':new_id}
 
-
     def add_group(self, data):
         print(session)
         data = deserialize(data)
         print(data)
         if data['new_group'] == 'true':
-            name = data['name']
+            name = urllib.unquote_plus(data['name'])
+            name.replace("'","''")
             print('INSERTING new group')
             res = self.query('''INSERT into groups (groupID, groupName) 
                         VALUES ({},'{}');'''.format(0, name))
@@ -151,9 +153,66 @@ class DB(object):
             return jsonify({'valid':True})
 
 
+    def add_location(self, data, eventID):
+        print('INSERTING new location')
+        #eventID = session['eventID']
+        eventID = eventID;
+        data = deserialize(data)
+        location = urllib.unquote_plus(data['location'])
+        res = self.query('''INSERT into locations (location, eventID, votes) VALUES ('{}', {}, 0);'''.format(location, eventID))
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Location added successfully !','id':location})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def submit_location_vote(self, data, eventID):
+        print('UPDATING location vote')
+        eventID = eventID;
+        data = deserialize(data)
+        location = urllib.unquote_plus(data['location'])
+        print(location)
+        res = self.query('''UPDATE locations set votes = votes + 1 where location = '{}' and eventID = {};'''.format(location, eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location vote updated successfully !','id':location})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def submit_location(self, eventID, location):
+        eventID = eventID
+        res = self.query('''UPDATE events SET locationID = (select locationID from locations where eventID = {} and location = '{}');'''.format(eventID, location))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location updated in events !','id':eventID})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def add_lodge(self, data, eventID):
+        d = deserialize(data)
+        lodgeName = urllib.unquote_plus(d['lodgeName'])
+        lodgeName.replace("'","''")
+        lodgeAddress = urllib.unquote_plus(d['lodgeAddress'])
+        lodgeAddress.replace("'","''")
+        lodgeURL = urllib.unquote_plus(d['lodgeURL'])
+        lodgePrice = d['lodgePrice']
+        print('INSERTING new lodge')
+        print "lodgeName: ", lodgeName
+        res = self.query('''INSERT into lodging (name, address, url, price, votes, eventID) VALUES ('{}', '{}', '{}', {}, 0, {});'''.format(lodgeName, lodgeAddress, lodgeURL, lodgePrice, eventID))
+
+        if len(res) is 0:
+            return json.dumps({'message': 'Lodge added successfully !'})
+        else:
+            return json.dumps({'error': str(data[0])})
+
     def add_event(self, data):
+        d = deserialize(data)
+        eventName = urllib.unquote_plus(d['eventName'])
+        groupID = session['eventGroup']
+        print "eventName: ", eventName
+        if groupID == "_createNewGroup":
+            groupID = self.query('''SELECT LAST_INSERT_ID() from groups''')[0][0]
+            print "groupID: ", groupID
         print('INSERTING new event')
-        res = self.query('''INSERT into events (eventID) VALUES (0);''')
+        res = self.query('''INSERT into events (eventID, eventName, groupID,admin) VALUES (0, '{}', {},{});'''.format(eventName, groupID,session['personID']))
         newID = self.query('''SELECT LAST_INSERT_ID() from events''')[0][0]
         print(newID)
         session['eventID'] = newID
@@ -183,10 +242,7 @@ class DB(object):
         groups = {l[1]:l[0] for l in res}
 
         print(groups)
-        if len(groups.keys()) <=0:
-            return {'valid':False}
-        else:
-            return jsonify({'groups':groups, 'valid': True})
+        return jsonify({'groups':groups, 'valid': True})
 
     def add_membership(self, data):
         data = json.loads(data)

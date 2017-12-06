@@ -78,6 +78,61 @@ drone.on('open', error=> {
     });
 });
 
+window.onload = function() {
+    $('#tabs a:first').tab('show'); 
+    let adminBool = $('#btnClosePoll').val();
+    console.log("adminBool: ", adminBool);
+    if (String(adminBool) == "False"){
+        document.getElementById('btnClosePoll').style.display = 'none';
+    }
+    return true;
+}
+
+$(function () {
+    $('#btnAddNewLocation').click(function () {
+        $.ajax({
+            url: '/addlocation',
+            data: {new_location: true, location: $('#newLocation').val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+                // document.getElementById("existingGroupBtn").style.visibility = "visible";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
+$(function () {
+    $('#textinputNewLocation').change(function () {
+        let input = document.getElementById('newLocation').value;
+        $.ajax({
+            url: '/getLocationSuggestions',
+            data: {input: input},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                for (val in response) {
+                    let descript = response[val]['description'];
+                    let row = $("<option>");
+                    row.val(descript);
+                    $("#suggestionList").append(row);
+                }
+                document.getElementById('suggestionList').click();
+
+
+            },
+            error: function (error) {
+                console.log(error)
+
+            }
+        });
+    });
+
+});
+
 function createMemberElement(member) {
     const { name, color } = member.clientData;
     console.log(member.clientData);
@@ -88,21 +143,37 @@ function createMemberElement(member) {
     el.style.color = color;
     return el;
 }
+      
+$(function () {
+    $('#btnSubmitLocationVote').click(function () {
+        $.ajax({
+            url: '/submitLocationVote',
+            data: {submit_vote: true, location: $("input[name=optionsRadios]:checked").val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
 
-function updateMembersDOM() {
-    DOM.membersCount.innerText = `${members.length} users in room:`;
-    DOM.membersList.innerHTML = '';
-    members.forEach(member =>
-            DOM.membersList.appendChild(createMemberElement(member))
-    );
-}
+});
 
-function createMessageElement(text, member) {
-    const el = document.createElement('div');
-    el.appendChild(createMemberElement(member));
-    el.appendChild(document.createTextNode(text));
-    el.className = 'message';
-    return el;
+function submitLocation() {
+    $.ajax({
+            url: '/submitLocation',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
 }
 
 function addMessageToListDOM(text, member) {
@@ -162,3 +233,23 @@ function showMessages() {
         //y.style.display = "block";
     }
 }
+
+$(function () {
+    $("#newLodgeForm").submit(function (event) {
+        console.log("data: ", $('#newLodgeForm').serialize()); 
+        $.ajax({
+            url: '/addlodge',
+            data: $('#newLodgeForm').serialize(),
+            type: 'POST',
+            success: function (response) {
+                console.log("From data: ", $('#newLodgeForm').serialize());
+                console.log(response);
+                window.location = "/eventDetails";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        event.preventDefault();
+    });
+});
