@@ -73,7 +73,13 @@
                             <div>
                                 <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote</button>
                                 <button type="button" class="btn btn-danger" id="btnCloseLocationsPoll" value="{{ adminBool }}">Close this Poll</button>                            
-                            </div>
+                            </div> 
+
+                        </div> <!-- /inProgressContent -->
+
+                        <div id=finalizedLocationContent>
+                            <legend id=chosenDestination>Chosen Destination:</legend>
+                            <h1 id=destinationName>{{ finalLocation }}</h1>
                         </div>
                     </div>
 

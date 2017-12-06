@@ -9,6 +9,8 @@ window.onload = function() {
     }
     if (inProgressData[1] == 1) {
         document.getElementById('locationsInProgressContent').style.display = 'none';
+        document.getElementById('finalizedLocationContent').style.display = 'block';
+        
     }
 
     return true;
@@ -16,7 +18,7 @@ window.onload = function() {
 
 $(function () { 
     $('#btnCloseLocationsPoll').click(function () {
-        $.ajax({
+        $.ajax({ 
             url: '/submitLocation',
             type: 'POST',
             success: function (response) {

@@ -134,10 +134,11 @@ def eventDetails():
         print "FALSE*****"
         adminBool = False
     print "adminBOOL: ", adminBool
+    finalLocation = db.query('''select location from locations where locations.locationID=(select locationID from events where eventID={});'''.format(eventID))
     inProgressData = db.query('''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(eventID))        
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    return render_template('eventDetails.html', inProgressData=inProgressData, locations = locations, adminBool = adminBool, lodgeData = lodgeData)
+    return render_template('eventDetails.html', finalLocation=finalLocation[0][0], inProgressData=inProgressData, locations = locations, adminBool = adminBool, lodgeData = lodgeData)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
@@ -153,10 +154,10 @@ def submitLocationVote():
 
 @app.route('/submitLocation', methods=['POST'])
 def submitLocation():
-    res = db.query(''' UPDATE events SET locationsInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))    
+    res1 = db.query(''' UPDATE events SET locationsInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))    
     eventID = session['eventDetailsID']
     location = db.query('''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    print "LOCATION: ", location[0][0]
+    print "LOCATION: ", location
     res = db.submit_location(eventID, location[0][0])
     return res
 
@@ -195,10 +196,6 @@ def getLocationSuggestions():
     data = request.get_data()
     return location.getLocationSuggestions(data)
 
-@app.route('/updateLocationsInProgress', methods=['POST'])
-def updateLocationsInProgress():
-    res = db.query(''' UPDATE events SET locationsInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))
-    return res
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
