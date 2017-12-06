@@ -253,3 +253,9 @@ class DB(object):
                         VALUES ({},{})'''.format(session['eventGroup'], id))
 
         return jsonify({'valid': True})
+
+    def add_message(self, data):
+        data = json.loads(data)
+        print "add_message data: {}".format(data)
+
+        return jsonify({'valid': True})

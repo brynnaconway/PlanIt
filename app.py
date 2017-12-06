@@ -6,6 +6,7 @@ from flask import Flask, render_template,request, jsonify, redirect, url_for, se
 
 from app import location
 from app.db import DB
+import urllib
 import yaml
 import os
 import urllib
@@ -112,6 +113,12 @@ def add_membership():
     res = db.add_membership(data)
     return res
 
+@app.route('/getName')
+def getName():
+    userID = session['personID']
+    name = db.query('''SELECT name FROM people WHERE personID={};'''.format(userID))
+    return name[0][0]
+
 @app.route('/setEventDetailsID', methods=['POST'])
 def setEventDetailsID():
     data = request.get_data()
@@ -188,11 +195,22 @@ def getGroups():
 def createEventDetails():
     return render_template('createEventDetails.html')
 
+@app.route('/sendMessage',methods=['POST'])
+def sendMessage():
+    data = request.get_data()
+    d = deserialize(data)
+
+    timestamp = urllib.unquote(d['timestamp']).decode('utf8')
+    message = d['message']
+    personID = session['personID']
+    ## eventID = session['eventDetailsID']
+
+    return data
+
 @app.route('/getLocationSuggestions', methods=['POST'])
 def getLocationSuggestions():
     data = request.get_data()
     return location.getLocationSuggestions(data)
-
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
