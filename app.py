@@ -199,13 +199,17 @@ def createEventDetails():
 def sendMessage():
     data = request.get_data()
     d = deserialize(data)
+    messageData = {}
 
+    messageData['personID'] = session['personID']
     timestamp = urllib.unquote(d['timestamp']).decode('utf8')
-    message = d['message']
-    personID = session['personID']
-    ## eventID = session['eventDetailsID']
+    messageData['timestamp'] = timestamp
+    messageData['eventID'] = session['eventDetailsID']
+    messageData['message'] = d['message']
 
-    return data
+    res = db.add_message(messageData)
+
+    return res
 
 @app.route('/getLocationSuggestions', methods=['POST'])
 def getLocationSuggestions():
