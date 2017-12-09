@@ -25,6 +25,7 @@ class DB(object):
         self.mysql = mysql
         self.conn = mysql.connect()
 
+    # Database management
     def reset(self):
         query = open('./resources/schema.sql').read()
         curr = self.conn.cursor()
@@ -56,6 +57,7 @@ class DB(object):
 
         print 'all ok'
 
+    # Query helping functions
     def query(self, q):
         print q
         cur = self.conn.cursor()
@@ -71,6 +73,7 @@ class DB(object):
         self.conn.commit()
         return res
 
+    # Sign in
     def sign_in(self, data):
         d = deserialize(data)
         email = urllib.unquote_plus(d['inputEmail'])
@@ -84,6 +87,21 @@ class DB(object):
             else:
                 return {'valid': False}
 
+    # Getting data
+    def getGroups(self, uid):
+        # uid = 1
+        print('SELECTING group IDS')
+        res = self.query('''
+            SELECT g.groupID, g.groupName from groups g WHERE g.groupID in (
+            SELECT groupID from memberships where personID = {});
+            '''.format(uid))
+
+        groups = {l[1]: l[0] for l in res}
+
+        print(groups)
+        return jsonify({'groups': groups, 'valid': True})
+
+    # Adding data
     def add_person(self, data):
         d = deserialize(data)
         name = urllib.unquote_plus(d['inputName'])
@@ -166,29 +184,6 @@ class DB(object):
         else:
             return json.dumps({'error': str(data[0])})
 
-    def submit_location_vote(self, data, eventID):
-        print('UPDATING location vote')
-        data = deserialize(data)
-        location = data['location'].replace("'", "''")
-        location = urllib.unquote_plus(location)
-        res = self.query(
-            '''UPDATE locations set votes = votes + 1 where location = '{}' and eventID = {};'''.format(location,
-                                                                                                        eventID))
-        if len(res) is 0:
-            return json.dumps({'message': 'Location vote updated successfully !', 'id': location})
-        else:
-            return json.dumps({'error': str(data[0])})
-
-    def submit_location(self, eventID, location):
-        eventID = eventID
-        res = self.query(
-            '''UPDATE events SET locationID = (select locationID from locations where eventID = {} and location = '{}');'''.format(
-                eventID, location))
-        if len(res) is 0:
-            return json.dumps({'message': 'Location updated in events !', 'id': eventID})
-        else:
-            return json.dumps({'error': str(data[0])})
-
     def add_lodge(self, data, eventID):
         d = deserialize(data)
         lodgeName = urllib.unquote_plus(d['lodgeName'])
@@ -231,27 +226,6 @@ class DB(object):
         else:
             return json.dumps({'error': str(data[0])})
 
-    def delete_event(self, data):
-        res = self.query('''DELETE FROM events WHERE eventID='{}';'''.format(data))
-
-        if len(res) is 0:
-            return json.dumps({'message': 'Event deleted successfully !'})
-        else:
-            return json.dumps({'error': str(data[0])})
-
-    def getGroups(self, uid):
-        # uid = 1
-        print('SELECTING group IDS')
-        res = self.query('''
-            SELECT g.groupID, g.groupName from groups g WHERE g.groupID in (
-            SELECT groupID from memberships where personID = {});
-            '''.format(uid))
-
-        groups = {l[1]: l[0] for l in res}
-
-        print(groups)
-        return jsonify({'groups': groups, 'valid': True})
-
     def add_membership(self, data):
         data = json.loads(data)
         assert 'ids' in data.keys()
@@ -259,6 +233,16 @@ class DB(object):
             id = int(id)
             res = self.query('''INSERT into memberships (groupID, personID) 
                         VALUES ({},{})'''.format(session['eventGroup'], id))
+
+        return jsonify({'valid': True})
+
+    def add_message(self, data):
+        message = urllib.unquote_plus(data['message']).replace("'", "''")
+
+        res = self.query('''INSERT INTO messages (personID, timestamp, eventID, message)
+                VALUES ({},'{}',{},'{}');'''.format(int(data['personID']),
+                    urllib.unquote_plus(data['timestamp']), int(data['eventID']),
+                    message))
 
         return jsonify({'valid': True})
 
@@ -280,10 +264,35 @@ class DB(object):
                                                         stop_str))
         return jsonify({'valid': 'true'})
 
+    # Voting
+    def submit_location_vote(self, data, eventID):
+        print('UPDATING location vote')
+        data = deserialize(data)
+        location = data['location'].replace("'", "''")
+        location = urllib.unquote_plus(location)
+        res = self.query(
+            '''UPDATE locations set votes = votes + 1 where location = '{}' and eventID = {};'''.format(location,
+                                                                                                        eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location vote updated successfully !', 'id': location})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def submit_location(self, eventID, location):
+        eventID = eventID
+        res = self.query(
+            '''UPDATE events SET locationID = (select locationID from locations where eventID = {} and location = '{}');'''.format(
+                eventID, location))
+        if len(res) is 0:
+            return json.dumps({'message': 'Location updated in events !', 'id': eventID})
+        else:
+            return json.dumps({'error': str(data[0])})
+
     def submit_lodge_vote(self, data, eventID):
         print('UPDATING lodge vote')
         eventID = eventID;
         data = deserialize(data)
+        print(data)
         lodgeName = urllib.unquote_plus(data['lodgeName'])
         print "LodgeName: ", lodgeName
         res = self.query(
@@ -301,13 +310,18 @@ class DB(object):
             return json.dumps({'message': 'Location updated in events !', 'id': lodgeID})
         else:
             return json.dumps({'error': str(data[0])})
-          
-    def add_message(self, data):
-        message = urllib.unquote_plus(data['message']).replace("'", "''")
 
-        res = self.query('''INSERT INTO messages (personID, timestamp, eventID, message)
-                VALUES ({},'{}',{},'{}');'''.format(int(data['personID']),
-                    urllib.unquote_plus(data['timestamp']), int(data['eventID']),
-                    message))
+    # Deletion
+    def delete_event(self, data):
+        res = self.query('''DELETE FROM events WHERE eventID='{}';'''.format(data))
 
-        return jsonify({'valid': True})
+        if len(res) is 0:
+            return json.dumps({'message': 'Event deleted successfully !'})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+
+
+
+
+
