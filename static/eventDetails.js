@@ -1,3 +1,30 @@
+// From Stack Overflow
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// From Stack Overflow
+var cache = {
+    stack: {}, //Cache stack
+    load: function (id) { //Load cache if found
+        return (typeof(this.stack[id]) != 'undefined') ? this.stack[id] : false;
+    },
+    save: function (data, id) { //Cache data with unique id
+        this.stack[id] = data;
+    },
+    remove: function (id) {//Remove cache for identifier
+        if (typeof(this.stack[id]) != 'undefined')
+            delete this.stack[id];
+    }
+};
+
+
 window.onload = function () {
     $('#tabs a:first').tab('show');
     let adminBool = $('#btnCloseLocationsPoll').val();
@@ -16,9 +43,23 @@ window.onload = function () {
         document.getElementById('finalizedLocationContent').style.display = 'none';
     }
 
+    $.ajax({
+        url: '/getPeopleInGroup',
+        type: 'POST',
+        success: function (response) {
+            console.log(response)
+            cache.save(response, 'peopleData');
+        },
+        error: function (error) {
+            alert("Unable to load group data! Changing group information may not work right now.");
+
+        }
+    });
+
     return true;
-}
-  
+};
+
+
 const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
 var username = getName();
 const drone = new ScaleDrone(CHANNEL_ID, {
@@ -39,13 +80,13 @@ const DOM = {
 };
 
 function getRandomName() {
-     const adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"];
-      const nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"];
-      return (
-              adjs[Math.floor(Math.random() * adjs.length)] +
-              "_" +
-              nouns[Math.floor(Math.random() * nouns.length)]
-             );
+    const adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"];
+    const nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"];
+    return (
+        adjs[Math.floor(Math.random() * adjs.length)] +
+        "_" +
+        nouns[Math.floor(Math.random() * nouns.length)]
+    );
 }
 
 function getName() {
@@ -59,15 +100,15 @@ function getRandomColor() {
     return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
 
-drone.on('open', error=> {
-    if(error) {
+drone.on('open', error => {
+    if (error) {
         return console.error(error);
     }
     console.log("Successfully connected to ScaleDrone");
 
     const room = drone.subscribe('observable-room');
     room.on('open', error => {
-        if(error) {
+        if (error) {
             return console.error(error);
         }
         console.log('Successfully joined room');
@@ -92,7 +133,7 @@ drone.on('open', error=> {
     });
 
     room.on('data', (text, member) => {
-        if(member) {
+        if (member) {
             addMessageToListDOM(text, member);
         }
         else {
@@ -173,7 +214,7 @@ $(function () {
 
 });
 
-      
+
 $(function () {
     $('#btnSubmitLocationVote').click(function () {
         $.ajax({
@@ -232,7 +273,7 @@ function sendMessage() {
     var dt = new Date($.now());
     var timestamp = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + " " + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
     console.log("timestamp: " + timestamp.replace('+', ' '));
-    if(value === '') {
+    if (value === '') {
         return;
     }
     DOM.input.value = '';
@@ -241,7 +282,7 @@ function sendMessage() {
         message: value,
     });
 
-    console.log("sendMessage() data: "+{timestamp: value});
+    console.log("sendMessage() data: " + {timestamp: value});
     $.ajax({
         url: '/sendMessage',
         type: 'POST',
@@ -249,11 +290,11 @@ function sendMessage() {
             "timestamp": timestamp,
             "message": value,
         },
-        success: function(res) {
+        success: function (res) {
             console.log("sendMessage success");
             console.log(res);
         },
-        error: function(err) {
+        error: function (err) {
             console.log("sendMessage failure");
             console.log(err);
         }
@@ -261,7 +302,7 @@ function sendMessage() {
 }
 
 function createMemberElement(member) {
-    const { name, color } = member.clientData;
+    const {name, color} = member.clientData;
     console.log(member.clientData);
     const el = document.createElement('div');
     // here is where colon and timestamp can be added i think
@@ -291,7 +332,7 @@ function addMessageToListDOM(text, member) {
     const el = DOM.messages;
     const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
     el.appendChild(createMessageElement(text, member));
-    if(wasTop) {
+    if (wasTop) {
         el.scrollTop = el.scrollHeight - el.clientHeight;
     }
 }
@@ -299,7 +340,7 @@ function addMessageToListDOM(text, member) {
 function showMessages() {
     var x = document.getElementById("chatbox");
     var y = document.getElementById("chatButton");
-    if(x.style.display === "none") {
+    if (x.style.display === "none") {
         //console.log("none -> block");
         x.style.display = "block";
         //y.style.display = "none";
@@ -349,6 +390,7 @@ $(function () {
     });
 });
 
+
 $(function () {
     $("#btnAddNewTime").click(function () {
         let start = $('#datetimepickerStart').data("DateTimePicker").date();
@@ -368,3 +410,104 @@ $(function () {
         });
     });
 });
+
+
+function deleteMembership(id) {
+    return $.ajax({
+        url: "/deleteMembership",
+        data: {id: id},
+        type: 'POST',
+        success: function (response) {
+            console.log(response);
+            window.location = '/eventDetails'
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+$(function () {
+    $('#btnPeopleSearch').click(function () {
+        // $('#search-results').toggle();
+        $.ajax({
+            url: '/searchpeople2',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function (response) {
+                $("#search-results tr").remove();
+
+                cache.save(response, 'searchData');
+                for (item in response) {
+                    var row = $("<tr>");
+
+                    // Don't ask
+                    row.append("<div class='checkbox'><td></td><label>" +
+                        "<input type='checkbox' id='regular' name='memberAddCheck' value='" + item + "'>"
+                        + item + "</label></td></div>");
+
+                    // row.append($("<td>" + item + "</td>"))
+                    row.append($("<td>" + response[item][1] + "</td>"));
+                    row.append("");
+                    $("#search-results tbody").append(row);
+                }
+
+                document.getElementById("btnAddPeople").style.display = "inline";
+
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+$(function () {
+    $('#btnAddPeople').click(function () {
+        selids = [];
+        checked = $('#results').find('input[type="checkbox"]:checked')
+        for (var i in [...Array(checked.length).keys()]) {
+            name = checked[i].value;
+            id = cache.load('searchData')[name];
+            console.log(id);
+            selids.push(parseInt(id))
+        }
+        $.ajax({
+            url: '/addmembership',
+            data: JSON.stringify({ids: selids}),
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    });
+});
+
+$(function () {
+    $('#addNewPerson').click(function () {
+
+        name = $('#newPersonName').val();
+        email = $('#newPersonEmail').val();
+        number = $('#newPersonPhone').val();
+
+        $.ajax({
+            url: '/addperson',
+            data: {inputName: name, inputEmail: email, inputNum: number, addToGroup: true},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+
+    });
+});
+

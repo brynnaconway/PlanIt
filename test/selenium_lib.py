@@ -48,7 +48,7 @@ def login(driver):
 
     elem = driver.find_element_by_id("inputPassword")
     elem.click()
-    elem.send_keys("b")
+    elem.send_keys("password")
 
     driver.find_element_by_id("btnSignIn").click()
 

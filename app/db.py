@@ -104,9 +104,11 @@ class DB(object):
     # Adding data
     def add_person(self, data):
         d = deserialize(data)
+        print(d)
         name = urllib.unquote_plus(d['inputName'])
         email = urllib.unquote_plus(d['inputEmail'])
-        newUserForGroup = False
+        addToGroup = d['addToGroup']
+
         try:
             num = d['inputNum']
         except KeyError:
@@ -125,13 +127,11 @@ class DB(object):
 
         if len(res) is not 0:
             return {'error': str(data[0])}
-        elif not newUserForGroup:
-            session['loggedIn'] = True
-            session['personID'] = new_id
-            print "personID: ", session['personID']
+        elif addToGroup == 'true': #hmm
+            self.query('INSERT INTO memberships (groupID, personID) VALUES ({},{});'.format(session['eventGroup'], new_id))
             return {'message': 'User created successfully !', 'id': new_id}
         else:
-            print "personID in else: ", session['personID']
+            # This might break things
             return {'message': 'User created successfully !', 'id': new_id}
 
     def add_group(self, data):
@@ -154,7 +154,7 @@ class DB(object):
             if 'eventID' in session.keys():
                 print('Updating EVENT with GROUPID')
                 self.query(''' UPDATE events SET groupID={}
-                    WHERE eventID = {};\n'''.format(new_id, session['eventID']))
+                    WHERE eventID = {};\n'''.format(new_id, session['eventDetailsId']))
 
             print(session)
             return jsonify({'valid': True, 'id': new_id})
@@ -162,7 +162,7 @@ class DB(object):
             assert 'id' in data.keys()
             session['eventGroup'] = data['id']
 
-            if 'eventID' in session.keys():
+            if 'eventDetailsID' in session.keys():
                 print('Updating EVENT with GROUPID')
                 q = ''' UPDATE events SET groupID={}
                      WHERE eventID = {};\n'''.format(data['id'], session['eventID'])
@@ -219,7 +219,7 @@ class DB(object):
                                                                                                              'personID']))
         newID = self.query('''SELECT LAST_INSERT_ID() from events''')[0][0]
         print(newID)
-        session['eventID'] = newID
+        session['eventDetailsId'] = newID
 
         if len(res) is 0:
             return json.dumps({'message': 'Event created successfully !', 'id': newID})
@@ -241,8 +241,8 @@ class DB(object):
 
         res = self.query('''INSERT INTO messages (personID, timestamp, eventID, message)
                 VALUES ({},'{}',{},'{}');'''.format(int(data['personID']),
-                    urllib.unquote_plus(data['timestamp']), int(data['eventID']),
-                    message))
+                                                    urllib.unquote_plus(data['timestamp']), int(data['eventID']),
+                                                    message))
 
         return jsonify({'valid': True})
 
@@ -319,9 +319,3 @@ class DB(object):
             return json.dumps({'message': 'Event deleted successfully !'})
         else:
             return json.dumps({'error': str(data[0])})
-
-
-
-
-
-

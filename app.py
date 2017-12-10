@@ -17,6 +17,15 @@ app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
 
+'''
+SESSION PARAMS:
+eventID:    'eventDetailsID'
+peopleID:   'personID'
+groupID:    'eventGroup'    
+Logged in?: 'loggedin'
+'''
+
+
 # Pages
 @app.route('/', methods=['POST', 'GET'])
 def homepage():
@@ -28,6 +37,7 @@ def homepage():
     except KeyError:
         return render_template('root.html')
 
+
 @app.route('/generate', methods=['POST', 'GET'])
 def generate_data():
     res = db.generate_data()
@@ -36,6 +46,7 @@ def generate_data():
     else:
         return res
 
+
 @app.route('/reset', methods=['POST', 'GET'])
 def reset_db():
     res = db.reset()
@@ -43,6 +54,7 @@ def reset_db():
         return render_template('reset.html')
     else:
         return res
+
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
@@ -59,9 +71,14 @@ def dashboard():
         print(e)
         return redirect(url_for('homepage'))
 
+
 @app.route('/eventDetails', methods=['POST', 'GET'])
 def eventDetails():
     print "session[eventDetailsID]: ", session['eventDetailsID']
+
+    session['eventGroup'] = \
+    db.single_attr_query('SELECT groupID FROM events where eventID = {}'.format(session['eventDetailsID']))[0]
+
     eventID = session['eventDetailsID']
     admin = db.query('''SELECT admin from events where eventID = {};'''.format(eventID))
     if int(admin[0][0]) == int(session['personID']):
@@ -84,13 +101,19 @@ def eventDetails():
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
     times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
+    people = db.query(
+        '''SELECT name, email, phoneNumber, personID from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
+            session['eventGroup']))
 
     return render_template('eventDetails.html', finalLocation=finalLocation, inProgressData=inProgressData,
-                       locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times)
+                           locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times,
+                           peopleData=people)
 
-@app.route('/pickPeople', methods=['GET']) # I don't think this is used anymore
+
+@app.route('/pickPeople', methods=['GET'])  # I don't think this is used anymore
 def get_people():
     return render_template('people.html')
+
 
 @app.route('/signUp')
 def signUp():
@@ -114,11 +137,13 @@ def signIn():
     else:
         return render_template('root.html')
 
+
 @app.route('/signOut')
 def signOut():
     session['personID'] = None
     session['loggedIn'] = False
     return redirect(url_for('homepage'))
+
 
 @app.route('/setEventDetailsID', methods=['POST'])
 def setEventDetailsID():
@@ -138,10 +163,21 @@ def getName():
     name = db.query('''SELECT name FROM people WHERE personID={};'''.format(userID))
     return name[0][0]
 
+
 @app.route('/getGroups', methods=['POST'])
 def getGroups():
     res = db.getGroups(session['personID'])
     return res
+
+
+@app.route('/getPeopleInGroup', methods=['POST'])
+def getPeopleInGroup():
+    res = db.query(
+        '''SELECT personID, name, email, phoneNumber from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
+            session['eventGroup']))
+    d = {k[1]: (k[0], k[2], k[3]) for k in res}
+    return jsonify(d)
+
 
 @app.route('/searchpeople', methods=['POST'])
 def search_people():
@@ -151,6 +187,17 @@ def search_people():
     jres = jsonify(data=res)
     # jres = json.dumps(dict(res))
     return jres
+
+
+@app.route('/searchpeople2', methods=['POST'])  # I'm sorry for this, I really am
+def search_people2():
+    data = request.get_data()
+    d = deserialize(data)
+    res = db.query(
+        '''SELECT personID,name, email, phoneNumber FROM people WHERE name LIKE '%{}%';'''.format(d['queryName']))
+    d = {k[1]: (k[0], k[2], k[3]) for k in res}
+    return jsonify(d)
+
 
 @app.route('/getLocationSuggestions', methods=['POST'])
 def getLocationSuggestions():
@@ -166,11 +213,13 @@ def add_person():
     print "Response: ", res
     return jsonify(res)
 
+
 @app.route('/addgroup', methods=['POST'])
 def add_group():
     data = request.get_data()
     res = db.add_group(data)
     return res
+
 
 @app.route('/addmembership', methods=['POST'])
 def add_membership():
@@ -178,11 +227,13 @@ def add_membership():
     res = db.add_membership(data)
     return res
 
+
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
     data = request.get_data()
     res = db.add_location(data, session['eventDetailsID'])
     return res
+
 
 @app.route('/addlodge', methods=['POST'])
 def addLodge():
@@ -191,9 +242,11 @@ def addLodge():
     res = db.add_lodge(data, session['eventDetailsID'])
     return res
 
-@app.route('/createEventDetails') # I don't think this is used
+
+@app.route('/createEventDetails')  # I don't think this is used
 def createEventDetails():
     return render_template('createEventDetails.html')
+
 
 @app.route('/createEvent', methods=['POST'])
 def createEvent():
@@ -202,7 +255,8 @@ def createEvent():
     res = db.add_event(data)
     return res
 
-@app.route('/sendMessage',methods=['POST'])
+
+@app.route('/sendMessage', methods=['POST'])
 def sendMessage():
     data = request.get_data()
     d = deserialize(data)
@@ -268,6 +322,18 @@ def deleteEvent():
     data = data.split('=')[1]
     res = db.delete_event(data)
     return res
+
+
+@app.route('/deleteMembership', methods=['POST'])
+def deleteMembership():
+    data = request.get_data()
+    peopleID = deserialize(data)['id']
+    if peopleID != session['personID']:
+        res = db.query(
+            '''DELETE FROM memberships WHERE groupID={} and personID={};'''.format(session['eventGroup'], peopleID))
+        return jsonify(res)
+    else:
+        return jsonify({'valid': False})
 
 
 if __name__ == "__main__":

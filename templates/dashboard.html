@@ -3,176 +3,192 @@
 <head>
     <title>PlanIt</title>
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css" rel="stylesheet">      
-    <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
+    <link href="https://gist.githubusercontent.com/hellt/bc4fc51d6f1b9584605517f5c8d6a5a0/raw/1541916ad019f8b5349d7353489b6fd2d36513dd/jumbotron-narrow.css"
+          rel="stylesheet">
+    <link href="https://bootswatch.com/4/flatly/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/background.css">
-    <link rel="stylesheet" type="text/css" href="/static/dashboard.css"> 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="/static/dashboard.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600" rel="stylesheet">
 </head>
 
 
-<body> 
+<body>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title w-100 text-primary" id=modalTitle>New Event</h3> 
-                    <button type="button" id=closeModal class="close" data-dismiss="modal">&times;</button>                    
-                </div>
-                <div class="modal-body">
-                    <form class=form-signin id=newEventForm method=POST>
-                        <fieldset>
-                        
-                            <!-- Event Name --> 
-                            <div class="form-group">
-                                <label for="eventName">Event Name</label>
-                                <input type="text" class="form-control" name=eventName id="eventName" placeholder="Enter event name" required>
-                            </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title w-100 text-primary" id=modalTitle>New Event</h3>
+                <button type="button" id=closeModal class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class=form-signin id=newEventForm method=POST>
+                    <fieldset>
 
-                            <!-- Choose group --> 
-                            <div class="form-group" id="chooseGroupInput">
+                        <!-- Event Name -->
+                        <div class="form-group">
+                            <label for="eventName">Event Name</label>
+                            <input type="text" class="form-control" name=eventName id="eventName"
+                                   placeholder="Enter event name" required>
+                        </div>
 
-                                <!-- Dropdown -->                         
-                                <label for="existingGroupSelect" id=groupSelectLabel>Participants (Group)</label>
-                                <select class="form-control" id="existingGroupSelect" name=groupID></select>
-                                
-                                <!-- Input box to create new group --> 
-                                <div id="textinputNewGroupName">
-                                    <label for="newGroupName">Participants (Group)</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="newGroupName" placeholder="New Group Name">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" id="btnCreateNewGroup">Create!</button>
+                        <!-- Choose group -->
+                        <div class="form-group" id="chooseGroupInput">
+
+                            <!-- Dropdown -->
+                            <label for="existingGroupSelect" id=groupSelectLabel>Participants (Group)</label>
+                            <select class="form-control" id="existingGroupSelect" name=groupID></select>
+
+                            <!-- Input box to create new group -->
+                            <div id="textinputNewGroupName">
+                                <label for="newGroupName">Participants (Group)</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="newGroupName"
+                                           placeholder="New Group Name">
+                                    <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"
+                                                    id="btnCreateNewGroup">Create!</button>
                                         </span>
-                                    </div>
-                                </div> 
-
+                                </div>
                             </div>
-                        </fieldset>
-                    </form>
+
+                        </div>
+                    </fieldset>
+                </form>
 
 
+                <!-- Create a new group -->
+                <div id=selectPeople>
 
-                    <!-- Create a new group --> 
-                     <div id=selectPeople>
- 
-                        <legend>Create a New Group</legend>
+                    <legend>Create a New Group</legend>
 
-                        <!-- Show who is selected to be in new group --> 
-                        <label>Selected Members of New Group:</label>
-                        <div class="container w-100" id="selection">
-                            <table class="table" id="selectionTable">
-                                <thead> 
+                    <!-- Show who is selected to be in new group -->
+                    <label>Selected Members of New Group:</label>
+                    <div class="container w-100" id="selection">
+                        <table class="table" id="selectionTable">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <tr id=noMembers>
+                                <td style="border-top: none">You are currently the only member of this group.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Search box and results for users and button to create new user -->
+                    <div id=addMembersOptions>
+                        <form class="form-signin" id="searchBox" method=POST>
+                            <label for="queryName" id=addMembersLabel>Add Members to Group</label>
+                            <div class="input-group">
+
+                                <input type="name" name="queryName" id="queryName" class="form-control"
+                                       placeholder="Search for name">
+                                <span class="input-group-btn">
+                                        <button id="btnPeopleSearch" class="btn btn-default"
+                                                type="button">Search</button>
+                                    </span>
+
+                                <button id="newUserButton" class="btn btn-default">Create New User</button>
+                            </div>
+                        </form>
+
+                        <!-- Search results -->
+                        <div class="container w-100" id="search-results">
+                            <table id="results" class="table display table-striped table-hover clickable-row">
+                                <thead>
                                 </thead>
                                 <tbody>
-                                    <tr id=noMembers >
-                                        <td style="border-top: none">You are currently the only member of this group.</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                        
-                        <!-- Search box and results for users and button to create new user --> 
-                         <div id=addMembersOptions>
-                            <form class="form-signin" id="searchBox" method=POST>
-                                <label for="queryName" id=addMembersLabel>Add Members to Group</label> 
-                                <div class="input-group"> 
+                    </div>
 
-                                    <input type="name" name="queryName" id="queryName" class="form-control" placeholder="Search for name">
-                                    <span class="input-group-btn">
-                                        <button id="btnPeopleSearch" class="btn btn-default" type="button">Search</button>
-                                    </span>
-
-                                    <button id="newUserButton" class="btn btn-default">Create New User</button>                                
-                                </div>
-                            </form>
-
-                            <!-- Search results --> 
-                            <div class="container w-100" id="search-results">
-                                <table id="results" class="table display table-striped table-hover clickable-row">
-                                    <thead>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <!-- Create new user form -->
+                    <form id="newUserForm">
+                        <legend id="newUserInfoLegend" style="font-size: 125%;">New User Information</legend>
+                        <div class="form-group">
+                            <label for="newPersonName">Name</label>
+                            <input type="text" class="form-control" id="newPersonName" placeholder="First Last">
                         </div>
 
-                        <!-- Create new user form --> 
-                        <form id="newUserForm">
-                            <legend id="newUserInfoLegend" style="font-size: 125%;">New User Information</legend>
-                            <div class="form-group">
-                                <label for="newPersonName">Name</label>
-                                    <input type="text" class="form-control" id="newPersonName" placeholder="First Last">
-                            </div>
+                        <div class="form-group">
+                            <label for="newPersonEmail">Email</label>
+                            <input type="email" class="form-control" id="newPersonEmail"
+                                   placeholder="email@example.com">
+                        </div>
 
-                            <div class="form-group">
-                                <label for="newPersonEmail">Email</label>
-                                <input type="email" class="form-control" id="newPersonEmail" placeholder="email@example.com">
-                            </div>
+                        <div class="form-group">
+                            <label for="newPersonPhone">Phone (Not required)</label>
+                            <input type="text" class="form-control" id="newPersonPhone" placeholder="000-000-0000">
+                        </div>
 
-                            <div class="form-group">
-                                <label for="newPersonPhone">Phone (Not required)</label>
-                                <input type="text" class="form-control" id="newPersonPhone" placeholder="000-000-0000">
-                            </div>
+                        <button type="button" class="btn btn-default" id="btnSendNewPerson">Add User</button>
+                    </form>
 
-                            <button type="button" class="btn btn-default" id="btnSendNewPerson">Add User</button>
-                        </form>
-
-                        <!-- Submit button to create new group --> 
-                        <button id="btnConfirmGroup" class="btn btn-primary btn-lg btn-block" type="button">Confirm Members and Create Group</button>
-                    </div>
-
-                </div> <!-- Closing modal body tag --> 
-
-                <div class="modal-footer">
-                    <button type=submit id=createEvent form=newEventForm value=Submit class="btn btn-primary">Create Event</button>
+                    <!-- Submit button to create new group -->
+                    <button id="btnConfirmGroup" class="btn btn-primary btn-lg btn-block" type="button">Confirm Members
+                        and Create Group
+                    </button>
                 </div>
+
+            </div> <!-- Closing modal body tag -->
+
+            <div class="modal-footer">
+                <button type=submit id=createEvent form=newEventForm value=Submit class="btn btn-primary">Create Event
+                </button>
             </div>
-
         </div>
+
     </div>
+</div>
 
-    <!-- Top Navbar -->
-    <nav class="navbar"> 
-        <a class="navbar-brand text-primary" id=navbarHome href="/dashboard">Home</a>
-        <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
-    </nav>
+<!-- Top Navbar -->
+<nav class="navbar">
+    <a class="navbar-brand text-primary" id=navbarHome href="/dashboard">Home</a>
+    <a class="navbar-brand text-primary my-2 my-lg-0" href="/signOut">Sign Out</a>
+</nav>
 
-    <div class="w3-container">
+<div class="w3-container">
 
-        <div class="jumbotron">
-            <h1 id=myEvents class="text-primary">My Events</h1>
-            <div class=row>
-                {% for eventID, eventName in eventData %}
+    <div class="jumbotron">
+        <h1 id=myEvents class="text-primary">My Events</h1>
+        <div class=row>
+            {% for eventID, eventName in eventData %}
                 <div class="col-sm-4" id=column>
                     <div class="card text-center text-light bg-primary h-100" id=card>
-<div class=showDelete><button id=btnDelete class="close btn" aria-label="Close" type="button" onclick=deleteEvent({{ eventID }})><span aria-hidden="true">&times;</span></button></div>                         <a href="" id=eventID onclick="go_to_eventDetails(event, {{ eventID }})" class="card-title h-100 text-white"> {{eventName}}</a>
+                        <div class=showDelete>
+                            <button id=btnDelete class="close btn" aria-label="Close" type="button"
+                                    onclick=deleteEvent({{ eventID }})><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <a href="" id=eventID onclick="go_to_eventDetails(event, {{ eventID }})"
+                           class="card-title h-100 text-white"> {{ eventName }}</a>
                     </div>
                 </div>
-                {% endfor %}
-                <div class="col-sm-4" id=column>
-                    <div class="card text-center text-light bg-secondary h-100" id=card>
-                        <button id="btnAddEvent" class="btn btn-lg btn-secondary btn-block w-100 h-100" data-toggle="modal" data-target="#myModal" type="button">+</button>
-                    </div>
+            {% endfor %}
+            <div class="col-sm-4" id=column>
+                <div class="card text-center text-light bg-secondary h-100" id=card>
+                    <button id="btnAddEvent" class="btn btn-lg btn-secondary btn-block w-100 h-100" data-toggle="modal"
+                            data-target="#myModal" type="button">+
+                    </button>
                 </div>
             </div>
-
-
         </div>
- 
+
+
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
-    <script src="/static/dashboard.js"></script>
-    <script src="/static/people.js"></script>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://getbootstrap.com/2.0.4/assets/js/bootstrap-tab.js"></script>
+<script src="/static/dashboard.js"></script>
+<script src="/static/people.js"></script>
 
 </body>
 </html>
