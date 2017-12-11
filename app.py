@@ -71,45 +71,6 @@ def dashboard():
         print(e)
         return redirect(url_for('homepage'))
 
-
-@app.route('/eventDetails', methods=['POST', 'GET'])
-def eventDetails():
-    print "session[eventDetailsID]: ", session['eventDetailsID']
-
-    session['eventGroup'] = \
-    db.single_attr_query('SELECT groupID FROM events where eventID = {}'.format(session['eventDetailsID']))[0]
-
-    eventID = session['eventDetailsID']
-    admin = db.query('''SELECT admin from events where eventID = {};'''.format(eventID))
-    if int(admin[0][0]) == int(session['personID']):
-        print "IN***"
-        adminBool = True
-    else:
-        print "FALSE*****"
-        adminBool = False
-    print "adminBOOL: ", adminBool
-    finalLocation = db.query(
-        '''select location from locations where locations.locationID=(select locationID from events where eventID={});'''.format(
-            eventID))
-    try:
-        finalLocation = finalLocation[0][0]
-    except:
-        finalLocation = "Location not finalized."
-    inProgressData = db.query(
-        '''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(
-            eventID))
-    locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
-    lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
-    people = db.query(
-        '''SELECT name, email, phoneNumber, personID from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
-            session['eventGroup']))
-
-    return render_template('eventDetails.html', finalLocation=finalLocation, inProgressData=inProgressData,
-                           locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times,
-                           peopleData=people)
-
-
 @app.route('/pickPeople', methods=['GET'])  # I don't think this is used anymore
 def get_people():
     return render_template('people.html')
@@ -154,7 +115,6 @@ def setEventDetailsID():
     session['eventDetailsID'] = eventID
     # return redirect(url_for('eventDetails'))
     return eventID
-
 
 # Pulling Data
 @app.route('/getName')
@@ -227,20 +187,13 @@ def add_membership():
     res = db.add_membership(data)
     return res
 
-@app.route('/setEventDetailsID', methods=['POST'])
-def setEventDetailsID():
-    data = request.get_data()
-    print "DATA: ", data
-    eventID = data.split('=')[1]
-    print "eventID: ", eventID
-    session['eventDetailsID'] = eventID
-    # return redirect(url_for('eventDetails'))
-    return eventID
-
-
 @app.route('/eventDetails', methods=['POST', 'GET'])
 def eventDetails():
     print "session[eventDetailsID]: ", session['eventDetailsID']
+
+    session['eventGroup'] = \
+    db.single_attr_query('SELECT groupID FROM events where eventID = {}'.format(session['eventDetailsID']))[0]
+
     eventID = session['eventDetailsID']
     admin = db.query('''SELECT admin from events where eventID = {};'''.format(eventID))
     if int(admin[0][0]) == int(session['personID']):
@@ -274,33 +227,18 @@ def eventDetails():
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
     times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
+    people = db.query(
+        '''SELECT name, email, phoneNumber, personID from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
+            session['eventGroup']))
 
     return render_template('eventDetails.html', finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
-                       locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times)
+                       locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times, peopleData=people)
 
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():
     data = request.get_data()
     res = db.add_location(data, session['eventDetailsID'])
-    return res
-
-@app.route('/submitLocationVote', methods=['POST'])
-def submitLocationVote():
-    data = request.get_data()
-    res = db.submit_location_vote(data, session['eventDetailsID'])
-    return res
-
-
-@app.route('/submitLocation', methods=['POST'])
-def submitLocation():
-    res1 = db.query(
-        ''' UPDATE events SET locationsInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))
-    eventID = session['eventDetailsID']
-    location = db.query(
-        '''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    print "LOCATION: ", location
-    res = db.submit_location(eventID, location[0][0])
     return res
 
 @app.route('/addlodge', methods=['POST'])
