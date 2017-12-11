@@ -5,6 +5,10 @@
     border-top-right-radius: 0.35rem; 
 }
 
+#btnAddPeople{
+    display: none;
+}
+
 #tabs {
     border-top-left-radius: 0.55rem;
     border-top-right-radius: 0.55rem;

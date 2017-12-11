@@ -41,19 +41,19 @@
     </ul>
 
     <div class="jumbotron">
-      <div id="chatbox" class="chatbox">
-                <div class="members-count"></div>
-                <div class="members-list"></div>
-                <div class="messages"></div>
-                <form class="message-form" id="message-form" onsubmit="return false;">
-                    <input class="message-form__input" placeholder="Type a message..." type="text"/>
-                    <input class="message-form__button" value="Send" type="submit"/>
-                </form>
-   </div>
+        <div id="chatbox" class="chatbox">
+            <div class="members-count"></div>
+            <div class="members-list"></div>
+            <div class="messages"></div>
+            <form class="message-form" id="message-form" onsubmit="return false;">
+                <input class="message-form__input" placeholder="Type a message..." type="text"/>
+                <input class="message-form__button" value="Send" type="submit"/>
+            </form>
+        </div>
         <div id=jumbotronContent>
 
             <!-- Tab panes -->
-            <div class="tab-content">
+            <div class="tab-content" id="tab_div">
 
                 <!-- Locations tab content -->
                 <div class="tab-pane active" id="locations" role="tabpanel">
@@ -304,6 +304,123 @@
                     </div>
                 </div> <!-- close lodging tab content -->
 
+                <!-- People tab content -->
+                <div class="tab-pane" id="groupMembers" role="tabpanel">Group Info
+                    <div class="tab-pane active" id="groupInfo" role="tabpanel">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Number</th>
+                                <th></th>
+                            </tr>
+                            {% for name, email, number, peopleID in peopleData %}
+                                <tr>
+
+                                    <th>{{ name }}</th>
+                                    <th>{{ email }}</th>
+                                    <th>{{ number }}</th>
+
+                                    <th>
+                                        <div class=showDelete>
+                                            <button id=btnDelete class='close btn' aria-label='Close' type='button'
+                                                    onclick=deleteMembership({{ peopleID }})><span aria-hidden='true'>&times;</span>
+                                            </button>
+                                        </div>
+                                    </th>
+
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </table>
+
+                    </div>
+
+
+                    <div id=addMembersOptions>
+
+                        <div>
+                            <form class="form-signin" id="searchBox" method=POST>
+                                <label for="queryName" id=addMembersLabel>Add Members to Group</label>
+                                <div class="input-group">
+
+                                    <input type="name" name="queryName" id="queryName" class="form-control"
+                                           placeholder="Search for name">
+                                    <span class="input-group-btn">
+                                        <button id="btnPeopleSearch" class="btn btn-default"
+                                                type="button">Search</button>
+                                    </span>
+
+                                    <button id="btnNewPerson" type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#peopleModal">Add a new User
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <!-- Search results -->
+                        <div class="container w-100" id="search-results">
+                            <button id="btnAddPeople" class="btn btn-default">Add Selected</button>
+                            <table id="results" class="table display table-striped table-hover clickable-row">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal fade" id="peopleModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- Create new user form -->
+                                    <form id="newUserForm">
+                                        <legend id="newUserInfoLegend" style="font-size: 125%;">New User Information
+                                        </legend>
+                                        <div class="form-group">
+                                            <label for="newPersonName">Name</label>
+                                            <input type="text" class="form-control" id="newPersonName"
+                                                   placeholder="First Last">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="newPersonEmail">Email</label>
+                                            <input type="email" class="form-control" id="newPersonEmail"
+                                                   placeholder="email@example.com">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="newPersonPhone">Phone (Not required)</label>
+                                            <input type="text" class="form-control" id="newPersonPhone"
+                                                   placeholder="000-000-0000">
+                                        </div>
+
+                                    </form>
+
+                                    <!-- Submit button to create new group -->
+                                    <button id="addNewPerson" class="btn btn-primary btn-lg btn-block" type="button">
+                                        Add new member!
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
