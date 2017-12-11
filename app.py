@@ -157,13 +157,24 @@ def eventDetails():
         print "FALSE*****"
         adminBool = False
     print "adminBOOL: ", adminBool
+    
     finalLocation = db.query(
-        '''select location from locations where locations.locationID=(select locationID from events where eventID={});'''.format(
-            eventID))
+        '''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    
+    finalLodge = db.query(
+        '''SELECT name from lodging WHERE eventID= {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    print "finalLocation: ", finalLocation
     try:
         finalLocation = finalLocation[0][0]
+        print "finalLocation in try: ", finalLocation
     except:
         finalLocation = "Location not finalized."
+
+    try:
+        finalLodge = finalLodge[0][0]
+    except:
+        finalLodge = "Lodging not finalized."
+
     inProgressData = db.query(
         '''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(
             eventID))
@@ -171,7 +182,7 @@ def eventDetails():
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
     times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
 
-    return render_template('eventDetails.html', finalLocation=finalLocation, inProgressData=inProgressData,
+    return render_template('eventDetails.html', finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
                        locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times)
 
 
@@ -199,7 +210,6 @@ def submitLocation():
     print "LOCATION: ", location
     res = db.submit_location(eventID, location[0][0])
     return res
-
 
 @app.route('/addlodge', methods=['POST'])
 def addLodge():
@@ -261,22 +271,21 @@ def submitTime():
     data = request.get_data()
     return db.addNewTime(data)
 
-
-@app.route('/submitLodge', methods=['POST'])
-def submitLodge():
+@app.route('/submitLodging', methods=['POST'])
+def submitLodging():
+    res1 = db.query(
+        ''' UPDATE events SET lodgingInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))
     eventID = session['eventDetailsID']
     lodge = db.query('''SELECT lodgeID from lodging WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
     print "Lodge: ", lodge[0][0]
     res = db.submit_lodge(eventID, lodge[0][0])
     return res
 
-
 @app.route('/submitLodgeVote', methods=['POST'])
 def submitLodgeVote():
     data = request.get_data()
     res = db.submit_lodge_vote(data, session['eventDetailsID'])
     return res
-
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

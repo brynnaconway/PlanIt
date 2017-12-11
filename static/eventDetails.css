@@ -187,3 +187,7 @@ tr:nth-child(even) {
     margin-right: 10px; 
 
 }
+
+#finalizedLodgingContent { 
+    display: none;
+}

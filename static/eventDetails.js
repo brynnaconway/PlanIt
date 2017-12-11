@@ -1,20 +1,45 @@
 window.onload = function () {
     $('#tabs a:first').tab('show');
     let adminBool = $('#btnCloseLocationsPoll').val();
-    var inProgressData = $('#inProgressData').val();
-    console.log("locationsInProgress: ", inProgressData[1]);
+    var locationsInProgressData = $('#locationsInProgressData').val();
+    var timeInProgressData = $('#timeInProgressData').val();
+    var lodgingInProgressData = $('#lodgingInProgressData').val();
+    console.log("locationsInProgress: ", locationsInProgressData[0]);
+    console.log("timeInProgress: ", timeInProgressData[0]);
+    console.log("lodgingInProgress: ", lodgingInProgressData[0]);
     console.log("adminBool: ", adminBool);
+    
     if (String(adminBool) == "False") {
         document.getElementById('btnCloseLocationsPoll').style.display = 'none';
         document.getElementById('btnCloseLodgePoll').style.display = 'none';
     }
-    if (inProgressData[1] == 1) {
+
+    // Show or hide voting for locations 
+    if (locationsInProgressData[0] == 1) {
         document.getElementById('locationsInProgressContent').style.display = 'none';
         document.getElementById('finalizedLocationContent').style.display = 'block';
     }
     else {
         document.getElementById('finalizedLocationContent').style.display = 'none';
     }
+
+    // Show or hide voting for lodging 
+    if (lodgingInProgressData[0] == 1) {
+        document.getElementById('lodgingInProgressContent').style.display = 'none'; 
+        document.getElementById('finalizedLodgingContent').style.display = 'block';
+    }
+    else {
+        document.getElementById('finalizedLodgingContent').style.display = 'none';
+    }
+
+    // Show or hide voting for times 
+    /*if (inProgressData[5] == 1) {
+        document.getElementById('timeInProgressContent').style.display = 'none'; 
+        document.getElementById('finalizedTimeContent').style.display = 'block';
+    }
+    else {
+        document.getElementById('timeInProgressContent').style.display = 'none';
+    }*/
 
     return true;
 }
@@ -194,6 +219,7 @@ $(function () {
 
 $(function () {
     $('#btnSubmitLodgeVote').click(function () {
+        console.log("in click function"); 
         $.ajax({
             url: '/submitLodgeVote',
             data: {submit_vote: true, lodgeName: $("input[name=lodgingRadio]:checked").val()},
@@ -209,21 +235,6 @@ $(function () {
     });
 
 });
-
-
-function submitLodge() {
-    $.ajax({
-        url: '/submitLodge',
-        type: 'POST',
-        success: function (response) {
-            console.log(response);
-            window.location = '/eventDetails'
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
 
 DOM.form.addEventListener('submit', sendMessage);
 
@@ -361,6 +372,23 @@ $(function () {
             success: function (response) {
                 console.log(response);
                 window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+$(function () {
+    $('#btnCloseLodgingPoll').click(function () {
+        $.ajax({
+            url: '/submitLodging',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+                console.log(response);
             },
             error: function (error) {
                 console.log(error);
