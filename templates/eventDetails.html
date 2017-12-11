@@ -105,32 +105,51 @@
                 <!-- Time tab content -->
                 <div class="tab-pane" id="time" role="tabpanel">Time
                     <div class="tab-pane active" id="time" role="tabpanel">
-                        <table>
-                            <tr>
-                                <th>Available from</th>
-                                <th>Available to</th>
-                            </tr>
-                            {% for start, stop in timeData %}
+                        <div id=timeInProgressContent>
+                        
+                            <table>
                                 <tr>
-                                    <th>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" id='timeRadioBtn' name="timeRadio">{{ start }}
-                                            </label>
-                                        </div>
-                                        {#                                        {{ start }}#}
-                                    </th>
-                                    <th>{{ stop }}</th>
+                                    <th>Available from</th>
+                                    <th>Available to</th>
                                 </tr>
-                            {% endfor %}
+                                {% for start, stop in timeData %}
+                                    <tr>
+                                        <th>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id='timeRadioBtn' name="timeRadio">{{ start }}
+                                                </label>
+                                            </div>
+                                            {#                                        {{ start }}#}
+                                        </th>
+                                        <th>{{ stop }}</th>
+                                    </tr>
+                                {% endfor %}
 
-                        </table>
+                            </table>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#timeModal">
+                                Add New Availability
+                            </button>
+
+                            <div id="buttonDiv">
+                                <button type="button" class="btn btn-primary" id="btnSubmitTimeVote">Submit your Vote for
+                                    Time Range
+                                </button>
+
+                                <button type="button" class="btn btn-danger" id="btnCloseTimePoll" value="{{ adminBool }}"
+                                        onclick="submitTime()">Close this Poll
+                                </button>
+                            </div>
+
+                        </div> <!-- /timeInProgressContent -->
+
+                        <div id=finalizedTimeContent>
+                            <legend id=chosenDestination>Chosen Destination:</legend>
+                            <h1 id=destinationName>{{ finalLocation }}</h1>
+                        </div>
 
                     </div>
-
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#timeModal">Add New
-                        Availability
-                    </button>
 
                     <div class="modal fade" id="timeModal" role="dialog">
                         <div class="modal-dialog">
@@ -176,49 +195,58 @@
                             </div>
                         </div>
                     </div>
-                    <div id="buttonDiv">
-                        <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote for
-                            Lodging
-                        </button>
-
-                        <button type="button" class="btn btn-danger" id="btnCloseLodgePoll" value="{{ adminBool }}"
-                                onclick="submitLodge()">Close this Poll
-                        </button>
-                    </div>
                 </div>
 
                 <!-- Lodging tab content -->
-                <div class="tab-pane" id="lodging" role="tabpanel">Lodging Info
+                <div class="tab-pane" id="lodging" role="tabpanel">
                     <div class="tab-pane active" id="locations" role="tabpanel">
-                        <table>
-                            <tr>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>url</th>
-                                <th>Price</th>
-                            </tr>
-                            {% for name, address, url, price in lodgeData %}
+                        <div id=lodgingInProgressContent>                        
+                            <table>
                                 <tr>
-                                    <th>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" id='regular' name="lodgingRadio"
-                                                       value="{{ name }}">{{ name }}</label>
-                                        </div>
-                                    </th>
-                                    <th>{{ address }}</th>
-                                    <th>{{ url }}</th>
-                                    <th>{{ price }}</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>url</th>
+                                    <th>Price</th>
                                 </tr>
-                            {% endfor %}
+                                {% for name, address, url, price in lodgeData %}
+                                    <tr>
+                                        <th>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id='regular' name="lodgingRadio"
+                                                        value="{{ name }}">{{ name }}</label>
+                                            </div>
+                                        </th>
+                                        <th>{{ address }}</th>
+                                        <th>{{ url }}</th>
+                                        <th>{{ price }}</th>
+                                    </tr>
+                                {% endfor %}
 
-                        </table>
+                            </table>
+                            
+                            <button id="addLodgebtn" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#myModal">Add a Lodge
+                            </button>
+
+                            <div id="buttonDiv">
+                                <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote for
+                                    Lodging
+                                </button>
+
+                                <button type="button" class="btn btn-danger" id="btnCloseLodgingPoll" value="{{ adminBool }}">
+                                    Close this Poll
+                                </button>
+                            </div>
+
+                        </div> <!-- /lodginInProgressContent -->
+
+                        <div id=finalizedLodgingContent>
+                            <legend id=chosenDestination>Chosen Lodging:</legend>
+                            <h1 id=destinationName>{{ finalLodge }}</h1>
+                        </div> 
 
                     </div>
-
-                    <button id="addLodgebtn" type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#myModal">Add a Lodge
-                    </button>
 
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
@@ -264,6 +292,7 @@
                                         </button>
                                     </form>
                                 </div>
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
@@ -272,15 +301,6 @@
 
 
                         </div>
-                    </div>
-                    <div id="buttonDiv">
-                        <button type="button" class="btn btn-primary" id="btnSubmitLodgeVote">Submit your Vote for
-                            Lodging
-                        </button>
-
-                        <button type="button" class="btn btn-danger" id="btnCloseLodgePoll" value="{{ adminBool }}"
-                                onclick="submitLodge()">Close this Poll
-                        </button>
                     </div>
                 </div> <!-- close lodging tab content -->
 
@@ -401,15 +421,18 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>
     </div>
 </div>
 
-<button type="button" class="btn" style="visibility: hidden; width:0px" id="inProgressData"
-        value="{{ inProgressData[0] }}" onclick=""></button>
+<button type="button" class="btn" style="visibility: hidden; width:0px" id="locationsInProgressData"
+        value="{{ inProgressData[0][0] }}" onclick=""></button>
+<button type="button" class="btn" style="visibility: hidden; width:0px" id="timeInProgressData"
+        value="{{ inProgressData[0][1] }}" onclick=""></button>
+<button type="button" class="btn" style="visibility: hidden; width:0px" id="lodgingInProgressData"
+        value="{{ inProgressData[0][2] }}" onclick=""></button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
