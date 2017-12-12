@@ -9,6 +9,7 @@ from app.db import DB
 import urllib
 import yaml
 import os
+import datetime
 import urllib
 from app.util import deserialize
 
@@ -228,7 +229,8 @@ def eventDetails():
     try: 
         finalTime = finalTime[0]
     except: 
-        finalTime = "No time ranges available."
+        
+        finalTime = (datetime.date(2002, 3, 11), datetime.date(2002, 3, 12))
 
     inProgressData = db.query(
         '''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(

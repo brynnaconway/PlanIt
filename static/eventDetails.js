@@ -471,7 +471,7 @@ $(function () {
                     var row = $("<tr>");
 
                     // Don't ask
-                    row.append("<div class='checkbox'><td></td><label>" +
+                    row.append("<div class='checkbox' style='padding-left: 7px'><td></td><label>" +
                         "<input type='checkbox' id='regular' name='memberAddCheck' value='" + item + "'>"
                         + item + "</label></td></div>");
 

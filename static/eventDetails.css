@@ -246,9 +246,35 @@ tr:nth-child(even) {
     margin: 0px; 
     max-width: none;
     padding-left: 0px; 
+    margin-bottom: 20px; 
 }
 
 #searchButtonSpan {
     margin-right: 80px; 
+}
+
+#search-results {
+    padding-left: 0px;
+    padding-right: 0px; 
+ 
+}
+
+#modalTitle {
+  text-align: center;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding-left: 29px;
+  padding-top: 5px;  
+}
+
+#scrollSearchResults {
+    max-height: 39vh; 
+    overflow: auto; 
+    border-radius: 6px;
+}
+
+#btnAddPeople {
+    margin-bottom: 10px; 
 }
 
