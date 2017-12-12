@@ -7,6 +7,7 @@ CREATE TABLE events (
   locationID   INT, 
   lodgeID      INT,
   groupID      INT,
+  timeID       INT,
   confirmCount INT,
   admin        INT,
   location     INT,
@@ -45,11 +46,13 @@ CREATE TABLE lodging (
 
 DROP TABLE IF EXISTS timerange;
 CREATE TABLE timerange (
+  timeID   INT      NOT NULL AUTO_INCREMENT,
   personID INT      NOT NULL,
   eventID  INT      NOT NULL,
   start    DATETIME NOT NULL,
   stop     DATETIME NOT NULL,
-  PRIMARY KEY (personID, eventID, start)
+  votes    INT,
+  PRIMARY KEY (timeID)
 );
 
 DROP TABLE IF EXISTS people;

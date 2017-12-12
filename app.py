@@ -209,29 +209,38 @@ def eventDetails():
     
     finalLodge = db.query(
         '''SELECT name from lodging WHERE eventID= {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    print "finalLocation: ", finalLocation
+    
+    finalTime = db.query(
+        '''SELECT start, stop from timerange WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    
+    print "finalTime: ", finalTime
     try:
         finalLocation = finalLocation[0][0]
         print "finalLocation in try: ", finalLocation
     except:
-        finalLocation = "Location not finalized."
+        finalLocation = "No locations available."
 
     try:
         finalLodge = finalLodge[0][0]
     except:
-        finalLodge = "Lodging not finalized."
+        finalLodge = "No lodging available."
+
+    try: 
+        finalTime = finalTime[0]
+    except: 
+        finalTime = "No time ranges available."
 
     inProgressData = db.query(
         '''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(
             eventID))
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
+    times = db.query('''SELECT timeID, start, stop FROM timerange where eventID = {};'''.format(eventID))
     people = db.query(
         '''SELECT name, email, phoneNumber, personID from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
             session['eventGroup']))
 
-    return render_template('eventDetails.html', finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
+    return render_template('eventDetails.html', finalTime=finalTime, finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
                        locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times, peopleData=people)
 
 
@@ -298,9 +307,25 @@ def submitLocation():
     res = db.submit_location(eventID, location[0][0])
     return res
 
-
 @app.route('/submitTime', methods=['POST'])
 def submitTime():
+    res1 = db.query(
+        ''' UPDATE events SET timeInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))
+    eventID = session['eventDetailsID']
+    time = db.query(
+        '''SELECT start, stop, timeID from timerange WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    print "TIME: ", time
+    res = db.submit_time(eventID, time[0][2])
+    return res
+
+@app.route('/submitTimeVote', methods=['POST'])
+def submitTimeVote():
+    data = request.get_data()
+    res = db.submit_time_vote(data, session['eventDetailsID'])
+    return res
+
+@app.route('/addTime', methods=['POST'])
+def addTime():
     data = request.get_data()
     return db.addNewTime(data)
 

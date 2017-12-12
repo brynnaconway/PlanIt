@@ -59,8 +59,18 @@
     display: none; 
 }
 
+#finalizedTimeContent {
+    display: none; 
+}
+
 #btnAddNewLocation { 
     padding-bottom: 7px; 
+}
+
+#btnPeopleSearch { 
+    padding-top: 11px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;  
 }
 
 #destinationName {
@@ -195,3 +205,50 @@ tr:nth-child(even) {
 #finalizedLodgingContent { 
     display: none;
 }
+
+#finalStartTime {
+    font-weight: 300;
+    font-size: 450%;
+    text-align: center;
+    padding-bottom: 0px;
+    color: #2C3E50;
+    text-shadow: -1px 1px 13px; 
+}
+
+#finalEndTime {
+    font-weight: 300;
+    font-size: 450%;
+    text-align: center;
+    padding-bottom: 20px;
+    color: #2C3E50;
+    text-shadow: -1px 1px 13px; 
+}
+
+#to {
+    margin-top: 0px; 
+    font-weight: 300;
+    font-size: 400%;
+    text-align: center;
+    color: #2C3E50;
+    text-shadow: -1px 1px 13px;
+}
+
+#searchBox {
+    display: flex;  
+}
+
+#queryName {
+    padding: 7px; 
+    max-width: 35%;
+}
+
+#addMembersInputs {
+    margin: 0px; 
+    max-width: none;
+    padding-left: 0px; 
+}
+
+#searchButtonSpan {
+    margin-right: 80px; 
+}
+

@@ -107,12 +107,20 @@ class DB(object):
         print(d)
         name = urllib.unquote_plus(d['inputName'])
         email = urllib.unquote_plus(d['inputEmail'])
-        addToGroup = d['addToGroup']
+        newUserForGroup = False 
+        addToGroup = None        
 
         try:
             num = d['inputNum']
         except KeyError:
             num = None
+        
+        try: 
+            addToGroup = d['addToGroup']
+            newUserForGroup = True 
+        except KeyError: 
+            addToGroup = None 
+
         try:
             password = generate_password_hash(d['inputPassword'])
         except KeyError:
@@ -125,13 +133,16 @@ class DB(object):
         new_id = self.query('select LAST_INSERT_ID()')[0][0]
         print('add_res{}'.format(res))
 
+        if addToGroup == 'true':
+            self.query('INSERT INTO memberships (groupID, personID) VALUES ({},{});'.format(session['eventGroup'], new_id))
+
         if len(res) is not 0:
             return {'error': str(data[0])}
-        elif addToGroup == 'true': #hmm
-            self.query('INSERT INTO memberships (groupID, personID) VALUES ({},{});'.format(session['eventGroup'], new_id))
+        elif not newUserForGroup: 
+            session['loggedIn'] = True
+            session['personID'] = new_id
             return {'message': 'User created successfully !', 'id': new_id}
         else:
-            # This might break things
             return {'message': 'User created successfully !', 'id': new_id}
 
     def add_group(self, data):
@@ -258,13 +269,25 @@ class DB(object):
         stop = ' '.join(stop_raw.lower().split(' ')[:-2])
         start_str = datetime.strptime(start, in_for).strftime(out_for)
         stop_str = datetime.strptime(stop, in_for).strftime(out_for)
-
-        res = self.query('''INSERT into timerange (personID, eventID, start, stop) 
-                    VALUES ({},{},'{}','{}');'''.format(session['personID'], session['eventDetailsID'], start_str,
+        res = self.query('''INSERT into timerange (personID, eventID, start, stop, votes) 
+                    VALUES ({},{},'{}','{}', 0);'''.format(session['personID'], session['eventDetailsID'], start_str,
                                                         stop_str))
         return jsonify({'valid': 'true'})
 
     # Voting
+        # Voting
+    def submit_time_vote(self, data, eventID):
+        print('UPDATING timerange vote')
+        data = deserialize(data)
+        print "TIME DATA: ", data
+        time = data['timeID']
+        res = self.query(
+            '''UPDATE timerange set votes = votes + 1 where timeID={} and eventID = {};'''.format(time, eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Time vote updated successfully !', 'id': time})
+        else:
+            return json.dumps({'error': str(data[0])})
+
     def submit_location_vote(self, data, eventID):
         print('UPDATING location vote')
         data = deserialize(data)
@@ -285,6 +308,16 @@ class DB(object):
                 eventID, location))
         if len(res) is 0:
             return json.dumps({'message': 'Location updated in events !', 'id': eventID})
+        else:
+            return json.dumps({'error': str(data[0])})
+
+    def submit_time(self, eventID, timeID):
+        eventID = eventID
+        res = self.query(
+            '''UPDATE events SET timeID={} where eventID={};'''.format(
+                timeID, eventID))
+        if len(res) is 0:
+            return json.dumps({'message': 'Time updated in events !', 'id': eventID})
         else:
             return json.dumps({'error': str(data[0])})
 

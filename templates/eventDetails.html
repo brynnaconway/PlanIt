@@ -59,7 +59,7 @@
                 <div class="tab-pane active" id="locations" role="tabpanel">
                     <div id=locationsInProgressContent>
                         <fieldset class="form-group" id=radioFieldset>
-                            <legend>Choose a location for your adventure</legend>
+                            <legend>Choose a location for your adventure:</legend>
                             {% for location in locations %}
                                 {% for l in location %}
 
@@ -72,6 +72,7 @@
                             {% endfor %}
                         </fieldset>
 
+                        <!-- Add a new location --> 
                         <div class="col-6" id="textinputNewLocation">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="newLocation"
@@ -80,12 +81,14 @@
                                 <datalist id="suggestionList">
                                 </datalist>
                                 <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button"
-                                                id="btnAddNewLocation">Add!</button>
-                                    </span>
+                                    <button class="btn btn-default" type="button" id="btnAddNewLocation">
+                                        Add!
+                                    </button>
+                                </span>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
 
+                        <!-- Buttons to submit vote and close poll -->
                         <div>
                             <button type="button" class="btn btn-primary" id="btnSubmitLocationVote">Submit your Vote
                             </button>
@@ -103,21 +106,23 @@
                 </div>
 
                 <!-- Time tab content -->
-                <div class="tab-pane" id="time" role="tabpanel">Time
+                <div class="tab-pane" id="time" role="tabpanel">
                     <div class="tab-pane active" id="time" role="tabpanel">
                         <div id=timeInProgressContent>
+                            <legend>Choose a date range for your adventure:</legend>                            
                         
+                            <!-- Table of time options --> 
                             <table>
                                 <tr>
                                     <th>Available from</th>
                                     <th>Available to</th>
                                 </tr>
-                                {% for start, stop in timeData %}
+                                {% for timeID, start, stop in timeData %}
                                     <tr>
                                         <th>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" id='timeRadioBtn' name="timeRadio">{{ start }}
+                                                    <input type="radio" id='timeRadioBtn' name="timeRadio" value={{timeID}}>{{ start }}
                                                 </label>
                                             </div>
                                             {#                                        {{ start }}#}
@@ -128,6 +133,7 @@
 
                             </table>
 
+                            <!-- Buttons -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#timeModal">
                                 Add New Availability
                             </button>
@@ -137,20 +143,24 @@
                                     Time Range
                                 </button>
 
-                                <button type="button" class="btn btn-danger" id="btnCloseTimePoll" value="{{ adminBool }}"
-                                        onclick="submitTime()">Close this Poll
+                                <button type="button" class="btn btn-danger" id="btnCloseTimePoll" value="{{ adminBool }}">
+                                    Close this Poll
                                 </button>
                             </div>
 
                         </div> <!-- /timeInProgressContent -->
 
+                        <!-- Finalized time --> 
                         <div id=finalizedTimeContent>
-                            <legend id=chosenDestination>Chosen Destination:</legend>
-                            <h1 id=destinationName>{{ finalLocation }}</h1>
+                            <legend id=chosenDestination>Chosen Time Range:</legend>
+                            <h1 id=finalStartTime>{{ finalTime[0].strftime('%B %d, %Y') }}</h1>
+                            <h1 id=to>to</h1>
+                            <h1 id=finalEndTime>{{ finalTime[1].strftime('%B %d, %Y') }}</h1>                            
                         </div>
 
                     </div>
 
+                    <!-- New time modal --> 
                     <div class="modal fade" id="timeModal" role="dialog">
                         <div class="modal-dialog">
 
@@ -200,7 +210,8 @@
                 <!-- Lodging tab content -->
                 <div class="tab-pane" id="lodging" role="tabpanel">
                     <div class="tab-pane active" id="locations" role="tabpanel">
-                        <div id=lodgingInProgressContent>                        
+                        <div id=lodgingInProgressContent>  
+                            <legend>Choose a lodge for your adventure:</legend>                                                                              
                             <table>
                                 <tr>
                                     <th>Name</th>
@@ -239,7 +250,7 @@
                                 </button>
                             </div>
 
-                        </div> <!-- /lodginInProgressContent -->
+                        </div> <!-- /lodgingInProgressContent -->
 
                         <div id=finalizedLodgingContent>
                             <legend id=chosenDestination>Chosen Lodging:</legend>
@@ -305,8 +316,10 @@
                 </div> <!-- close lodging tab content -->
 
                 <!-- People tab content -->
-                <div class="tab-pane" id="groupMembers" role="tabpanel">Group Info
+                <div class="tab-pane" id="groupMembers" role="tabpanel">
                     <div class="tab-pane active" id="groupInfo" role="tabpanel">
+                        <legend>Group Info</legend>                            
+
                         <table>
                             <tr>
                                 <th>Name</th>
@@ -338,25 +351,24 @@
 
                     </div>
 
-
                     <div id=addMembersOptions>
 
                         <div>
-                            <form class="form-signin" id="searchBox" method=POST>
-                                <label for="queryName" id=addMembersLabel>Add Members to Group</label>
-                                <div class="input-group">
+                            <form class="form-signin" id=addMembersInputs method=POST>
+                                    <div class="input-group" id=searchBox>
 
-                                    <input type="name" name="queryName" id="queryName" class="form-control"
-                                           placeholder="Search for name">
-                                    <span class="input-group-btn">
-                                        <button id="btnPeopleSearch" class="btn btn-default"
-                                                type="button">Search</button>
-                                    </span>
+                                        <input type=name name="queryName" id="queryName" class="form-control"
+                                            placeholder="Search People">
+                                        <span class="input-group-btn" id=searchButtonSpan>
+                                            <button id="btnPeopleSearch" class="btn btn-default" type="button">
+                                                Search
+                                            </button>
+                                        </span>
 
-                                    <button id="btnNewPerson" type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#peopleModal">Add a new User
-                                    </button>
-                                </div>
+                                        <button id="btnNewPerson" type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#peopleModal">Add a new User
+                                        </button>
+                                    </div> <!-- /input-group -->
                             </form>
                         </div>
 
