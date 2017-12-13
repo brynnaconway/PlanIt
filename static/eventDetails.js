@@ -39,6 +39,7 @@ window.onload = function () {
     if (String(adminBool) == "False") {
         document.getElementById('btnCloseLocationsPoll').style.display = 'none';
         document.getElementById('btnCloseLodgePoll').style.display = 'none';
+        document.getElementById('btnCloseTimePoll').style.display = 'none';
     }
 
     // Show or hide voting for locations 
@@ -60,13 +61,14 @@ window.onload = function () {
     }
 
     // Show or hide voting for times 
-    /*if (inProgressData[5] == 1) {
+    if (timeInProgressData[0] == 1) {
         document.getElementById('timeInProgressContent').style.display = 'none'; 
         document.getElementById('finalizedTimeContent').style.display = 'block';
     }
     else {
-        document.getElementById('timeInProgressContent').style.display = 'none';
-    }*/
+        document.getElementById('finalizedTimeContent').style.display = 'none';
+    }
+
     $.ajax({
         url: '/getPeopleInGroup',
         type: 'POST',
@@ -258,6 +260,24 @@ $(function () {
 });
 
 $(function () {
+    $('#btnSubmitTimeVote').click(function () {
+        $.ajax({
+            url: '/submitTimeVote',
+            data: {submit_vote: true, timeID: $("input[name=timeRadio]:checked").val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+
+});
+
+$(function () {
     $('#btnSubmitLodgeVote').click(function () {
         console.log("in click function"); 
         $.ajax({
@@ -407,7 +427,7 @@ $(function () {
         let stop = $('#datetimepickerStop').data("DateTimePicker").date();
         console.log(start);
         $.ajax({
-            url: '/submitTime',
+            url: '/addTime',
             data: {start: start._d, stop: stop._d},
             type: 'POST',
             success: function (response) {
@@ -451,7 +471,7 @@ $(function () {
                     var row = $("<tr>");
 
                     // Don't ask
-                    row.append("<div class='checkbox'><td></td><label>" +
+                    row.append("<div class='checkbox' style='padding-left: 7px'><td></td><label>" +
                         "<input type='checkbox' id='regular' name='memberAddCheck' value='" + item + "'>"
                         + item + "</label></td></div>");
 
@@ -536,4 +556,20 @@ $(function () {
     });
 });
 
+$(function () {
+    $('#btnCloseTimePoll').click(function () {
+        $.ajax({
+            url: '/submitTime',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails'
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
 

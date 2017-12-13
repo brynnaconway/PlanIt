@@ -9,13 +9,22 @@ from app.db import DB
 import urllib
 import yaml
 import os
+import datetime
 import urllib
 from app.util import deserialize
+from flask_mail import Mail, Message
 
 config = yaml.load(open('planit.config'))
 app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'planIt.travelwebsite@gmail.com'
+app.config['MAIL_PASSWORD'] = 'dataWizards'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 '''
 SESSION PARAMS:
@@ -168,7 +177,28 @@ def getLocationSuggestions():
 # Add new data
 @app.route('/addperson', methods=['POST'])
 def add_person():
-    data = request.get_data()
+    sendEmail = False
+    data = request.get_data()    
+    emailRecipient = urllib.unquote_plus(deserialize(data)['inputEmail'])
+    recipientName = urllib.unquote_plus(deserialize(data)['inputName'])
+
+    try:
+        password = deserialize(data)['inputPassword']
+        sendEmail = False 
+    except: 
+        sendEmail = True
+
+    try:
+        addToGroup = deserialize(data)['addToGroup']
+        sendEmail = True
+    except:
+        sendEmail = False 
+
+    if sendEmail:
+        msg = Message('You\'ve been invited to PlanIt!', sender = 'planIt.travelwebsite@gmail.com', recipients = [emailRecipient])
+        msg.body = "{},\n\nYour friend has invited you to join PlanIt, the group travel planning website! Login to see who has invited you and what event you have been added to.\n\nEmail: {}\nPassword: password".format(recipientName, emailRecipient)
+        mail.send(msg)
+
     res = db.add_person(data)
     print "Response: ", res
     return jsonify(res)
@@ -209,29 +239,39 @@ def eventDetails():
     
     finalLodge = db.query(
         '''SELECT name from lodging WHERE eventID= {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    print "finalLocation: ", finalLocation
+    
+    finalTime = db.query(
+        '''SELECT start, stop from timerange WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    
+    print "finalTime: ", finalTime
     try:
         finalLocation = finalLocation[0][0]
         print "finalLocation in try: ", finalLocation
     except:
-        finalLocation = "Location not finalized."
+        finalLocation = "No locations available."
 
     try:
         finalLodge = finalLodge[0][0]
     except:
-        finalLodge = "Lodging not finalized."
+        finalLodge = "No lodging available."
+
+    try: 
+        finalTime = finalTime[0]
+    except: 
+        
+        finalTime = (datetime.date(2002, 3, 11), datetime.date(2002, 3, 12))
 
     inProgressData = db.query(
         '''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(
             eventID))
     locations = db.query('''SELECT location FROM locations WHERE eventID = {};'''.format(eventID))
     lodgeData = db.query('''SELECT name, address, url, price FROM lodging where eventID = {};'''.format(eventID))
-    times = db.query('''SELECT start, stop FROM timerange where eventID = {};'''.format(eventID))
+    times = db.query('''SELECT timeID, start, stop FROM timerange where eventID = {};'''.format(eventID))
     people = db.query(
         '''SELECT name, email, phoneNumber, personID from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
             session['eventGroup']))
 
-    return render_template('eventDetails.html', finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
+    return render_template('eventDetails.html', finalTime=finalTime, finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
                        locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times, peopleData=people)
 
 
@@ -298,9 +338,25 @@ def submitLocation():
     res = db.submit_location(eventID, location[0][0])
     return res
 
-
 @app.route('/submitTime', methods=['POST'])
 def submitTime():
+    res1 = db.query(
+        ''' UPDATE events SET timeInProgress=1 WHERE eventID = {};\n'''.format(session['eventDetailsID']))
+    eventID = session['eventDetailsID']
+    time = db.query(
+        '''SELECT start, stop, timeID from timerange WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
+    print "TIME: ", time
+    res = db.submit_time(eventID, time[0][2])
+    return res
+
+@app.route('/submitTimeVote', methods=['POST'])
+def submitTimeVote():
+    data = request.get_data()
+    res = db.submit_time_vote(data, session['eventDetailsID'])
+    return res
+
+@app.route('/addTime', methods=['POST'])
+def addTime():
     data = request.get_data()
     return db.addNewTime(data)
 
