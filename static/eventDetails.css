@@ -136,9 +136,10 @@ tr:nth-child(even) {
 
 .messages {
     flex-shrink: 1;
-    overflow: auto;
     background-color: rgba(238, 238, 238, .95); 
-    margin-bottom: 0px;    
+    margin-bottom: 0px;   
+    max-height: 40vh; 
+    overflow: auto; 
 }
 
 .message {
