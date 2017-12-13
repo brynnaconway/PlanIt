@@ -180,6 +180,7 @@ def add_person():
     sendEmail = False
     data = request.get_data()    
     emailRecipient = urllib.unquote_plus(deserialize(data)['inputEmail'])
+    recipientName = urllib.unquote_plus(deserialize(data)['inputName'])
 
     try:
         password = deserialize(data)['inputPassword']
@@ -195,7 +196,7 @@ def add_person():
 
     if sendEmail:
         msg = Message('You\'ve been invited to PlanIt!', sender = 'planIt.travelwebsite@gmail.com', recipients = [emailRecipient])
-        msg.body = "Your friend has invited you to join PlanIt, the group travel planning website! Login to see who has invited you and what event you have been added to.\n\nEmail: {}\nPassword: password".format(emailRecipient)
+        msg.body = "{},\n\nYour friend has invited you to join PlanIt, the group travel planning website! Login to see who has invited you and what event you have been added to.\n\nEmail: {}\nPassword: password".format(recipientName, emailRecipient)
         mail.send(msg)
 
     res = db.add_person(data)
