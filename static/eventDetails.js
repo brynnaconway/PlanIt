@@ -43,12 +43,17 @@ window.onload = function () {
     }
 
     // Show or hide voting for locations 
-    if (locationsInProgressData[0] == 1) {
+    if (locationsInProgressData[0] == 1) { //finalized 
         document.getElementById('locationsInProgressContent').style.display = 'none';
         document.getElementById('finalizedLocationContent').style.display = 'block';
+        $("#tabs li:eq(2) a").removeClass('disabled');
+        $('#tabs li:eq(2) a').attr('data-toggle', 'tab');
+        
     }
     else {
         document.getElementById('finalizedLocationContent').style.display = 'none';
+        $("#tabs li:eq(2) a").addClass('disabled');
+        $('#tabs li:eq(2) a').removeAttr('data-toggle', 'tab');
     }
 
     // Show or hide voting for lodging 
