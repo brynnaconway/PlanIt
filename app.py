@@ -24,6 +24,7 @@ app.config['MAIL_USERNAME'] = 'planIt.travelwebsite@gmail.com'
 app.config['MAIL_PASSWORD'] = 'dataWizards'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+#app.config['APPLICATION_ROOT'] = "/planit/"
 mail = Mail(app)
 
 '''
@@ -100,11 +101,15 @@ def signIn():
             personID = res['personID']
             session['personID'] = personID
             session['loggedIn'] = True
+            print('1')
             return redirect(url_for('dashboard', personID=personID))
+           
         else:
+            print('2')
             session['personID'] = None
             return json.dumps(res)
     else:
+        print('3')
         return render_template('root.html')
 
 
