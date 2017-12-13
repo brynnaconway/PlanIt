@@ -12,11 +12,19 @@ import os
 import datetime
 import urllib
 from app.util import deserialize
+from flask_mail import Mail, Message
 
 config = yaml.load(open('planit.config'))
 app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'planIt.travelwebsite@gmail.com'
+app.config['MAIL_PASSWORD'] = 'dataWizards'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 '''
 SESSION PARAMS:
@@ -169,7 +177,27 @@ def getLocationSuggestions():
 # Add new data
 @app.route('/addperson', methods=['POST'])
 def add_person():
-    data = request.get_data()
+    sendEmail = False
+    data = request.get_data()    
+    emailRecipient = urllib.unquote_plus(deserialize(data)['inputEmail'])
+
+    try:
+        password = deserialize(data)['inputPassword']
+        sendEmail = False 
+    except: 
+        sendEmail = True
+
+    try:
+        addToGroup = deserialize(data)['addToGroup']
+        sendEmail = True
+    except:
+        sendEmail = False 
+
+    if sendEmail:
+        msg = Message('You\'ve been invited to PlanIt!', sender = 'planIt.travelwebsite@gmail.com', recipients = [emailRecipient])
+        msg.body = "Your friend has invited you to join PlanIt, the group travel planning website! Login to see who has invited you and what event you have been added to.\n\nEmail: {}\nPassword: password".format(emailRecipient)
+        mail.send(msg)
+
     res = db.add_person(data)
     print "Response: ", res
     return jsonify(res)
