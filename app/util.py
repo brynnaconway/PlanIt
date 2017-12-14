@@ -1,23 +1,57 @@
 #! /usr/bin/env python2
 
 import datetime, calendar, random
+
 random.seed()
 
 
 def deserialize(str):
-    return { item.split('=')[0] : item.split('=')[1] for item in str.split('&') }
+    return {item.split('=')[0]: item.split('=')[1] for item in str.split('&')}
+
 
 def qfy(str):
     return "'{}'".format(str)
 
+def exception_safe(function):
+    def f(*args, **kwargs):
+        try:
+            return function(*args, **kwargs)
+        except Exception as e:
+            return
+    return f
+
+
+
 def getRandomTimes():
-    start = ' ' + str(random.randint(1,11)) +':' + str(random.randint(0,59)) + ':' +str(random.randint(0,59))
-    stop = ' ' + str(random.randint(12,23)) +':' + str(random.randint(0,59)) + ':' +str(random.randint(0,59))
+    start = ' ' + str(random.randint(1, 11)) + ':' + str(random.randint(0, 59)) + ':' + str(random.randint(0, 59))
+    stop = ' ' + str(random.randint(12, 23)) + ':' + str(random.randint(0, 59)) + ':' + str(random.randint(0, 59))
     return start, stop
+
+
+'''Code to adjust URL
+https://stackoverflow.com/questions/18967441/add-a-prefix-to-all-flask-routes'''
+
+
+class PrefixMiddleware(object):
+    def __init__(self, app, prefix=''):
+        self.app = app
+        self.prefix = prefix
+
+    def __call__(self, environ, start_response):
+
+        if environ['PATH_INFO'].startswith(self.prefix):
+            environ['PATH_INFO'] = environ['PATH_INFO'][len(self.prefix):]
+            environ['SCRIPT_NAME'] = self.prefix
+            return self.app(environ, start_response)
+        else:
+            start_response('404', [('Content-Type', 'text/plain')])
+            return ["This url does not belong to the app.".encode()]
 
 
 ''' Code for random interval generation from stackoverflow:
 https://stackoverflow.com/questions/44111143/how-to-generate-a-random-datetime-interval-in-python'''
+
+
 # Function to get random date with given month & year
 def getDate(m, y, start=1):
     # For months havin 30 days

@@ -3,6 +3,7 @@ import json
 
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from werkzeug.exceptions import HTTPException
 
 from app import location
 from app.db import DB
@@ -18,13 +19,27 @@ config = yaml.load(open('planit.config'))
 app = Flask(__name__)
 db = DB(app, config)
 app.config["DEBUG"] = True  # Only include this while you are testing your app
-app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'planIt.travelwebsite@gmail.com'
 app.config['MAIL_PASSWORD'] = 'dataWizards'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
+
+'From https://stackoverflow.com/questions/29332056/global-error-handler-for-any-exception/41655397#41655397'
+'Makes sure the server stays up worst case scenario'
+
+
+def handle_error(error):
+    code = 500
+    if isinstance(error, HTTPException):
+        code = error.code
+    return jsonify(error='error', code=code)
+
+
+for cls in HTTPException.__subclasses__():
+    app.register_error_handler(cls, handle_error)
 
 '''
 SESSION PARAMS:
@@ -80,6 +95,7 @@ def dashboard():
         print(e)
         return redirect(url_for('homepage'))
 
+
 @app.route('/pickPeople', methods=['GET'])  # I don't think this is used anymore
 def get_people():
     return render_template('people.html')
@@ -100,11 +116,15 @@ def signIn():
             personID = res['personID']
             session['personID'] = personID
             session['loggedIn'] = True
+            print('1')
             return redirect(url_for('dashboard', personID=personID))
+
         else:
+            print('2')
             session['personID'] = None
             return json.dumps(res)
     else:
+        print('3')
         return render_template('root.html')
 
 
@@ -125,12 +145,18 @@ def setEventDetailsID():
     # return redirect(url_for('eventDetails'))
     return eventID
 
+
 # Pulling Data
 @app.route('/getName')
 def getName():
     userID = session['personID']
     name = db.query('''SELECT name FROM people WHERE personID={};'''.format(userID))
     return name[0][0]
+
+@app.route('/getGroup')
+def getGroup():
+    print "session['eventGroup']: {}".format(session['eventGroup'])
+    return str(session['eventGroup'])
 
 
 @app.route('/getGroups', methods=['POST'])
@@ -178,25 +204,27 @@ def getLocationSuggestions():
 @app.route('/addperson', methods=['POST'])
 def add_person():
     sendEmail = False
-    data = request.get_data()    
+    data = request.get_data()
     emailRecipient = urllib.unquote_plus(deserialize(data)['inputEmail'])
     recipientName = urllib.unquote_plus(deserialize(data)['inputName'])
 
     try:
         password = deserialize(data)['inputPassword']
-        sendEmail = False 
-    except: 
+        sendEmail = False
+    except:
         sendEmail = True
 
     try:
         addToGroup = deserialize(data)['addToGroup']
         sendEmail = True
     except:
-        sendEmail = False 
+        sendEmail = False
 
     if sendEmail:
-        msg = Message('You\'ve been invited to PlanIt!', sender = 'planIt.travelwebsite@gmail.com', recipients = [emailRecipient])
-        msg.body = "{},\n\nYour friend has invited you to join PlanIt, the group travel planning website! Login to see who has invited you and what event you have been added to.\n\nEmail: {}\nPassword: password".format(recipientName, emailRecipient)
+        msg = Message('You\'ve been invited to PlanIt!', sender='planIt.travelwebsite@gmail.com',
+                      recipients=[emailRecipient])
+        msg.body = "{},\n\nYour friend has invited you to join PlanIt, the group travel planning website! Login to see who has invited you and what event you have been added to.\n\nEmail: {}\nPassword: password".format(
+            recipientName, emailRecipient)
         mail.send(msg)
 
     res = db.add_person(data)
@@ -217,12 +245,13 @@ def add_membership():
     res = db.add_membership(data)
     return res
 
+
 @app.route('/eventDetails', methods=['POST', 'GET'])
 def eventDetails():
     print "session[eventDetailsID]: ", session['eventDetailsID']
 
     session['eventGroup'] = \
-    db.single_attr_query('SELECT groupID FROM events where eventID = {}'.format(session['eventDetailsID']))[0]
+        db.single_attr_query('SELECT groupID FROM events where eventID = {}'.format(session['eventDetailsID']))[0]
 
     eventID = session['eventDetailsID']
     admin = db.query('''SELECT admin from events where eventID = {};'''.format(eventID))
@@ -233,16 +262,16 @@ def eventDetails():
         print "FALSE*****"
         adminBool = False
     print "adminBOOL: ", adminBool
-    
+
     finalLocation = db.query(
         '''SELECT location from locations WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    
+
     finalLodge = db.query(
         '''SELECT name from lodging WHERE eventID= {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    
+
     finalTime = db.query(
         '''SELECT start, stop from timerange WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
-    
+
     print "finalTime: ", finalTime
     try:
         finalLocation = finalLocation[0][0]
@@ -255,10 +284,10 @@ def eventDetails():
     except:
         finalLodge = "No lodging available."
 
-    try: 
+    try:
         finalTime = finalTime[0]
-    except: 
-        
+    except:
+
         finalTime = (datetime.date(2002, 3, 11), datetime.date(2002, 3, 12))
 
     inProgressData = db.query(
@@ -271,8 +300,10 @@ def eventDetails():
         '''SELECT name, email, phoneNumber, personID from people where personID in (SELECT personID from memberships where groupID = {});'''.format(
             session['eventGroup']))
 
-    return render_template('eventDetails.html', finalTime=finalTime, finalLocation=finalLocation, finalLodge=finalLodge, inProgressData=inProgressData,
-                       locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times, peopleData=people)
+    return render_template('eventDetails.html', finalTime=finalTime, finalLocation=finalLocation, finalLodge=finalLodge,
+                           inProgressData=inProgressData,
+                           locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times,
+                           peopleData=people)
 
 
 @app.route('/addlocation', methods=['POST'])
@@ -280,6 +311,7 @@ def addLocation():
     data = request.get_data()
     res = db.add_location(data, session['eventDetailsID'])
     return res
+
 
 @app.route('/addlodge', methods=['POST'])
 def addLodge():
@@ -306,8 +338,8 @@ def createEvent():
 def sendMessage():
     data = request.get_data()
     d = deserialize(data)
-    messageData = {}
 
+    messageData = {}
     messageData['personID'] = session['personID']
     timestamp = urllib.unquote(d['timestamp']).decode('utf8')
     messageData['timestamp'] = timestamp
@@ -338,6 +370,7 @@ def submitLocation():
     res = db.submit_location(eventID, location[0][0])
     return res
 
+
 @app.route('/submitTime', methods=['POST'])
 def submitTime():
     res1 = db.query(
@@ -349,16 +382,19 @@ def submitTime():
     res = db.submit_time(eventID, time[0][2])
     return res
 
+
 @app.route('/submitTimeVote', methods=['POST'])
 def submitTimeVote():
     data = request.get_data()
     res = db.submit_time_vote(data, session['eventDetailsID'])
     return res
 
+
 @app.route('/addTime', methods=['POST'])
 def addTime():
     data = request.get_data()
     return db.addNewTime(data)
+
 
 @app.route('/submitLodging', methods=['POST'])
 def submitLodging():
@@ -370,11 +406,13 @@ def submitLodging():
     res = db.submit_lodge(eventID, lodge[0][0])
     return res
 
+
 @app.route('/submitLodgeVote', methods=['POST'])
 def submitLodgeVote():
     data = request.get_data()
     res = db.submit_lodge_vote(data, session['eventDetailsID'])
     return res
+
 
 # Deletion
 @app.route('/deleteEvent', methods=['POST'])
@@ -395,6 +433,7 @@ def deleteMembership():
         return jsonify(res)
     else:
         return jsonify({'valid': False})
+
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)

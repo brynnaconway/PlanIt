@@ -1,13 +1,3 @@
-/*
-
-
-WHAT YOU WERE DOING
-EITHER EDIT THIS FILE SO THAT IT REGISTERS THE EVENT ID, GROUP ID ON CLICK OR DO ANOTHER ON LOAD IN THE EVENTDETAILS.JS
- */
-
-
-
-
 /*$(function () {
     $('#createEvent').click(function (event) {
         //console.log("Form data: ", document.getElementById('newEventform').serialize());

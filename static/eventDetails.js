@@ -27,6 +27,11 @@ var cache = {
 
 window.onload = function () {
     $('#tabs a:first').tab('show');
+    let tabNo = parseInt(getParameterByName('tab'));
+    let tab = document.getElementsByClassName('nav-link')[tabNo];
+    if (tab){tab.click();}
+
+
     let adminBool = $('#btnCloseLocationsPoll').val();
     var locationsInProgressData = $('#locationsInProgressData').val();
     var timeInProgressData = $('#timeInProgressData').val();
@@ -35,7 +40,7 @@ window.onload = function () {
     console.log("timeInProgress: ", timeInProgressData[0]);
     console.log("lodgingInProgress: ", lodgingInProgressData[0]);
     console.log("adminBool: ", adminBool);
-    
+
     if (String(adminBool) == "False") {
         document.getElementById('btnCloseLocationsPoll').style.display = 'none';
         document.getElementById('btnCloseLodgePoll').style.display = 'none';
@@ -43,17 +48,22 @@ window.onload = function () {
     }
 
     // Show or hide voting for locations 
-    if (locationsInProgressData[0] == 1) {
+    if (locationsInProgressData[0] == 1) { //finalized 
         document.getElementById('locationsInProgressContent').style.display = 'none';
         document.getElementById('finalizedLocationContent').style.display = 'block';
+        $("#tabs li:eq(2) a").removeClass('disabled');
+        $('#tabs li:eq(2) a').attr('data-toggle', 'tab');
+
     }
     else {
         document.getElementById('finalizedLocationContent').style.display = 'none';
+        $("#tabs li:eq(2) a").addClass('disabled');
+        $('#tabs li:eq(2) a').removeAttr('data-toggle', 'tab');
     }
 
     // Show or hide voting for lodging 
     if (lodgingInProgressData[0] == 1) {
-        document.getElementById('lodgingInProgressContent').style.display = 'none'; 
+        document.getElementById('lodgingInProgressContent').style.display = 'none';
         document.getElementById('finalizedLodgingContent').style.display = 'block';
     }
     else {
@@ -62,7 +72,7 @@ window.onload = function () {
 
     // Show or hide voting for times 
     if (timeInProgressData[0] == 1) {
-        document.getElementById('timeInProgressContent').style.display = 'none'; 
+        document.getElementById('timeInProgressContent').style.display = 'none';
         document.getElementById('finalizedTimeContent').style.display = 'block';
     }
     else {
@@ -73,7 +83,7 @@ window.onload = function () {
         url: '/getPeopleInGroup',
         type: 'POST',
         success: function (response) {
-            console.log(response)
+            console.log(response);
             cache.save(response, 'peopleData');
         },
         error: function (error) {
@@ -86,7 +96,7 @@ window.onload = function () {
 };
 
 
-const CHANNEL_ID = 'tJIuiaaWpfpdOfcV'
+const CHANNEL_ID = 'tJIuiaaWpfpdOfcV';
 var username = getName();
 const drone = new ScaleDrone(CHANNEL_ID, {
     data: {
@@ -126,17 +136,27 @@ function getRandomColor() {
     return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
 
+function getGroup() {
+    console.log("in getGroup()");
+    return $.ajax({
+        url: "/getGroup",
+        async: false
+    }).responseText;
+}
+
 drone.on('open', error => {
     if (error) {
         return console.error(error);
     }
     console.log("Successfully connected to ScaleDrone");
+    roomname = 'observable-'+getGroup();
 
-    const room = drone.subscribe('observable-room');
+    const room = drone.subscribe(roomname);
     room.on('open', error => {
         if (error) {
             return console.error(error);
         }
+        //console.log(roomname);
         console.log('Successfully joined room');
     });
 
@@ -184,7 +204,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=0';
                 console.log(response);
             },
             error: function (error) {
@@ -202,7 +222,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=0'
                 // document.getElementById("existingGroupBtn").style.visibility = "visible";
             },
             error: function (error) {
@@ -249,7 +269,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=0'
             },
             error: function (error) {
                 console.log(error);
@@ -267,7 +287,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=1'
             },
             error: function (error) {
                 console.log(error);
@@ -279,14 +299,14 @@ $(function () {
 
 $(function () {
     $('#btnSubmitLodgeVote').click(function () {
-        console.log("in click function"); 
+        console.log("in click function");
         $.ajax({
             url: '/submitLodgeVote',
             data: {submit_vote: true, lodgeName: $("input[name=lodgingRadio]:checked").val()},
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=2'
             },
             error: function (error) {
                 console.log(error);
@@ -307,8 +327,10 @@ function sendMessage() {
         return;
     }
     DOM.input.value = '';
+    roomname = 'observable-'+getGroup();
+    console.log("sendMessage() roomname: " + roomname);
     drone.publish({
-        room: 'observable-room',
+        room: roomname,
         message: value,
     });
 
@@ -392,7 +414,7 @@ $(function () {
             success: function (response) {
                 console.log("From data: ", $('#newLodgeForm').serialize());
                 console.log(response);
-                window.location = "/eventDetails";
+                window.location = "/eventDetails?tab=2";
             },
             error: function (error) {
                 console.log(error);
@@ -432,7 +454,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=1'
             },
             error: function (error) {
                 console.log(error);
@@ -448,7 +470,7 @@ function deleteMembership(id) {
         type: 'POST',
         success: function (response) {
             console.log(response);
-            window.location = '/eventDetails'
+            window.location = '/eventDetails?tab=3'
         },
         error: function (error) {
             console.log(error);
@@ -498,7 +520,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=2';
                 console.log(response);
             },
             error: function (error) {
@@ -524,7 +546,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=3'
             },
             error: function (error) {
                 console.log(error);
@@ -547,7 +569,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=3';
             },
             error: function (error) {
                 console.log(error);
@@ -563,7 +585,7 @@ $(function () {
             type: 'POST',
             success: function (response) {
                 console.log(response);
-                window.location = '/eventDetails'
+                window.location = '/eventDetails?tab=1';
                 console.log(response);
             },
             error: function (error) {

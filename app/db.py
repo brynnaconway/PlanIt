@@ -17,10 +17,10 @@ class DB(object):
         mysql = MySQL()
 
         # MySQL configurations
-        app.config['MYSQL_DATABASE_USER'] = 'root'
+        app.config['MYSQL_DATABASE_USER'] = config['user']
         app.config['MYSQL_DATABASE_PASSWORD'] = config['mysql_password']
-        app.config['MYSQL_DATABASE_DB'] = 'planit'
-        app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+        app.config['MYSQL_DATABASE_DB'] = config['database']
+        app.config['MYSQL_DATABASE_HOST'] = '0.0.0.0'
         mysql.init_app(app)
         self.mysql = mysql
         self.conn = mysql.connect()
@@ -79,6 +79,7 @@ class DB(object):
         email = urllib.unquote_plus(d['inputEmail'])
         password = d['inputPassword']
         res = self.query('''SELECT personID, password FROM people WHERE email like "{}" limit 1;'''.format(email))
+        print(session)
         if len(res) is 0:
             return {'valid': False}
         else:
@@ -240,7 +241,11 @@ class DB(object):
     def add_membership(self, data):
         data = json.loads(data)
         assert 'ids' in data.keys()
-        for id in data['ids']:
+        ids = set(data['ids'])
+        ids.discard(int(session['personID']))
+        ids = ids - set(self.single_attr_query('''SELECT personID FROM memberships where groupID = {}'''.format(session['eventGroup'])))
+
+        for id in ids:
             id = int(id)
             res = self.query('''INSERT into memberships (groupID, personID) 
                         VALUES ({},{})'''.format(session['eventGroup'], id))
