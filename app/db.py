@@ -241,7 +241,11 @@ class DB(object):
     def add_membership(self, data):
         data = json.loads(data)
         assert 'ids' in data.keys()
-        for id in data['ids']:
+        ids = set(data['ids'])
+        ids.discard(int(session['personID']))
+        ids = ids - set(self.single_attr_query('''SELECT personID FROM memberships where groupID = {}'''.format(session['eventGroup'])))
+
+        for id in ids:
             id = int(id)
             res = self.query('''INSERT into memberships (groupID, personID) 
                         VALUES ({},{})'''.format(session['eventGroup'], id))
