@@ -136,17 +136,27 @@ function getRandomColor() {
     return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
 
+function getGroup() {
+    console.log("in getGroup()");
+    return $.ajax({
+        url: "/getGroup",
+        async: false
+    }).responseText;
+}
+
 drone.on('open', error => {
     if (error) {
         return console.error(error);
     }
     console.log("Successfully connected to ScaleDrone");
+    roomname = 'observable-'+getGroup();
 
-    const room = drone.subscribe('observable-room');
+    const room = drone.subscribe(roomname);
     room.on('open', error => {
         if (error) {
             return console.error(error);
         }
+        //console.log(roomname);
         console.log('Successfully joined room');
     });
 
@@ -317,8 +327,10 @@ function sendMessage() {
         return;
     }
     DOM.input.value = '';
+    roomname = 'observable-'+getGroup();
+    console.log("sendMessage() roomname: " + roomname);
     drone.publish({
-        room: 'observable-room',
+        room: roomname,
         message: value,
     });
 

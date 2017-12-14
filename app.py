@@ -153,6 +153,11 @@ def getName():
     name = db.query('''SELECT name FROM people WHERE personID={};'''.format(userID))
     return name[0][0]
 
+@app.route('/getGroup')
+def getGroup():
+    print "session['eventGroup']: {}".format(session['eventGroup'])
+    return str(session['eventGroup'])
+
 
 @app.route('/getGroups', methods=['POST'])
 def getGroups():
@@ -333,8 +338,8 @@ def createEvent():
 def sendMessage():
     data = request.get_data()
     d = deserialize(data)
-    messageData = {}
 
+    messageData = {}
     messageData['personID'] = session['personID']
     timestamp = urllib.unquote(d['timestamp']).decode('utf8')
     messageData['timestamp'] = timestamp
