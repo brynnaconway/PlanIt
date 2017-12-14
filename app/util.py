@@ -12,6 +12,15 @@ def deserialize(str):
 def qfy(str):
     return "'{}'".format(str)
 
+def exception_safe(function):
+    def f(*args, **kwargs):
+        try:
+            return function(*args, **kwargs)
+        except Exception as e:
+            return
+    return f
+
+
 
 def getRandomTimes():
     start = ' ' + str(random.randint(1, 11)) + ':' + str(random.randint(0, 59)) + ':' + str(random.randint(0, 59))

@@ -62,7 +62,7 @@ CREATE TABLE people (
   phoneNumber VARCHAR(20),
   email       VARCHAR(50),
   password    VARCHAR(93),
-  PRIMARY KEY (personID)
+  PRIMARY KEY (personID, email)
 );
 
 DROP TABLE IF EXISTS votes;
