@@ -1,0 +1,728 @@
+[
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "8:40pm", 
+                "departure_airport": "Newark, NJ (EWR-Liberty Intl.)", 
+                "departure_time": "5:25pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 15 minutes", 
+        "plane code": "32B", 
+        "plane": "AIRBUS INDUSTRIE A321 SHARKLETS", 
+        "departure": "Newark, Newark", 
+        "stops": "Nonstop", 
+        "ticket price": "244.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "7:59pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "4:29pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 30 minutes", 
+        "plane code": "", 
+        "plane": "", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "250.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:45pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "7:26pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 19 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "250.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "7:10pm", 
+                "departure_airport": "Newark, NJ (EWR-Liberty Intl.)", 
+                "departure_time": "5:03pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "12:33am", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "10:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "1 days 7 hours 30 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "Newark, Newark", 
+        "stops": "1 Stop", 
+        "ticket price": "251.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "7:45pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "5:24pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "12:33am", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "10:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "1 days 7 hours 9 minutes", 
+        "plane code": "", 
+        "plane": "", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "257.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "7:15pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "4:55pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "12:33am", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "10:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "1 days 7 hours 38 minutes", 
+        "plane code": "320", 
+        "plane": "Airbus A320", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "257.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "7:15pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "4:55pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:25pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "8:15pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 5 hours 30 minutes", 
+        "plane code": "320", 
+        "plane": "Airbus A320", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "257.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "6:08pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "3:55pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:25pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "8:15pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 6 hours 30 minutes", 
+        "plane code": "320", 
+        "plane": "Airbus A320", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "257.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "6:43pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "3:18pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 25 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "291.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "11:00pm", 
+                "departure_airport": "Newark, NJ (EWR-Liberty Intl.)", 
+                "departure_time": "7:50pm"
+            }
+        ], 
+        "airline": "United", 
+        "flight duration": "0 days 3 hours 10 minutes", 
+        "plane code": "739", 
+        "plane": "Boeing 737-900", 
+        "departure": "Newark, Newark", 
+        "stops": "Nonstop", 
+        "ticket price": "291.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "7:00pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "4:44pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "12:33am", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "10:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "1 days 7 hours 49 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "298.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "7:00pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "4:44pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:25pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "8:15pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 5 hours 41 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "298.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "3:07pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "1:00pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "6:55pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "4:33pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 5 hours 55 minutes", 
+        "plane code": "321", 
+        "plane": "Airbus A321", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "298.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Boston, MA (BOS-Logan Intl.)", 
+                "arrival_time": "3:06pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "2:00pm"
+            }, 
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "6:41pm", 
+                "departure_airport": "Boston, MA (BOS-Logan Intl.)", 
+                "departure_time": "4:01pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:25pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "8:15pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 8 hours 25 minutes", 
+        "plane code": "E90", 
+        "plane": "Embraer 190", 
+        "departure": "New York, New York", 
+        "stops": "2 Stop", 
+        "ticket price": "303.90"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "2:12am", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "10:45pm"
+            }
+        ], 
+        "airline": "Frontier Airlines", 
+        "flight duration": "1 days 3 hours 27 minutes", 
+        "plane code": "319", 
+        "plane": "Airbus A319", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "325.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:16am", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "7:00am"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 16 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "3:48pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "12:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 18 minutes", 
+        "plane code": "32B", 
+        "plane": "AIRBUS INDUSTRIE A321 SHARKLETS", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "11:02pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "7:25pm"
+            }
+        ], 
+        "airline": "Delta", 
+        "flight duration": "0 days 3 hours 37 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:50am", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "7:30am"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 20 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "9:22pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "5:55pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 27 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "11:20am", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "8:00am"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 20 minutes", 
+        "plane code": "", 
+        "plane": "", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "2:23pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "11:00am"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 23 minutes", 
+        "plane code": "", 
+        "plane": "", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "8:20pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "5:00pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 20 minutes", 
+        "plane code": "763", 
+        "plane": "Boeing 767-300", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "7:00pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "3:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 30 minutes", 
+        "plane code": "757", 
+        "plane": "Boeing 757", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "4:44pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "1:30pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 14 minutes", 
+        "plane code": "738", 
+        "plane": "Boeing 737-800", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "9:16pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "5:50pm"
+            }
+        ], 
+        "airline": "Delta", 
+        "flight duration": "0 days 3 hours 26 minutes", 
+        "plane code": "320", 
+        "plane": "Airbus A320", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "10:19pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "6:50pm"
+            }
+        ], 
+        "airline": "Delta", 
+        "flight duration": "0 days 3 hours 29 minutes", 
+        "plane code": "320", 
+        "plane": "Airbus A320", 
+        "departure": "New York, New York", 
+        "stops": "Nonstop", 
+        "ticket price": "385.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "10:25am", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "8:05am"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "2:01pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "11:45am"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 5 hours 56 minutes", 
+        "plane code": "757", 
+        "plane": "Boeing 757", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "392.30"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Washington, DC (DCA-Ronald Reagan Washington National)", 
+                "arrival_time": "12:10pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "10:35am"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "6:42pm", 
+                "departure_airport": "Washington, DC (DCA-Ronald Reagan Washington National)", 
+                "departure_time": "3:45pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 8 hours 7 minutes", 
+        "plane code": "ER4", 
+        "plane": "Embraer RJ145", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "393.80"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Pittsburgh, PA (PIT-Pittsburgh Intl.)", 
+                "arrival_time": "5:15pm", 
+                "departure_airport": "New York, NY (LGA-LaGuardia)", 
+                "departure_time": "3:40pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "9:49pm", 
+                "departure_airport": "Pittsburgh, PA (PIT-Pittsburgh Intl.)", 
+                "departure_time": "7:00pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 6 hours 9 minutes", 
+        "plane code": "E75", 
+        "plane": "Embraer 175", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "393.80"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Washington, DC (DCA-Ronald Reagan Washington National)", 
+                "arrival_time": "12:10pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "10:35am"
+            }, 
+            {
+                "arrival_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "arrival_time": "3:13pm", 
+                "departure_airport": "Washington, DC (DCA-Ronald Reagan Washington National)", 
+                "departure_time": "1:40pm"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "6:55pm", 
+                "departure_airport": "Charlotte, NC (CLT-Charlotte-Douglas Intl.)", 
+                "departure_time": "4:33pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 8 hours 20 minutes", 
+        "plane code": "ER4", 
+        "plane": "Embraer RJ145", 
+        "departure": "New York, New York", 
+        "stops": "2 Stop", 
+        "ticket price": "397.90"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Washington, DC (DCA-Ronald Reagan Washington National)", 
+                "arrival_time": "12:10pm", 
+                "departure_airport": "New York, NY (JFK-John F. Kennedy Intl.)", 
+                "departure_time": "10:35am"
+            }, 
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "4:44pm", 
+                "departure_airport": "Washington, DC (DCA-Ronald Reagan Washington National)", 
+                "departure_time": "1:51pm"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 6 hours 9 minutes", 
+        "plane code": "ER4", 
+        "plane": "Embraer RJ145", 
+        "departure": "New York, New York", 
+        "stops": "1 Stop", 
+        "ticket price": "402.81"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "5:32pm", 
+                "departure_airport": "Newark, NJ (EWR-Liberty Intl.)", 
+                "departure_time": "2:20pm"
+            }
+        ], 
+        "airline": "United", 
+        "flight duration": "0 days 3 hours 12 minutes", 
+        "plane code": "752", 
+        "plane": "Boeing 757-200", 
+        "departure": "Newark, Newark", 
+        "stops": "Nonstop", 
+        "ticket price": "409.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "9:15am", 
+                "departure_airport": "Newark, NJ (EWR-Liberty Intl.)", 
+                "departure_time": "6:00am"
+            }
+        ], 
+        "airline": "American Airlines", 
+        "flight duration": "0 days 3 hours 15 minutes", 
+        "plane code": "32B", 
+        "plane": "AIRBUS INDUSTRIE A321 SHARKLETS", 
+        "departure": "Newark, Newark", 
+        "stops": "Nonstop", 
+        "ticket price": "409.20"
+    }, 
+    {
+        "arrival": "Miami, Miami", 
+        "timings": [
+            {
+                "arrival_airport": "Miami, FL (MIA-Miami Intl.)", 
+                "arrival_time": "7:17pm", 
+                "departure_airport": "Newark, NJ (EWR-Liberty Intl.)", 
+                "departure_time": "4:06pm"
+            }
+        ], 
+        "airline": "United", 
+        "flight duration": "0 days 3 hours 11 minutes", 
+        "plane code": "319", 
+        "plane": "Airbus A319", 
+        "departure": "Newark, Newark", 
+        "stops": "Nonstop", 
+        "ticket price": "409.20"
+    }
+]
