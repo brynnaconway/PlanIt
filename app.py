@@ -12,6 +12,7 @@ import yaml
 import os
 import datetime
 import urllib
+from flight import Flight
 from app.util import deserialize
 from flask_mail import Mail, Message
 
@@ -27,6 +28,7 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
+flight_results = []
 'From https://stackoverflow.com/questions/29332056/global-error-handler-for-any-exception/41655397#41655397'
 'Makes sure the server stays up worst case scenario'
 
@@ -248,6 +250,8 @@ def add_membership():
 
 @app.route('/eventDetails', methods=['POST', 'GET'])
 def eventDetails():
+
+    flight = False
     print "session[eventDetailsID]: ", session['eventDetailsID']
 
     session['eventGroup'] = \
@@ -272,7 +276,6 @@ def eventDetails():
     finalTime = db.query(
         '''SELECT start, stop from timerange WHERE eventID = {} ORDER BY votes DESC limit 1;'''.format(eventID))
 
-    print "finalTime: ", finalTime
     try:
         finalLocation = finalLocation[0][0]
         print "finalLocation in try: ", finalLocation
@@ -288,7 +291,24 @@ def eventDetails():
         finalTime = finalTime[0]
     except:
 
-        finalTime = (datetime.date(2002, 3, 11), datetime.date(2002, 3, 12))
+        finalTime = (datetime.date(2018, 3, 11), datetime.date(2018, 3, 12))
+
+    print "finalTime: ", finalTime
+
+    try:
+        data = request.get_data()
+        d = deserialize(data)
+        departure_city = d['departure_city']
+        departure_time = finalTime[0].strftime('%m/%d/%Y')
+        f = Flight()
+        results = f.parse(str(departure_city), str(finalLocation), str(departure_time))
+        for i in range(0, len(results)):
+            departure = urllib.unquote(departure_city).replace('+', ' ')
+            if departure in str(results[i][0]):
+                flight_results.append(results[i])
+
+    except:
+        departure_city = "No city chosen"
 
     inProgressData = db.query(
         '''SELECT locationsInProgress, timeInProgress, lodgingInProgress FROM events WHERE eventID = {};'''.format(
@@ -303,8 +323,7 @@ def eventDetails():
     return render_template('eventDetails.html', finalTime=finalTime, finalLocation=finalLocation, finalLodge=finalLodge,
                            inProgressData=inProgressData,
                            locations=locations, adminBool=adminBool, lodgeData=lodgeData, timeData=times,
-                           peopleData=people)
-
+                           peopleData=people, flight_results=flight_results)
 
 @app.route('/addlocation', methods=['POST'])
 def addLocation():

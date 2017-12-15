@@ -64,7 +64,11 @@
 }
 
 #btnAddNewLocation { 
-    padding-bottom: 7px; 
+    padding-bottom: 6px; 
+}
+
+#btnDepartureCity { 
+    padding-bottom: 6px; 
 }
 
 #btnPeopleSearch { 
@@ -243,6 +247,9 @@ tr:nth-child(even) {
     max-width: 35%;
 }
 
+#departureCity {
+    max-width: 50%;
+}
 #addMembersInputs {
     margin: 0px; 
     max-width: none;
@@ -279,3 +286,6 @@ tr:nth-child(even) {
     margin-bottom: 10px; 
 }
 
+#notice {
+    font-size: 10pt;
+}

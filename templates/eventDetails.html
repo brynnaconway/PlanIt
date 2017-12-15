@@ -36,6 +36,9 @@
             <a class="nav-link" id=tab data-toggle="tab" href="#lodging" role=tab>Lodging</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" id=tab data-toggle="tab" href="#flights" role=tab>Flights</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" id=tab data-toggle="tab" href="#groupMembers" role=tab>Group</a>
         </li>
     </ul>
@@ -316,6 +319,54 @@
                         </div>
                     </div>
                 </div> <!-- close lodging tab content -->
+
+                <!-- Flights tab content -->
+                <div class="tab-pane" id="flights" role="tabpanel">
+                    <div class="tab-pane" id="flights" role="tabpanel">
+                        <div id=flightsContent>  
+                            <legend>Here are some possible flights for your adventure! *</legend>
+                            <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">What City would you fly out of?</label>
+                            <div id= "departureCity" class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="City (format ex: Dallas, TX)" id="inputCity">
+                                
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="btnDepartureCity">
+                                        Add!
+                                    </button>
+                                </span>
+                                </div>
+                            </div><!-- /input-group -->                                                                              
+                            <table>
+                                <tr>
+                                    <th>Departing From</th>
+                                    <th>Departure Time</th>
+                                    <th>Arriving In</th>
+                                    <th> Arrival Time </th>
+                                    <th> Number of Stops </th>
+                                    <th> Price </th>
+                                    <th>Airline</th>
+
+                                </tr>
+                                    {% for d_loc, d_time, a_loc, a_time, stop, airline, price in flight_results %}
+                                    <tr>
+                                        <th> {{ d_loc }} </th>
+                                        <th> {{ d_time }} </th>
+                                        <th> {{ a_loc }} </th>
+                                        <th> {{ a_time }} </th>
+                                        <th>{{ stop }}</th>
+                                        <th>{{ airline }}</th>
+                                        <th>{{ price }}</th>
+                                    </tr>
+                                                                {% endfor %}
+
+                            </table>
+                            <p id="notice" > * Please note flights can only be found <br> if the final location is in the form city, <br> state as well as the depature location </p>
+                        </div>
+                    </div>
+                </div> <!-- close flights tab content -->
+
 
                 <!-- People tab content -->
                 <div class="tab-pane" id="groupMembers" role="tabpanel">
