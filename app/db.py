@@ -218,6 +218,7 @@ class DB(object):
     def add_event(self, data):
         d = deserialize(data)
         eventName = urllib.unquote_plus(d['eventName'])
+        eventName.replace("'", "''")
         groupID = session['eventGroup']
         print "eventName: ", eventName
         if groupID == "_createNewGroup":
