@@ -177,7 +177,7 @@ class DB(object):
             if 'eventDetailsID' in session.keys():
                 print('Updating EVENT with GROUPID')
                 q = ''' UPDATE events SET groupID={}
-                     WHERE eventID = {};\n'''.format(data['id'], session['eventID'])
+                     WHERE eventID = {};\n'''.format(data['id'], session['eventDetailsId'])
                 self.query(q)
 
             return jsonify({'valid': True})
