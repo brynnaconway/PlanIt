@@ -53,12 +53,16 @@ window.onload = function () {
         document.getElementById('finalizedLocationContent').style.display = 'block';
         $("#tabs li:eq(2) a").removeClass('disabled');
         $('#tabs li:eq(2) a').attr('data-toggle', 'tab');
+        $("#tabs li:eq(3) a").removeClass('disabled');
+        $('#tabs li:eq(3) a').attr('data-toggle', 'tab');
 
     }
     else {
         document.getElementById('finalizedLocationContent').style.display = 'none';
         $("#tabs li:eq(2) a").addClass('disabled');
         $('#tabs li:eq(2) a').removeAttr('data-toggle', 'tab');
+        $("#tabs li:eq(3) a").addClass('disabled');
+        $('#tabs li:eq(3) a').removeAttr('data-toggle', 'tab');
     }
 
     // Show or hide voting for lodging 
@@ -223,6 +227,24 @@ $(function () {
             success: function (response) {
                 console.log(response);
                 window.location = '/eventDetails?tab=0'
+                // document.getElementById("existingGroupBtn").style.visibility = "visible";
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+$(function () {
+    $('#btnDepartureCity').click(function () {
+        $.ajax({
+            url: '/eventDetails',
+            data: {departure_city: $('#inputCity').val()},
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                window.location = '/eventDetails?tab=3'
                 // document.getElementById("existingGroupBtn").style.visibility = "visible";
             },
             error: function (error) {
